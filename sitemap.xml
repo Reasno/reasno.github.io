@@ -3,28 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://example.org/posts/hello-world/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://example.org/posts/</loc>
+    <loc>https://reasno.github.io/categories/</loc>
     <lastmod>2019-06-24T14:11:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/categories/</loc>
+    <loc>https://reasno.github.io/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/posts/industry-on-service-mesh/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/posts/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>https://reasno.github.io/tags/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/categories/coding/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/service-mesh/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/twitter/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
