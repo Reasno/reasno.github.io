@@ -6,49 +6,22 @@
     <description>Recent content in Tags on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Jun 2019 00:17:13 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 27 Jun 2019 21:06:28 +0800</lastBuildDate>
     
 	<atom:link href="https://reasno.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Apache Beam</title>
-      <link>https://reasno.github.io/tags/apache-beam/</link>
-      <pubDate>Thu, 27 Jun 2019 00:17:13 +0800</pubDate>
-      
-      <guid>https://reasno.github.io/tags/apache-beam/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>RxJS</title>
-      <link>https://reasno.github.io/tags/rxjs/</link>
-      <pubDate>Thu, 27 Jun 2019 00:17:13 +0800</pubDate>
-      
-      <guid>https://reasno.github.io/tags/rxjs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tensorflow</title>
-      <link>https://reasno.github.io/tags/tensorflow/</link>
-      <pubDate>Thu, 27 Jun 2019 00:17:13 +0800</pubDate>
-      
-      <guid>https://reasno.github.io/tags/tensorflow/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>service mesh</title>
-      <link>https://reasno.github.io/tags/service-mesh/</link>
-      <pubDate>Mon, 24 Jun 2019 14:11:24 +0800</pubDate>
+      <title>Dependency Injection</title>
+      <link>https://reasno.github.io/tags/dependency-injection/</link>
+      <pubDate>Thu, 27 Jun 2019 21:06:28 +0800</pubDate>
       
       <guid>https://reasno.github.io/tags/dependency-injection/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>twitter</title>
+      <title>Twitter</title>
       <link>https://reasno.github.io/tags/twitter/</link>
       <pubDate>Thu, 27 Jun 2019 21:06:28 +0800</pubDate>
       
