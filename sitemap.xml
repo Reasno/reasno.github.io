@@ -3,37 +3,65 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://reasno.github.io/categories/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <loc>https://reasno.github.io/tags/dependency-injection/</loc>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://reasno.github.io/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/posts/industry-on-service-mesh/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <loc>https://reasno.github.io/posts/manual-injection/</loc>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://reasno.github.io/posts/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://reasno.github.io/tags/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/categories/coding/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
+    <loc>https://reasno.github.io/tags/twitter/</loc>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/apache-beam/</loc>
+    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/posts/beauty-of-lazy-execution/</loc>
+    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/rxjs/</loc>
+    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/tensorflow/</loc>
+    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/posts/industry-on-service-mesh/</loc>
+    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
   </url>
   
   <url>
@@ -43,13 +71,12 @@
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/twitter/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
-    <priority>0</priority>
+    <loc>https://reasno.github.io/about/</loc>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/about/</loc>
+    <loc>https://reasno.github.io/categories/</loc>
+    <priority>0</priority>
   </url>
   
 </urlset>
