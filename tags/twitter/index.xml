@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>twitter on Garbage Collected</title>
+    <title>Twitter on Garbage Collected</title>
     <link>https://reasno.github.io/tags/twitter/</link>
-    <description>Recent content in twitter on Garbage Collected</description>
+    <description>Recent content in Twitter on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Jun 2019 14:11:24 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 27 Jun 2019 21:06:28 +0800</lastBuildDate>
     
 	<atom:link href="https://reasno.github.io/tags/twitter/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Manual Injection</title>
+      <link>https://reasno.github.io/posts/manual-injection/</link>
+      <pubDate>Thu, 27 Jun 2019 21:06:28 +0800</pubDate>
+      
+      <guid>https://reasno.github.io/posts/manual-injection/</guid>
+      <description>Came across this pic from twitter.
+If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
+ A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion.</description>
+    </item>
     
     <item>
       <title>Industry on Service Mesh</title>
@@ -17,7 +28,7 @@
       <pubDate>Mon, 24 Jun 2019 14:11:24 +0800</pubDate>
       
       <guid>https://reasno.github.io/posts/industry-on-service-mesh/</guid>
-      <description>Just read a thread in twitter from Matt Klein, where he basically summerized his opinion about complex toolings like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a freshing one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
+      <description>Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
     </item>
     
   </channel>

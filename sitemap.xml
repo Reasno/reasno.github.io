@@ -3,6 +3,57 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://reasno.github.io/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/go/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/posts/options-have-a-toll/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/posts/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/vue/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/dependency-injection/</loc>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/posts/manual-injection/</loc>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://reasno.github.io/tags/twitter/</loc>
+    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://reasno.github.io/tags/apache-beam/</loc>
     <lastmod>2019-06-27T00:17:13+08:00</lastmod>
     <priority>0</priority>
@@ -14,24 +65,7 @@
   </url>
   
   <url>
-    <loc>https://reasno.github.io/</loc>
-    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://reasno.github.io/posts/</loc>
-    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://reasno.github.io/tags/rxjs/</loc>
-    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://reasno.github.io/tags/</loc>
     <lastmod>2019-06-27T00:17:13+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -49,12 +83,6 @@
   
   <url>
     <loc>https://reasno.github.io/tags/service-mesh/</loc>
-    <lastmod>2019-06-24T14:11:24+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://reasno.github.io/tags/twitter/</loc>
     <lastmod>2019-06-24T14:11:24+08:00</lastmod>
     <priority>0</priority>
   </url>

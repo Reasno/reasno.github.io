@@ -6,10 +6,33 @@
     <description>Recent content on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Jun 2019 00:17:13 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 30 Jun 2019 16:24:33 +0800</lastBuildDate>
     
 	<atom:link href="https://reasno.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Options Have a Toll</title>
+      <link>https://reasno.github.io/posts/options-have-a-toll/</link>
+      <pubDate>Sun, 30 Jun 2019 16:24:33 +0800</pubDate>
+      
+      <guid>https://reasno.github.io/posts/options-have-a-toll/</guid>
+      <description>Vue community exploded due to changes in Vue 3. Some comments are full of gunpowder with regards to the recent functional API RFC. Let me show my opinions up front:
+ A. OSS authors clearly deserve more respect.
+ B. I think functional API generally are more expressive compared to the old one.
+  However I would like to provide a counter argument to a very point the maintainers of Vue made.</description>
+    </item>
+    
+    <item>
+      <title>Manual Injection</title>
+      <link>https://reasno.github.io/posts/manual-injection/</link>
+      <pubDate>Thu, 27 Jun 2019 21:06:28 +0800</pubDate>
+      
+      <guid>https://reasno.github.io/posts/manual-injection/</guid>
+      <description>Came across this pic from twitter.
+If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
+ A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion.</description>
+    </item>
     
     <item>
       <title>Beauty of Lazy Execution</title>
@@ -27,7 +50,7 @@ I once heard a Haskell fan said that she thought lazy execution was what set Has
       <pubDate>Mon, 24 Jun 2019 14:11:24 +0800</pubDate>
       
       <guid>https://reasno.github.io/posts/industry-on-service-mesh/</guid>
-      <description>Just read a thread in twitter from Matt Klein, where he basically summerized his opinion about complex toolings like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a freshing one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
+      <description>Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
     </item>
     
   </channel>
