@@ -3,96 +3,96 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://reasno.github.io/</loc>
+    <loc>https://guxi.me/</loc>
     <lastmod>2019-06-30T16:24:33+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/go/</loc>
-    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://reasno.github.io/posts/options-take-a-toll/</loc>
-    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://reasno.github.io/posts/</loc>
+    <loc>https://guxi.me/tags/go/</loc>
     <lastmod>2019-06-30T16:24:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/</loc>
+    <loc>https://guxi.me/posts/options-take-a-toll/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
     <lastmod>2019-06-30T16:24:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/vue/</loc>
+    <loc>https://guxi.me/tags/</loc>
     <lastmod>2019-06-30T16:24:33+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/dependency-injection/</loc>
+    <loc>https://guxi.me/tags/vue/</loc>
+    <lastmod>2019-06-30T16:24:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/dependency-injection/</loc>
     <lastmod>2019-06-27T21:06:28+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/posts/manual-injection/</loc>
+    <loc>https://guxi.me/posts/manual-injection/</loc>
     <lastmod>2019-06-27T21:06:28+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/twitter/</loc>
+    <loc>https://guxi.me/tags/twitter/</loc>
     <lastmod>2019-06-27T21:06:28+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/apache-beam/</loc>
+    <loc>https://guxi.me/tags/apache-beam/</loc>
     <lastmod>2019-06-27T00:17:13+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/posts/beauty-of-lazy-execution/</loc>
+    <loc>https://guxi.me/posts/beauty-of-lazy-execution/</loc>
     <lastmod>2019-06-27T00:17:13+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/rxjs/</loc>
-    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://reasno.github.io/tags/tensorflow/</loc>
+    <loc>https://guxi.me/tags/rxjs/</loc>
     <lastmod>2019-06-27T00:17:13+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/posts/industry-on-service-mesh/</loc>
+    <loc>https://guxi.me/tags/tensorflow/</loc>
+    <lastmod>2019-06-27T00:17:13+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/industry-on-service-mesh/</loc>
     <lastmod>2019-06-24T14:11:24+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/tags/service-mesh/</loc>
+    <loc>https://guxi.me/tags/service-mesh/</loc>
     <lastmod>2019-06-24T14:11:24+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/about/</loc>
+    <loc>https://guxi.me/about/</loc>
   </url>
   
   <url>
-    <loc>https://reasno.github.io/categories/</loc>
+    <loc>https://guxi.me/categories/</loc>
     <priority>0</priority>
   </url>
   
