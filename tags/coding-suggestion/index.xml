@@ -6,10 +6,21 @@
     <description>Recent content in Coding Suggestion on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Jun 2019 21:06:28 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jul 2019 23:18:37 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/coding-suggestion/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Good Code Are Easy to Remove</title>
+      <link>https://guxi.me/posts/good-code-are-easy-to-remove/</link>
+      <pubDate>Sat, 06 Jul 2019 23:18:37 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/good-code-are-easy-to-remove/</guid>
+      <description>Over the days I have been thinking how can I improving my coding one step further. As I was refactoring some company work, this idea came to me.
+One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).
+Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means single responsibility is enforced, so removing one thing won&amp;rsquo;t jeopardize another.</description>
+    </item>
     
     <item>
       <title>Manual Injection</title>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected  | Garbage Collected</title>
+    <title>Garbage Collected  | Good Code Are Easy to Remove</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -27,34 +27,45 @@
     
 
     
-      <link href="https://guxi.me/index.xml" rel="alternate" type="application/rss+xml" title="Garbage Collected" />
-      <link href="https://guxi.me/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
-    
 
-    <meta property="og:title" content="Garbage Collected" />
-<meta property="og:description" content="A collection of my ephemeral thoughts" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://guxi.me/" />
+    <meta property="og:title" content="Good Code Are Easy to Remove" />
+<meta property="og:description" content="Over the days I have been thinking how can I improving my coding one step further. As I was refactoring some company work, this idea came to me.
+One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).
+Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means single responsibility is enforced, so removing one thing won&rsquo;t jeopardize another." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://guxi.me/posts/good-code-are-easy-to-remove/" />
+<meta property="article:published_time" content="2019-07-06T23:18:37&#43;08:00"/>
+<meta property="article:modified_time" content="2019-07-06T23:18:37&#43;08:00"/>
 
-<meta property="og:updated_time" content="2019-07-06T23:18:37&#43;08:00"/>
+<meta itemprop="name" content="Good Code Are Easy to Remove">
+<meta itemprop="description" content="Over the days I have been thinking how can I improving my coding one step further. As I was refactoring some company work, this idea came to me.
+One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).
+Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means single responsibility is enforced, so removing one thing won&rsquo;t jeopardize another.">
 
-<meta itemprop="name" content="Garbage Collected">
-<meta itemprop="description" content="A collection of my ephemeral thoughts">
 
+<meta itemprop="datePublished" content="2019-07-06T23:18:37&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-06T23:18:37&#43;08:00" />
+<meta itemprop="wordCount" content="220">
+
+
+
+<meta itemprop="keywords" content="Coding Suggestion," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Garbage Collected"/>
-<meta name="twitter:description" content="A collection of my ephemeral thoughts"/>
+<meta name="twitter:title" content="Good Code Are Easy to Remove"/>
+<meta name="twitter:description" content="Over the days I have been thinking how can I improving my coding one step further. As I was refactoring some company work, this idea came to me.
+One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).
+Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means single responsibility is enforced, so removing one thing won&rsquo;t jeopardize another."/>
 
   </head>
 
   <body class="ma0 avenir bg-near-white">
 
     
+   
+  
 
-  
-  
-  <header class="cover bg-top" style="background-image: url('https://guxi.me/images/gohugo-default-sample-hero-image.jpg');">
-    <div class="bg-black-60">
+  <header>
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://guxi.me/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -114,157 +125,77 @@
   </div>
 </nav>
 
-      <div class="tc-l pv4 pv6-l ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 white-90 mb0 lh-title">
-          Garbage Collected
-        </h1>
-        
-          <h2 class="fw1 f5 f3-l white-80 measure-wide-l center mt3">
-            A collection of my ephemeral thoughts
-          </h2>
-        
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray">
-    <p>Warning: Blogs are opinions, not facts, nor tutorials.</p>
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Good Code Are Easy to Remove</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-07-06T23:18:37&#43;08:00">July 6, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Over the days I have been thinking how can I improving my coding one step further. As I was refactoring some company work, this idea came to me.</p>
+
+<p>One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).</p>
+
+<p>Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means single responsibility is enforced, so removing one thing won&rsquo;t jeopardize another.</p>
+
+<p>Code removal consequently improves readability of code. Without code removal your code base will become a pile of dead bones where real usable pieces are buried deep. I used to run into code base with a huge amount of dead code, and I couldn&rsquo;t say I enjoyed.</p>
+
+<p>One may argue that code removal is only a special case of code change. Yes it is. But good code can be hard to sweep due to business flip. Meanwhile bad code are easy to change, more often too easy. There is a established principle in SOLID claiming software entities should be closed to modification. I will take removability as a better gauge of code quality.</p>
+
+<p>Code removal is much more common in the industry where business rules change constantly, than, for example, OSS world where backward compatibility is of utter importance.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/coding-suggestion" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Coding Suggestion</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+      <script src="https://utteranc.es/client.js"
+        repo="Reasno/reasno.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/manual-injection/">Manual Injection</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
 
   </article>
-  
-  
-  
-  
-  
-  
-  
-    
-    
-
-    <div class="pa3 pa4-ns w-100 w-70-ns center">
-      
-       
-          <h1 class="flex-none">
-            Recent Posts
-          </h1>
-        
-
-      
-
-      <section class="w-100 mw8">
-        
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/good-code-are-easy-to-remove/" class="color-inherit dim link">
-            Good Code Are Easy to Remove
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Over the days I have been thinking how can I improving my coding one step further. As I was refactoring some company work, this idea came to me.
-One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).
-Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means single responsibility is enforced, so removing one thing won&rsquo;t jeopardize another.
-        </div>
-          <a href="/posts/good-code-are-easy-to-remove/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/options-take-a-toll/" class="color-inherit dim link">
-            Options Take a Toll
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Vue community exploded due to changes in Vue 3. Some comments are full of gunpowder with regards to the recent functional API RFC. Let me show my opinions up front:
- A. OSS authors clearly deserve more respect.
- B. I think functional API generally are more expressive compared to the old one.
-  However I would like to provide a counter argument to a very point the defender of RFC made.
-        </div>
-          <a href="/posts/options-take-a-toll/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/manual-injection/" class="color-inherit dim link">
-            Manual Injection
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Came across this pic from twitter.
-If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
- A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion.
-        </div>
-          <a href="/posts/manual-injection/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-      </section>
-
-      
-      <section class="w-100">
-        <h1 class="f3">More</h1>
-        
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/beauty-of-lazy-execution/" class="link black dim">
-              Beauty of Lazy Execution
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/industry-on-service-mesh/" class="link black dim">
-              Industry on Service Mesh
-            </a>
-          </h2>
-        
-
-        
-        
-          <a href="/posts/" class="link db f6 pa2 br3 bg-mid-gray white dim w4 tc">All Posts</a>
-        
-        </section>
-      
-
-      </div>
-  
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
