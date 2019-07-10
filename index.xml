@@ -6,10 +6,23 @@
     <description>Recent content on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jul 2019 23:18:37 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jul 2019 07:43:40 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Id Based Throttling</title>
+      <link>https://guxi.me/posts/id-based-throttling/</link>
+      <pubDate>Thu, 11 Jul 2019 07:43:40 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/id-based-throttling/</guid>
+      <description>RxJS is bonker!
+Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
+With RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((ctx: pb.UpsertRequest) =&amp;gt; ctx.getAdId()), flatMap(group =&amp;gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff );  Without RxJS:
+Too much to write.</description>
+    </item>
     
     <item>
       <title>Good Code Are Easy to Remove</title>
