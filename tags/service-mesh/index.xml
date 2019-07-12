@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>service mesh on Garbage Collected</title>
-    <link>https://reasno.github.io/tags/service-mesh/</link>
-    <description>Recent content in service mesh on Garbage Collected</description>
+    <title>Service Mesh on Garbage Collected</title>
+    <link>https://guxi.me/tags/service-mesh/</link>
+    <description>Recent content in Service Mesh on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 24 Jun 2019 14:11:24 +0800</lastBuildDate>
     
-	<atom:link href="https://reasno.github.io/tags/service-mesh/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://guxi.me/tags/service-mesh/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Industry on Service Mesh</title>
-      <link>https://reasno.github.io/posts/industry-on-service-mesh/</link>
+      <link>https://guxi.me/posts/industry-on-service-mesh/</link>
       <pubDate>Mon, 24 Jun 2019 14:11:24 +0800</pubDate>
       
-      <guid>https://reasno.github.io/posts/industry-on-service-mesh/</guid>
-      <description>Just read a thread in twitter from Matt Klein, where he basically summerized his opinion about complex toolings like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a freshing one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
+      <guid>https://guxi.me/posts/industry-on-service-mesh/</guid>
+      <description>Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
     </item>
     
   </channel>

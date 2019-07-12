@@ -2,21 +2,67 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Garbage Collected</title>
-    <link>https://reasno.github.io/posts/</link>
+    <link>https://guxi.me/posts/</link>
     <description>Recent content in Posts on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Jun 2019 21:06:28 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jul 2019 14:02:34 +0800</lastBuildDate>
     
-	<atom:link href="https://reasno.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://guxi.me/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Binlog Decoding</title>
+      <link>https://guxi.me/posts/binlog-decoding/</link>
+      <pubDate>Fri, 12 Jul 2019 14:02:34 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/binlog-decoding/</guid>
+      <description>I have to admit I am really clumsy when it comes to SQL related stuff. This is the year of 2019, and SQL is not a fancy technology to learn anymore. I managed to get away with not diving deep into SQL for a long time, but the lack of fluency in SQL bites me quite often recently.
+Yesterday I was forced into a binlog trace of the production MySQL database.</description>
+    </item>
+    
+    <item>
+      <title>Id Based Throttling</title>
+      <link>https://guxi.me/posts/id-based-throttling/</link>
+      <pubDate>Thu, 11 Jul 2019 07:43:40 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/id-based-throttling/</guid>
+      <description>RxJS is bonkers!
+Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
+With RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&amp;gt; e.getId()), flatMap(group =&amp;gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff );  Without RxJS:
+Too much to write.</description>
+    </item>
+    
+    <item>
+      <title>Good Code Are Easy to Remove</title>
+      <link>https://guxi.me/posts/good-code-are-easy-to-remove/</link>
+      <pubDate>Sat, 06 Jul 2019 23:18:37 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/good-code-are-easy-to-remove/</guid>
+      <description>Over the days I have been thinking about improving my coding one step further. As I was refactoring some company work, this idea came to me.
+One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).
+Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means Single Responsibility is enforced, so removing one thing won’t jeopardize another.</description>
+    </item>
+    
+    <item>
+      <title>Options Take a Toll</title>
+      <link>https://guxi.me/posts/options-take-a-toll/</link>
+      <pubDate>Sun, 30 Jun 2019 16:24:33 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/options-take-a-toll/</guid>
+      <description>Vue community exploded due to changes in Vue 3. Some comments are full of gunpowder with regards to the recent functional API RFC. Let me show my opinions up front:
+ A. OSS authors clearly deserve more respect.
+ B. I think functional API generally are more expressive compared to the old one.
+  However I would like to provide a counter argument to a very point the defender of RFC made.</description>
+    </item>
+    
+    <item>
       <title>Manual Injection</title>
-      <link>https://reasno.github.io/posts/manual-injection/</link>
+      <link>https://guxi.me/posts/manual-injection/</link>
       <pubDate>Thu, 27 Jun 2019 21:06:28 +0800</pubDate>
       
-      <guid>https://reasno.github.io/posts/manual-injection/</guid>
+      <guid>https://guxi.me/posts/manual-injection/</guid>
       <description>Came across this pic from twitter.
 If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
  A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion.</description>
@@ -24,21 +70,21 @@ If I have an adequate number of audience, I would like to make poll out of it. W
     
     <item>
       <title>Beauty of Lazy Execution</title>
-      <link>https://reasno.github.io/posts/beauty-of-lazy-execution/</link>
+      <link>https://guxi.me/posts/beauty-of-lazy-execution/</link>
       <pubDate>Thu, 27 Jun 2019 00:17:13 +0800</pubDate>
       
-      <guid>https://reasno.github.io/posts/beauty-of-lazy-execution/</guid>
+      <guid>https://guxi.me/posts/beauty-of-lazy-execution/</guid>
       <description>I have done some quick&amp;rsquo;n&amp;rsquo;dirty bid data processing with Apache Beam in past weeks. As someone who try to stay away from JVM, I am not a big data expert at all. However the working with apache beam is a blast (Using JAVA!). The lazy execution style feels right a home. I love wiring a various component into a topology, and only start processing when data arrives.
 I once heard a Haskell fan said that she thought lazy execution was what set Haskell apart from other programing languages.</description>
     </item>
     
     <item>
       <title>Industry on Service Mesh</title>
-      <link>https://reasno.github.io/posts/industry-on-service-mesh/</link>
+      <link>https://guxi.me/posts/industry-on-service-mesh/</link>
       <pubDate>Mon, 24 Jun 2019 14:11:24 +0800</pubDate>
       
-      <guid>https://reasno.github.io/posts/industry-on-service-mesh/</guid>
-      <description>Just read a thread in twitter from Matt Klein, where he basically summerized his opinion about complex toolings like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a freshing one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
+      <guid>https://guxi.me/posts/industry-on-service-mesh/</guid>
+      <description>Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
     </item>
     
   </channel>
