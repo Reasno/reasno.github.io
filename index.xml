@@ -6,30 +6,22 @@
     <description>Recent content on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jul 2019 12:57:59 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jul 2019 19:38:06 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>When Do We Need PHP</title>
-      <link>https://guxi.me/posts/when-do-we-need-php/</link>
-      <pubDate>Thu, 18 Jul 2019 12:57:59 +0800</pubDate>
+      <title>Transactions Are Not Atomic</title>
+      <link>https://guxi.me/posts/transactions-are-not-atomic/</link>
+      <pubDate>Fri, 19 Jul 2019 19:38:06 +0800</pubDate>
       
-      <guid>https://guxi.me/posts/when-do-we-need-php/</guid>
-      <description>When we started huijiwiki.com, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.
-Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.
-Go as well as Rust has a very different nature compared to PHP.</description>
-    </item>
-    
-    <item>
-      <title>Realtime Query Oriented Data Structure for DMP</title>
-      <link>https://guxi.me/posts/realtime-query-oriented-data-structure-for-dmp/</link>
-      <pubDate>Sat, 13 Jul 2019 11:21:14 +0800</pubDate>
-      
-      <guid>https://guxi.me/posts/realtime-query-oriented-data-structure-for-dmp/</guid>
-      <description>DMP stands for Data Management Platform, and per Wikipedia, it is a technology platform used for collecting and managing data, mainly for digital marketing purposes. To put it simply, DMP is a collection of data about user attributes.
-As you might expect a DMP may contain more than millions of data. The DMP I worked on contained nearly a billion. Open source toolings such as Elasticsearch provided a good average baseline for data analytics, and reasonable response time for general-purpose querying.</description>
+      <guid>https://guxi.me/posts/transactions-are-not-atomic/</guid>
+      <description>MySQL (InnoDB) transactions are ACID, with A for atomicity.
+ An atomic transaction is an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
+ The atomicity here is different from the atomicity in concurrent programming.
+ An operation acting on shared memory is atomic if it completes in a single step relative to other threads.
+ Suppose you want to read a number from a column, add it by an offset, and write it back to the same column.</description>
     </item>
     
     <item>
