@@ -25,6 +25,27 @@
     </item>
     
     <item>
+      <title>When Do We Need PHP</title>
+      <link>https://guxi.me/posts/when-do-we-need-php/</link>
+      <pubDate>Thu, 18 Jul 2019 12:57:59 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/when-do-we-need-php/</guid>
+      <description>When we started huijiwiki.com, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.
+Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.
+Go as well as Rust has a very different nature compared to PHP.</description>
+    </item>
+    
+    <item>
+      <title>Realtime Query Oriented Data Structure for DMP</title>
+      <link>https://guxi.me/posts/realtime-query-oriented-data-structure-for-dmp/</link>
+      <pubDate>Sat, 13 Jul 2019 11:21:14 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/realtime-query-oriented-data-structure-for-dmp/</guid>
+      <description>DMP stands for Data Management Platform, and per Wikipedia, it is a technology platform used for collecting and managing data, mainly for digital marketing purposes. To put it simply, DMP is a collection of data about user attributes.
+As you might expect a DMP may contain more than millions of data. The DMP I worked on contained nearly a billion. Open source toolings such as Elasticsearch provided a good average baseline for data analytics, and reasonable response time for general-purpose querying.</description>
+    </item>
+    
+    <item>
       <title>Binlog Decoding</title>
       <link>https://guxi.me/posts/binlog-decoding/</link>
       <pubDate>Fri, 12 Jul 2019 14:02:34 +0800</pubDate>
