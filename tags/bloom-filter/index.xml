@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bloom Filter on Garbage Collected</title>
+    <link>https://guxi.me/tags/bloom-filter/</link>
+    <description>Recent content in Bloom Filter on Garbage Collected</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 13 Jul 2019 11:21:14 +0800</lastBuildDate>
+    
+	<atom:link href="https://guxi.me/tags/bloom-filter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Realtime Query Oriented Data Structure for DMP</title>
+      <link>https://guxi.me/posts/realtime-query-oriented-data-structure-for-dmp/</link>
+      <pubDate>Sat, 13 Jul 2019 11:21:14 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/realtime-query-oriented-data-structure-for-dmp/</guid>
+      <description>DMP stands for Data Management Platform, and per Wikipedia, it is a technology platform used for collecting and managing data, mainly for digital marketing purposes. To put it simply, DMP is a collection of data about user attributes.
+As you might expect a DMP may contain more than millions of data. The DMP I worked on contained nearly a billion. Open source toolings such as Elasticsearch provided a good average baseline for data analytics, and reasonable response time for general-purpose querying.</description>
+    </item>
+    
+  </channel>
+</rss>
