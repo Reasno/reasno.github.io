@@ -4,7 +4,30 @@
   
   <url>
     <loc>https://guxi.me/</loc>
-    <lastmod>2019-07-18T12:57:59+08:00</lastmod>
+    <lastmod>2019-07-19T19:38:06+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/mysql/</loc>
+    <lastmod>2019-07-19T19:38:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2019-07-19T19:38:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2019-07-19T19:38:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/transactions-are-not-atomic/</loc>
+    <lastmod>2019-07-19T19:38:06+08:00</lastmod>
   </url>
   
   <url>
@@ -15,18 +38,6 @@
   
   <url>
     <loc>https://guxi.me/tags/php/</loc>
-    <lastmod>2019-07-18T12:57:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2019-07-18T12:57:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
     <lastmod>2019-07-18T12:57:59+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -62,12 +73,6 @@
   <url>
     <loc>https://guxi.me/posts/binlog-decoding/</loc>
     <lastmod>2019-07-12T14:02:34+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/mysql/</loc>
-    <lastmod>2019-07-12T14:02:34+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
