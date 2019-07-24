@@ -43,7 +43,7 @@ The first thing should be made crystal clear is that things happen on two sides:
 
 <meta itemprop="datePublished" content="2019-07-24T14:15:03&#43;08:00" />
 <meta itemprop="dateModified" content="2019-07-24T14:15:03&#43;08:00" />
-<meta itemprop="wordCount" content="523">
+<meta itemprop="wordCount" content="524">
 
 
 
@@ -173,9 +173,9 @@ if (!doNotTrack) {
 
 <h2 id="the-un-fair-comparasion">the (un)fair comparasion</h2>
 
-<p>On the kernel side, <em>epoll()</em> is often compared to <em>poll()</em> and <em>select()</em>. The former comes with which FD and events are triggered, making the user program O(1) to find out what happend, whereas the latter two do not, making them O(n) because user have to look up every possible FD.</p>
+<p>On the kernel side, <em>epoll()</em> is often compared to <em>poll()</em> and <em>select()</em>. The former comes with which FD and events are triggered, making the user program O(1) to find out what happened, whereas the latter two do not, making them O(n) because the user has to look up every possible FD.</p>
 
-<p>On the userspace, event loop is often comapred to the multi-threading model. System threads are heavy weight, so the upper bound of the threads you can have becomes the bottle neck of a high traffic system. On the other hand event loop allows a single thread to be multiplexed by your busiest port.</p>
+<p>On the userspace, the event loop is often compared to the multi-threading model. System threads are heavyweight, so the upper bound of the threads you can have becomes the bottleneck of a high traffic system. On the other hand, the event loop allows a single thread to be multiplexed by your busiest port.</p>
 
 <h2 id="the-rest-to-know">The rest to know</h2>
 
