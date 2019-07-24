@@ -43,7 +43,7 @@ The first thing should be made crystal clear is that things happen on two sides:
 
 <meta itemprop="datePublished" content="2019-07-24T14:15:03&#43;08:00" />
 <meta itemprop="dateModified" content="2019-07-24T14:15:03&#43;08:00" />
-<meta itemprop="wordCount" content="524">
+<meta itemprop="wordCount" content="520">
 
 
 
@@ -165,6 +165,8 @@ if (!doNotTrack) {
 
 <h2 id="the-kernel-epoll">The kernel, <em>epoll()</em></h2>
 
+<p><em>epoll()</em> is a system call in linux systems. On windows you will use IO Completion Ports, while on mac and freebsd you will have kqueue. They all do similar things.</p>
+
 <p>Programs can register an event through the system call. Programs must provide what file descriptor (An abstract handle for resources, abbr. as FD) and what kind of event (read, write, etc.) they want to watch. After it is done, programs will go to sleep. Registered entries will be placed onto a red-black tree in the preallocated kernel memory. Kernel will be responsible to call the poll method on the device. Once an interrupt (Such as packet arrives) happens, the device says to kernel that it is ready. The kernel will then copy the corresponding data to a ready list, and wake up the program who cares about this FD event by searching the red-black tree. A program may be waiting for multiple events. So Kernel will tell the program what is/are ready.</p>
 
 <h2 id="the-userspace-event-loop">The Userspace, event loop</h2>
@@ -176,10 +178,6 @@ if (!doNotTrack) {
 <p>On the kernel side, <em>epoll()</em> is often compared to <em>poll()</em> and <em>select()</em>. The former comes with which FD and events are triggered, making the user program O(1) to find out what happened, whereas the latter two do not, making them O(n) because the user has to look up every possible FD.</p>
 
 <p>On the userspace, the event loop is often compared to the multi-threading model. System threads are heavyweight, so the upper bound of the threads you can have becomes the bottleneck of a high traffic system. On the other hand, the event loop allows a single thread to be multiplexed by your busiest port.</p>
-
-<h2 id="the-rest-to-know">The rest to know</h2>
-
-<p>Epoll is a system call in linux systems. On windows you will use IO Completion Ports, while on mac and freebsd you will have kqueue. They all do similar things.</p>
 <ul class="pa0">
   
    <li class="list">
