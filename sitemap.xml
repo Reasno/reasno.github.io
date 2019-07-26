@@ -3,29 +3,46 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://guxi.me/posts/ad-server-rewrite-goals-and-non-goals/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/advertising/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/coding-suggestions/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/posts/epoll-and-event-loop-just-enough-you-need-for-interview/</loc>
     <lastmod>2019-07-24T14:15:03+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/event-loop/</loc>
-    <lastmod>2019-07-24T14:15:03+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/</loc>
-    <lastmod>2019-07-24T14:15:03+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2019-07-24T14:15:03+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
     <lastmod>2019-07-24T14:15:03+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -62,12 +79,6 @@
   <url>
     <loc>https://guxi.me/posts/when-do-we-need-php/</loc>
     <lastmod>2019-07-18T12:57:59+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/advertising/</loc>
-    <lastmod>2019-07-13T11:21:14+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
