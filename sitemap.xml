@@ -3,52 +3,35 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://guxi.me/tags/c#/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/coding-suggestion/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/tensorflow/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/posts/ad-server-rewrite-goals-and-non-goals/</loc>
     <lastmod>2019-07-26T10:08:36+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/advertising/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/coding-suggestion/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
     <lastmod>2019-07-26T10:08:36+08:00</lastmod>
     <priority>0</priority>
   </url>
