@@ -3,12 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://guxi.me/tags/c#/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/tags/coding-suggestion/</loc>
     <lastmod>2019-07-28T13:51:45+08:00</lastmod>
     <priority>0</priority>
@@ -22,6 +16,12 @@
   <url>
     <loc>https://guxi.me/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/</loc>
     <lastmod>2019-07-28T13:51:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/php/</loc>
+    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -95,12 +95,6 @@
   
   <url>
     <loc>https://guxi.me/tags/go/</loc>
-    <lastmod>2019-07-18T12:57:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/php/</loc>
     <lastmod>2019-07-18T12:57:59+08:00</lastmod>
     <priority>0</priority>
   </url>
