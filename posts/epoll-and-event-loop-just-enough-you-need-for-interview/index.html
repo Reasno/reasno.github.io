@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected  | Industry on Service Mesh</title>
+    <title>Garbage Collected  | Epoll and Event Loop: Just Enough You Need for Interview</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -28,27 +28,30 @@
 
     
 
-    <meta property="og:title" content="Industry on Service Mesh" />
-<meta property="og:description" content="Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches." />
+    <meta property="og:title" content="Epoll and Event Loop: Just Enough You Need for Interview" />
+<meta property="og:description" content="The biggest challenge for intermediate developers to understand event loop is that the articles found around the web are either written for die-hard C programmers or simply too long to read. I will give a try on explaining the event loop/epoll(), and stop at a point where interviewers will be sufficiently satisfied.
+The first thing should be made crystal clear is that things happen on two sides: The kernel and the userspace." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://guxi.me/posts/industry-on-service-mesh/" />
-<meta property="article:published_time" content="2019-06-24T14:11:24&#43;08:00"/>
-<meta property="article:modified_time" content="2019-06-24T14:11:24&#43;08:00"/>
+<meta property="og:url" content="https://guxi.me/posts/epoll-and-event-loop-just-enough-you-need-for-interview/" />
+<meta property="article:published_time" content="2019-07-24T14:15:03&#43;08:00"/>
+<meta property="article:modified_time" content="2019-07-24T14:15:03&#43;08:00"/>
 
-<meta itemprop="name" content="Industry on Service Mesh">
-<meta itemprop="description" content="Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.">
-
-
-<meta itemprop="datePublished" content="2019-06-24T14:11:24&#43;08:00" />
-<meta itemprop="dateModified" content="2019-06-24T14:11:24&#43;08:00" />
-<meta itemprop="wordCount" content="124">
+<meta itemprop="name" content="Epoll and Event Loop: Just Enough You Need for Interview">
+<meta itemprop="description" content="The biggest challenge for intermediate developers to understand event loop is that the articles found around the web are either written for die-hard C programmers or simply too long to read. I will give a try on explaining the event loop/epoll(), and stop at a point where interviewers will be sufficiently satisfied.
+The first thing should be made crystal clear is that things happen on two sides: The kernel and the userspace.">
 
 
+<meta itemprop="datePublished" content="2019-07-24T14:15:03&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-24T14:15:03&#43;08:00" />
+<meta itemprop="wordCount" content="520">
 
-<meta itemprop="keywords" content="twitter,service mesh," />
+
+
+<meta itemprop="keywords" content="event loop,epoll,interview," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Industry on Service Mesh"/>
-<meta name="twitter:description" content="Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches."/>
+<meta name="twitter:title" content="Epoll and Event Loop: Just Enough You Need for Interview"/>
+<meta name="twitter:description" content="The biggest challenge for intermediate developers to understand event loop is that the articles found around the web are either written for die-hard C programmers or simply too long to read. I will give a try on explaining the event loop/epoll(), and stop at a point where interviewers will be sufficiently satisfied.
+The first thing should be made crystal clear is that things happen on two sides: The kernel and the userspace."/>
 
       
 <script type="application/javascript">
@@ -147,24 +150,46 @@ if (!doNotTrack) {
           
         POSTS
       </p>
-      <h1 class="f1 athelas mb1">Industry on Service Mesh</h1>
+      <h1 class="f1 athelas mb1">Epoll and Event Loop: Just Enough You Need for Interview</h1>
       
-      <time class="f6 mv4 dib tracked" datetime="2019-06-24T14:11:24&#43;08:00">June 24, 2019</time>
+      <time class="f6 mv4 dib tracked" datetime="2019-07-24T14:15:03&#43;08:00">July 24, 2019</time>
       
       
     </header>
 
-    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Just read a <a href="https://twitter.com/mattklein123/status/1142905758847315968">thread</a> in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches. I expect the interests around istio would drop considerably by the end of 2019.</p>
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
 
-<p>Engineering must be practical and pragmatic. I am glad to see the industry converge on this principle.</p>
+<p>The biggest challenge for intermediate developers to understand event loop is that the articles found around the web are either written for die-hard C programmers or simply too long to read. I will give a try on explaining the event loop/<em>epoll()</em>, and stop at a point where interviewers will be sufficiently satisfied.</p>
+
+<p>The first thing should be made crystal clear is that things happen on two sides: The kernel and the userspace. The bridge between two worlds is the system call &ndash; <em>epoll()</em>.</p>
+
+<h2 id="the-kernel-epoll">The kernel, <em>epoll()</em></h2>
+
+<p><em>epoll()</em> is a system call in linux systems. On windows you will use IO Completion Ports, while on mac and freebsd you will have kqueue. They all do similar things.</p>
+
+<p>Programs can register an event through the system call. Programs must provide what file descriptor (An abstract handle for resources, abbr. as FD) and what kind of event (read, write, etc.) they want to watch. After it is done, programs will go to sleep. Registered entries will be placed onto a red-black tree in the preallocated kernel memory. Kernel will be responsible to call the poll method on the device. Once an interrupt (Such as packet arrives) happens, the device says to kernel that it is ready. The kernel will then copy the corresponding data to a ready list, and wake up the program who cares about this FD event by searching the red-black tree. A program may be waiting for multiple events. So Kernel will tell the program what is/are ready.</p>
+
+<h2 id="the-userspace-event-loop">The Userspace, event loop</h2>
+
+<p>The userspace doesn&rsquo;t necessarily mean the code written by yourself. Node.js utilize libuv to provide an event loop. For Go, the event loop resides in the net package. For Rust, the event loop is provided by the fabulous Tokio crate. Every implemetation is slightly different. Taking Tokio for instance, it mostly contain two major components, the reactor, and the executor. The executor holds a queue of the Futures, ask them one by one if they are resolved/ready. The executor will dispatch the callback for the ready ones and pass it down to the reactor for the non-ready ones. The Reactor will talk to the kernel, go to sleep, wake by the kernel and report the status and data back to the executor. Then the loop goes on. Sometimes the event loop has more capabilities than doing IO. For example, the event loop can execute tasks based on a timeout or time interval. For such use cases, the reactor is not needed.</p>
+
+<h2 id="the-un-fair-comparision">The (un)fair comparision</h2>
+
+<p>On the kernel side, <em>epoll()</em> is often compared to <em>poll()</em> and <em>select()</em>. The former comes with which FD and events are triggered, making the user program O(1) to find out what happened, whereas the latter two do not, making them O(n) because the user has to look up every possible FD.</p>
+
+<p>On the userspace, the event loop is often compared to the multi-threading model. System threads are heavyweight, so the upper bound of the threads you can have becomes the bottleneck of a high traffic system. On the other hand, the event loop allows a single thread to be multiplexed by your busiest port.</p>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/twitter" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">twitter</a>
+     <a href="/tags/event-loop" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">event loop</a>
    </li>
   
    <li class="list">
-     <a href="/tags/service-mesh" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">service mesh</a>
+     <a href="/tags/epoll" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">epoll</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/interview" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">interview</a>
    </li>
   
 </ul>
@@ -180,21 +205,22 @@ if (!doNotTrack) {
       </div>
     </section>
 
-    <aside class="w-30-l mt6-l">
+    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">What&#39;s in this posts</p>
+      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#the-kernel-epoll">The kernel, <em>epoll()</em></a></li>
+<li><a href="#the-userspace-event-loop">The Userspace, event loop</a></li>
+<li><a href="#the-un-fair-comparision">The (un)fair comparision</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
 
 
 
-
-  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
-    <p class="f5 b mb3">Related</p>
-    <ul class="pa0 list">
-	   
-	     <li  class="mb2">
-          <a href="/posts/manual-injection/">Manual Injection</a>
-        </li>
-	    
-    </ul>
-</div>
 
 </aside>
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected  | Industry on Service Mesh</title>
+    <title>Garbage Collected  | Ad Server Rewrite: Goals and Non Goals</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -28,27 +28,30 @@
 
     
 
-    <meta property="og:title" content="Industry on Service Mesh" />
-<meta property="og:description" content="Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches." />
+    <meta property="og:title" content="Ad Server Rewrite: Goals and Non Goals" />
+<meta property="og:description" content="We have carried out the first or maybe last round of rewrite of the Juhui DSP/SSP/ADX with Typescript. A few goals and non-goals have been set for this labor-intensive process.
+Goals  Strong typed. Strong API contracts. Holistic Observability with logging, tracing, and metrics. Layered Architecture and dedicated component. Testcases can be run by anyone. Stateless over stateful. Improved readability. Proper code deprecation process.  Non-Goals  Use fancy technology." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://guxi.me/posts/industry-on-service-mesh/" />
-<meta property="article:published_time" content="2019-06-24T14:11:24&#43;08:00"/>
-<meta property="article:modified_time" content="2019-06-24T14:11:24&#43;08:00"/>
+<meta property="og:url" content="https://guxi.me/posts/ad-server-rewrite-goals-and-non-goals/" />
+<meta property="article:published_time" content="2019-07-26T10:08:36&#43;08:00"/>
+<meta property="article:modified_time" content="2019-07-26T10:08:36&#43;08:00"/>
 
-<meta itemprop="name" content="Industry on Service Mesh">
-<meta itemprop="description" content="Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.">
-
-
-<meta itemprop="datePublished" content="2019-06-24T14:11:24&#43;08:00" />
-<meta itemprop="dateModified" content="2019-06-24T14:11:24&#43;08:00" />
-<meta itemprop="wordCount" content="124">
+<meta itemprop="name" content="Ad Server Rewrite: Goals and Non Goals">
+<meta itemprop="description" content="We have carried out the first or maybe last round of rewrite of the Juhui DSP/SSP/ADX with Typescript. A few goals and non-goals have been set for this labor-intensive process.
+Goals  Strong typed. Strong API contracts. Holistic Observability with logging, tracing, and metrics. Layered Architecture and dedicated component. Testcases can be run by anyone. Stateless over stateful. Improved readability. Proper code deprecation process.  Non-Goals  Use fancy technology.">
 
 
+<meta itemprop="datePublished" content="2019-07-26T10:08:36&#43;08:00" />
+<meta itemprop="dateModified" content="2019-07-26T10:08:36&#43;08:00" />
+<meta itemprop="wordCount" content="115">
 
-<meta itemprop="keywords" content="twitter,service mesh," />
+
+
+<meta itemprop="keywords" content="advertising,coding suggestion,typescript," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Industry on Service Mesh"/>
-<meta name="twitter:description" content="Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches."/>
+<meta name="twitter:title" content="Ad Server Rewrite: Goals and Non Goals"/>
+<meta name="twitter:description" content="We have carried out the first or maybe last round of rewrite of the Juhui DSP/SSP/ADX with Typescript. A few goals and non-goals have been set for this labor-intensive process.
+Goals  Strong typed. Strong API contracts. Holistic Observability with logging, tracing, and metrics. Layered Architecture and dedicated component. Testcases can be run by anyone. Stateless over stateful. Improved readability. Proper code deprecation process.  Non-Goals  Use fancy technology."/>
 
       
 <script type="application/javascript">
@@ -147,24 +150,55 @@ if (!doNotTrack) {
           
         POSTS
       </p>
-      <h1 class="f1 athelas mb1">Industry on Service Mesh</h1>
+      <h1 class="f1 athelas mb1">Ad Server Rewrite: Goals and Non Goals</h1>
       
-      <time class="f6 mv4 dib tracked" datetime="2019-06-24T14:11:24&#43;08:00">June 24, 2019</time>
+      <time class="f6 mv4 dib tracked" datetime="2019-07-26T10:08:36&#43;08:00">July 26, 2019</time>
       
       
     </header>
 
-    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Just read a <a href="https://twitter.com/mattklein123/status/1142905758847315968">thread</a> in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches. I expect the interests around istio would drop considerably by the end of 2019.</p>
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
 
-<p>Engineering must be practical and pragmatic. I am glad to see the industry converge on this principle.</p>
+<p>We have carried out the first or maybe last round of rewrite of the <a href="http://www.adjuhui.cn/">Juhui</a> DSP/SSP/ADX with Typescript. A few goals and non-goals have been set for this labor-intensive process.</p>
+
+<h2 id="goals">Goals</h2>
+
+<ul>
+<li>Strong typed.</li>
+<li>Strong API contracts.</li>
+<li>Holistic Observability with logging, tracing, and metrics.</li>
+<li>Layered Architecture and dedicated component.</li>
+<li>Testcases can be run by anyone.</li>
+<li>Stateless over stateful.</li>
+<li>Improved readability.</li>
+<li><a href="/posts/good-code-are-easy-to-remove/">Proper code deprecation process.</a></li>
+</ul>
+
+<h2 id="non-goals">Non-Goals</h2>
+
+<ul>
+<li>Use fancy technology.</li>
+<li>Reinvent the wheel.</li>
+<li>Making ad server more complex.</li>
+<li>Code reuse.</li>
+<li>Abstraction over business logic.</li>
+<li>Premature optimization for performance.</li>
+<li>Programming productivity (Reduce boilerplate).</li>
+</ul>
+
+<p>These goals and non-goals are driven by our business needs. Logics for the advertising industry is often overwhelming, undocumented and may change three times a day.</p>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/twitter" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">twitter</a>
+     <a href="/tags/advertising" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">advertising</a>
    </li>
   
    <li class="list">
-     <a href="/tags/service-mesh" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">service mesh</a>
+     <a href="/tags/coding-suggestion" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">coding suggestion</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/typescript" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">typescript</a>
    </li>
   
 </ul>
@@ -180,7 +214,18 @@ if (!doNotTrack) {
       </div>
     </section>
 
-    <aside class="w-30-l mt6-l">
+    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">What&#39;s in this posts</p>
+      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#goals">Goals</a></li>
+<li><a href="#non-goals">Non-Goals</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
 
 
 
@@ -189,6 +234,18 @@ if (!doNotTrack) {
     <p class="f5 b mb3">Related</p>
     <ul class="pa0 list">
 	   
+	     <li  class="mb2">
+          <a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/">Never Force Yourself to Learn New Skills Without a Concrete Project</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/realtime-query-oriented-data-structure-for-dmp/">Realtime Query Oriented Data Structure for DMP</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/good-code-are-easy-to-remove/">Good Code Are Easy to Remove</a>
+        </li>
+	    
 	     <li  class="mb2">
           <a href="/posts/manual-injection/">Manual Injection</a>
         </li>
