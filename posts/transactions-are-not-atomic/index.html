@@ -49,7 +49,7 @@
 
 <meta itemprop="datePublished" content="2019-07-19T19:38:06&#43;08:00" />
 <meta itemprop="dateModified" content="2019-07-19T19:38:06&#43;08:00" />
-<meta itemprop="wordCount" content="161">
+<meta itemprop="wordCount" content="173">
 
 
 
@@ -178,7 +178,7 @@ if (!doNotTrack) {
 <p>An operation acting on shared memory is atomic if it completes in a single step relative to other threads.</p>
 </blockquote>
 
-<p>Suppose you want to read a number from a column, add it by an offset, and write it back to the same column. You want to do it in parallel. In that case, with the default isolation level, a transaction will not guarantee its data integrity. You will have to modify your queries using <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html">Locking Reads</a>.</p>
+<p>Suppose you want to read a number from a column, add it by an offset, and write it back to the same column. You want to do it in parallel. In that case, with the default isolation level of MySQL (<a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html#isolevel_repeatable-read">REPEATALE READ</a>), a transaction will not guarantee its data integrity. You still risk reading from the phantom row. You will have to modify your queries using <a href="https://dev.mysql.com/doc/refman/8.0/en/innodb-locking-reads.html">Locking Reads</a>.</p>
 
 <p>Before you can distinguish the two definitions of atomicity, better memorize transactions as not atomic in your mind.</p>
 
