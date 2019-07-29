@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jul 2019 13:51:45 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jul 2019 13:08:10 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes on Premise: Top 5 Fallacies (Part One)</title>
+      <link>https://guxi.me/posts/kubernetes-on-premise-top-5-fallacies-part-one/</link>
+      <pubDate>Mon, 29 Jul 2019 13:08:10 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/kubernetes-on-premise-top-5-fallacies-part-one/</guid>
+      <description>As the saying goes, Kubernetes is gradually eating the world of software. In the last year, we have switched our on premise infrastructure from Docker Swarm to Kubernetes. Adopting Kubernetes on the cloud is one thing; adopting it on premise and making it production ready is quite another. Many lessons have been learned along our journey. For those who have played with Kubernetes in the vacuum, there are probably some hidden deadly trap yet to be revealed.</description>
+    </item>
     
     <item>
       <title>Never Force Yourself to Learn New Skills Without a Concrete Project</title>
