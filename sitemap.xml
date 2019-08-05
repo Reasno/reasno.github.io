@@ -3,37 +3,65 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://guxi.me/posts/contextual-dependency-injection-is-a-myth/</loc>
+    <lastmod>2019-08-05T23:11:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/dependency-injection/</loc>
+    <lastmod>2019-08-05T23:11:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/</loc>
+    <lastmod>2019-08-05T23:11:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/laravel/</loc>
+    <lastmod>2019-08-05T23:11:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/php/</loc>
+    <lastmod>2019-08-05T23:11:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2019-08-05T23:11:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2019-08-05T23:11:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/kubernetes/</loc>
+    <lastmod>2019-07-29T13:08:10+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/kubernetes-on-premise-top-5-fallacies-part-one/</loc>
+    <lastmod>2019-07-29T13:08:10+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/tags/coding-suggestion/</loc>
     <lastmod>2019-07-28T13:51:45+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://guxi.me/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/</loc>
     <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/php/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
-    <lastmod>2019-07-28T13:51:45+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -150,12 +178,6 @@
   <url>
     <loc>https://guxi.me/tags/vue/</loc>
     <lastmod>2019-06-30T16:24:33+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/dependency-injection/</loc>
-    <lastmod>2019-06-27T21:06:28+08:00</lastmod>
     <priority>0</priority>
   </url>
   

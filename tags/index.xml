@@ -6,10 +6,46 @@
     <description>Recent content in Tags on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jul 2019 13:51:45 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 05 Aug 2019 23:11:10 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Dependency Injection</title>
+      <link>https://guxi.me/tags/dependency-injection/</link>
+      <pubDate>Mon, 05 Aug 2019 23:11:10 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/dependency-injection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Laravel</title>
+      <link>https://guxi.me/tags/laravel/</link>
+      <pubDate>Mon, 05 Aug 2019 23:11:10 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/laravel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PHP</title>
+      <link>https://guxi.me/tags/php/</link>
+      <pubDate>Mon, 05 Aug 2019 23:11:10 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://guxi.me/tags/kubernetes/</link>
+      <pubDate>Mon, 29 Jul 2019 13:08:10 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/kubernetes/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Coding Suggestion</title>
@@ -17,15 +53,6 @@
       <pubDate>Sun, 28 Jul 2019 13:51:45 +0800</pubDate>
       
       <guid>https://guxi.me/tags/coding-suggestion/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PHP</title>
-      <link>https://guxi.me/tags/php/</link>
-      <pubDate>Sun, 28 Jul 2019 13:51:45 +0800</pubDate>
-      
-      <guid>https://guxi.me/tags/php/</guid>
       <description></description>
     </item>
     
@@ -134,15 +161,6 @@
       <pubDate>Sun, 30 Jun 2019 16:24:33 +0800</pubDate>
       
       <guid>https://guxi.me/tags/vue/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Dependency Injection</title>
-      <link>https://guxi.me/tags/dependency-injection/</link>
-      <pubDate>Thu, 27 Jun 2019 21:06:28 +0800</pubDate>
-      
-      <guid>https://guxi.me/tags/dependency-injection/</guid>
       <description></description>
     </item>
     
