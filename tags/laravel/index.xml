@@ -19,7 +19,7 @@
       <guid>https://guxi.me/posts/contextual-dependency-injection-is-a-myth/</guid>
       <description>Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &amp;ldquo;contextual binding&amp;rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&amp;gt;app-&amp;gt;when(PhotoController::class) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&amp;gt;app-&amp;gt;when([VideoController::class, UploadController::class]) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.</description>
+$this-&amp;gt;app-&amp;gt;when(PhotoController::class) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&amp;#39;local&amp;#39;); }); $this-&amp;gt;app-&amp;gt;when([VideoController::class, UploadController::class]) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&amp;#39;s3&amp;#39;); }); This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.</description>
     </item>
     
   </channel>

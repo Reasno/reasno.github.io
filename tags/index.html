@@ -21,6 +21,8 @@
     
 
     
+      <link rel="stylesheet" href="/css/syntax.css">
+    
 
     
       
@@ -320,7 +322,7 @@ If I have an adequate number of audience, I would like to make poll out of it. W
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('local'); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('s3'); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
+$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); }); This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
     </div>
   </div>
 </div>
@@ -494,7 +496,7 @@ The first thing should be made crystal clear is that things happen on two sides:
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('local'); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('s3'); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
+$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); }); This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
     </div>
   </div>
 </div>
@@ -560,7 +562,7 @@ Yesterday I was forced into a binlog trace of the production MySQL database.
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('local'); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('s3'); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
+$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); }); This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
     </div>
   </div>
 </div>
@@ -640,7 +642,7 @@ As you might expect a DMP may contain more than millions of data. The DMP I work
       RxJS is bonkers!
 Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
 With RxJS:
-// Throttle each id in one minute. fromEvent(emitter, 'tick').pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff );  Without RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff ); Without RxJS:
 Too much to write.
     </div>
   </div>

@@ -21,6 +21,8 @@
     
 
     
+      <link rel="stylesheet" href="/css/syntax.css">
+    
 
     
       
@@ -31,7 +33,7 @@
     <meta property="og:title" content="Contextual Dependency Injection Is a Myth" />
 <meta property="og:description" content="Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good." />
+$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); }); This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://guxi.me/posts/contextual-dependency-injection-is-a-myth/" />
 <meta property="article:published_time" content="2019-08-05T23:11:10&#43;08:00"/>
@@ -40,7 +42,7 @@ $this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&g
 <meta itemprop="name" content="Contextual Dependency Injection Is a Myth">
 <meta itemprop="description" content="Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.">
+$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); }); This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.">
 
 
 <meta itemprop="datePublished" content="2019-08-05T23:11:10&#43;08:00" />
@@ -54,7 +56,7 @@ $this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&g
 <meta name="twitter:title" content="Contextual Dependency Injection Is a Myth"/>
 <meta name="twitter:description" content="Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good."/>
+$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); }); This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good."/>
 
       
 <script type="application/javascript">
@@ -163,49 +165,43 @@ if (!doNotTrack) {
     <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to  Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.</p>
 
 <p>In Laravel it looks like this:</p>
-
-<pre><code class="language-php">$this-&gt;app-&gt;when(PhotoController::class)
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">$this-&gt;app-&gt;when(PhotoController::class)
           -&gt;needs(Filesystem::class)
           -&gt;give(function () {
-              return Storage::disk('local');
+              return Storage::disk(&#39;local&#39;);
           });
 
 $this-&gt;app-&gt;when([VideoController::class, UploadController::class])
           -&gt;needs(Filesystem::class)
           -&gt;give(function () {
-              return Storage::disk('s3');
-          });
-</code></pre>
+              return Storage::disk(&#39;s3&#39;);
+          });</code></pre></div>
+<p>This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good. Among many merits dependency injection may have, managing business domain logic is not one of them. Sometimes we can inject based on an env value or a flag, but injection based on a dynamic business property has gone too far.</p>
 
-<p>This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good. Of many merits dependency injection may have, managing business domain logic is not one of them. Sometimes we can inject based on an env value or a flag, but injection based on a dynamic business property has gone too far.</p>
-
-<p>What you can do is simply inject a factory class for all your route/module, and make your little minions dynamically from that factory class. What makes things different is that the factory instance will be explictly called in your domain logic, inviting programers to keep track of the actually condition.</p>
-
-<pre><code class="language-php">$this-&gt;app-&gt;singleton('My\Factory', function ($app) {
+<p>What you can do is simply inject a factory class for all your route/module, and make your little minions dynamically from that factory class. What makes things different is that the factory instance will be explictly called in your domain logic, inviting programers to keep track of the actual condition.</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">$this-&gt;app-&gt;singleton(&#39;My\Factory&#39;, function ($app) {
     return new class{
         public function create(string $route){
-            if ($route == 'hello'){
-                return $app-&gt;make('My\HelloHandler');
+            if ($route == &#39;hello&#39;){
+                return $app-&gt;make(&#39;My\HelloHandler&#39;);
             }
-            return $app-&gt;make('My\OtherHandler');
+            return $app-&gt;make(&#39;My\OtherHandler&#39;);
         }
     };
-});
-</code></pre>
-
+});</code></pre></div>
 <p>It turns out you will pratically never need a contextual binding. Logic buried in the boostrap phase is a death trap for future maintainers.</p>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/dependency-injection" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Dependency Injection</a>
+     <a href="/tags/dependency-injection" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">dependency injection</a>
    </li>
   
    <li class="list">
-     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">PHP</a>
+     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">php</a>
    </li>
   
    <li class="list">
-     <a href="/tags/laravel" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Laravel</a>
+     <a href="/tags/laravel" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">laravel</a>
    </li>
   
 </ul>

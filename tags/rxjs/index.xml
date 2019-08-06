@@ -20,7 +20,7 @@
       <description>RxJS is bonkers!
 Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
 With RxJS:
-// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&amp;gt; e.getId()), flatMap(group =&amp;gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff );  Without RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &amp;#39;tick&amp;#39;).pipe( groupBy((e: Event) =&amp;gt; e.getId()), flatMap(group =&amp;gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff ); Without RxJS:
 Too much to write.</description>
     </item>
     
