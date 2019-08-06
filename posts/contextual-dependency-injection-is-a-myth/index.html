@@ -177,9 +177,9 @@ $this-&gt;app-&gt;when([VideoController::class, UploadController::class])
           });
 </code></pre>
 
-<p>This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good. Among many merits dependency injection may have, managing business domain logic is not one of them. Sometimes we can inject based on an env value or a flag, but injection based on a dynamic business property has gone too far.</p>
+<p>This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good. Of many merits dependency injection may have, managing business domain logic is not one of them. Sometimes we can inject based on an env value or a flag, but injection based on a dynamic business property has gone too far.</p>
 
-<p>What you can do is simply inject a factory class for all your route/module, and make your little minions dynamically from that factory class. What makes things different is that the factory instance will be explictly called in your domain logic, inviting programers to keep track of the actual condition.</p>
+<p>What you can do is simply inject a factory class for all your route/module, and make your little minions dynamically from that factory class. What makes things different is that the factory instance will be explictly called in your domain logic, inviting programers to keep track of the actually condition.</p>
 
 <pre><code class="language-php">$this-&gt;app-&gt;singleton('My\Factory', function ($app) {
     return new class{
