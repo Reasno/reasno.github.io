@@ -6,10 +6,21 @@
     <description>Recent content in PHP on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 05 Aug 2019 23:11:10 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Aug 2019 21:39:20 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/php/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Unboxing Taylor Otwell&#39;s Laravel Cloud</title>
+      <link>https://guxi.me/posts/unboxing-taylor-otwell-s-laravel-cloud/</link>
+      <pubDate>Tue, 06 Aug 2019 21:39:20 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/unboxing-taylor-otwell-s-laravel-cloud/</guid>
+      <description>Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &amp;ldquo;too much BS&amp;rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled.</description>
+    </item>
     
     <item>
       <title>Contextual Dependency Injection Is a Myth</title>
@@ -19,7 +30,7 @@
       <guid>https://guxi.me/posts/contextual-dependency-injection-is-a-myth/</guid>
       <description>Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &amp;ldquo;contextual binding&amp;rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&amp;gt;app-&amp;gt;when(PhotoController::class) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&amp;gt;app-&amp;gt;when([VideoController::class, UploadController::class]) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.</description>
+&amp;lt;?php $this-&amp;gt;app-&amp;gt;when(PhotoController::class) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&amp;#39;local&amp;#39;); }); $this-&amp;gt;app-&amp;gt;when([VideoController::class, UploadController::class]) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&amp;#39;s3&amp;#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.</description>
     </item>
     
     <item>

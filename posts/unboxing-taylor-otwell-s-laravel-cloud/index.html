@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected  | When Do We Need PHP</title>
+    <title>Garbage Collected  | Unboxing Taylor Otwell&#39;s Laravel Cloud</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -30,33 +30,33 @@
 
     
 
-    <meta property="og:title" content="When Do We Need PHP" />
-<meta property="og:description" content="When we started huijiwiki.com, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.
-Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.
-Go as well as Rust has a very different nature compared to PHP." />
+    <meta property="og:title" content="Unboxing Taylor Otwell&#39;s Laravel Cloud" />
+<meta property="og:description" content="Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;too much BS&rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://guxi.me/posts/when-do-we-need-php/" />
-<meta property="article:published_time" content="2019-07-18T12:57:59&#43;08:00"/>
-<meta property="article:modified_time" content="2019-07-18T12:57:59&#43;08:00"/>
+<meta property="og:url" content="https://guxi.me/posts/unboxing-taylor-otwell-s-laravel-cloud/" />
+<meta property="article:published_time" content="2019-08-06T21:39:20&#43;08:00"/>
+<meta property="article:modified_time" content="2019-08-06T21:39:20&#43;08:00"/>
 
-<meta itemprop="name" content="When Do We Need PHP">
-<meta itemprop="description" content="When we started huijiwiki.com, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.
-Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.
-Go as well as Rust has a very different nature compared to PHP.">
-
-
-<meta itemprop="datePublished" content="2019-07-18T12:57:59&#43;08:00" />
-<meta itemprop="dateModified" content="2019-07-18T12:57:59&#43;08:00" />
-<meta itemprop="wordCount" content="356">
+<meta itemprop="name" content="Unboxing Taylor Otwell&#39;s Laravel Cloud">
+<meta itemprop="description" content="Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;too much BS&rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled.">
 
 
+<meta itemprop="datePublished" content="2019-08-06T21:39:20&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-06T21:39:20&#43;08:00" />
+<meta itemprop="wordCount" content="270">
 
-<meta itemprop="keywords" content="php,go," />
+
+
+<meta itemprop="keywords" content="Laravel,PHP," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="When Do We Need PHP"/>
-<meta name="twitter:description" content="When we started huijiwiki.com, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.
-Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.
-Go as well as Rust has a very different nature compared to PHP."/>
+<meta name="twitter:title" content="Unboxing Taylor Otwell&#39;s Laravel Cloud"/>
+<meta name="twitter:description" content="Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;too much BS&rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled."/>
 
       
 <script type="application/javascript">
@@ -155,39 +155,40 @@ if (!doNotTrack) {
           
         POSTS
       </p>
-      <h1 class="f1 athelas mb1">When Do We Need PHP</h1>
+      <h1 class="f1 athelas mb1">Unboxing Taylor Otwell&#39;s Laravel Cloud</h1>
       
-      <time class="f6 mv4 dib tracked" datetime="2019-07-18T12:57:59&#43;08:00">July 18, 2019</time>
+      <time class="f6 mv4 dib tracked" datetime="2019-08-06T21:39:20&#43;08:00">August 6, 2019</time>
       
       
     </header>
 
-    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>When we started <a href="https://www.huijiwiki.com">huijiwiki.com</a>, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.</p>
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;too much BS&rdquo;. Forks are still available everywhere though. <a href="https://github.com/Reasno/laravel-cloud.git">Here is my fork.</a></p>
 
-<p>Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.</p>
+<p>I cloned the repository and skimmed through most of the classes. Here are my takeaways.</p>
 
-<p>Go as well as Rust has a very different nature compared to PHP. Strong typed aside, these languages prefer explicitness over magic. Meaning they have explicit error handling etc. In my opinion, the explicitness they offer is of great merit in the industry environment where demand changes day to day and employees come and go. Every magic in the code will turn into a huge pain for future maintainers. If starting a new project from scratch, I would try to stay away from the magical PHP in any collaborative job.</p>
+<ol>
+<li><p>Dependency Injection is used very lightly. The service container is mostly underfilled. The only things registered are third-party services (S3, Digital Ocean, etc.)  or external libraries (YAML parser, etc.).</p></li>
 
-<p>Even in my little simple personal project, I would love to avoid using PHP. Check out my blog. These are just static pages. Hosting a LAMP stack seems far more overkill and harder to wrap my mind about. I want to use simple and explicit technology for personal projects because I don&rsquo;t have time to invest in these things, and these things won&rsquo;t be documented properly, so the urge for explicitness will be stronger. Even if I do have the energy now, why not save some precious opportunity cost for the future maintainer (the future me).</p>
+<li><p>No Extra layers. Just Model-Controller-View. I thought I would introduce a service layer for a complex business like this. But no, Taylor didn&rsquo;t do it.</p></li>
 
-<p>But still, I think the flexibility of PHP still matters in some use cases today. It will shine if you are starting a startup.  PHP frameworks are mature and easy to master, which means:</p>
+<li><p>The factory classes are widely adopted. It was not a surprise after seeing so few DI delegated to the service container. Like I wrote in my previous blog, factory classes leave more discoverable traces of how logics are composed in a business domain.</p></li>
 
-<ul>
-<li>Your productivity will be unparalleled. (<em>Not for the lack of async</em>)</li>
-<li>When your business grows it is easy to hire new developers.</li>
-<li>Opensource templates for PHP are all over the place.</li>
-<li>Very few traps you can go in.</li>
-</ul>
+<li><p>Tayler is quite liberal to use real-time facades, wielding its magic fearlessly. The code does seem much cleaner after boilerplates out of the way.</p></li>
 
-<p>In short, use PHP, when the development velocity weights more than future maintainability. And this is a compliment. You do know nine out of ten start-ups failed in the first year, don&rsquo;t you?</p>
+<li><p>Models sometimes have added the responsibility of interfering with domain logic. Probably a consequence of No.2.</p></li>
+
+<li><p>An inheritance hierarchy can be found in certain models. I originally thought It should be avoided in Laravel as active record pattern do not favor inheritance. (But the underlying database table are different.)</p></li>
+</ol>
+
+<p>Overall, I think Laravel Cloud is unquestionably not a sincere pilgrim of traditional programming patterns, yet the code of which is stunningly elegant and pragmatic. Fairly sure I will poach some of its coding style as my own.</p>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">php</a>
+     <a href="/tags/laravel" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Laravel</a>
    </li>
   
    <li class="list">
-     <a href="/tags/go" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">go</a>
+     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">PHP</a>
    </li>
   
 </ul>
@@ -213,10 +214,6 @@ if (!doNotTrack) {
     <ul class="pa0 list">
 	   
 	     <li  class="mb2">
-          <a href="/posts/unboxing-taylor-otwell-s-laravel-cloud/">Unboxing Taylor Otwell&#39;s Laravel Cloud</a>
-        </li>
-	    
-	     <li  class="mb2">
           <a href="/posts/contextual-dependency-injection-is-a-myth/">Contextual Dependency Injection Is a Myth</a>
         </li>
 	    
@@ -225,7 +222,7 @@ if (!doNotTrack) {
         </li>
 	    
 	     <li  class="mb2">
-          <a href="/posts/options-take-a-toll/">Options Take a Toll</a>
+          <a href="/posts/when-do-we-need-php/">When Do We Need PHP</a>
         </li>
 	    
     </ul>

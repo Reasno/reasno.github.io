@@ -21,6 +21,8 @@
     
 
     
+      <link rel="stylesheet" href="/css/syntax.css">
+    
 
     
       
@@ -32,7 +34,7 @@
 <meta property="og:description" content="RxJS is bonkers!
 Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
 With RxJS:
-// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff );  Without RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff ); Without RxJS:
 Too much to write." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://guxi.me/posts/id-based-throttling/" />
@@ -43,7 +45,7 @@ Too much to write." />
 <meta itemprop="description" content="RxJS is bonkers!
 Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
 With RxJS:
-// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff );  Without RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff ); Without RxJS:
 Too much to write.">
 
 
@@ -59,7 +61,7 @@ Too much to write.">
 <meta name="twitter:description" content="RxJS is bonkers!
 Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
 With RxJS:
-// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff );  Without RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff ); Without RxJS:
 Too much to write."/>
 
       
@@ -171,17 +173,13 @@ if (!doNotTrack) {
 <p>Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.</p>
 
 <p>With RxJS:</p>
-
-<pre><code class="language-ts">// Throttle each id in one minute.
-fromEvent(emitter, 'tick').pipe(
-	groupBy((e: Event) =&gt; e.getId()),
-	flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))),
-).subscribe(
-	//Do your stuff
-);
-
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">// Throttle each id in one minute.
+</span><span class="c1"></span><span class="nx">fromEvent</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="s1">&#39;tick&#39;</span><span class="p">).</span><span class="nx">pipe</span><span class="p">(</span>
+	<span class="nx">groupBy</span><span class="p">((</span><span class="nx">e</span>: <span class="kt">Event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">getId</span><span class="p">()),</span>
+	<span class="nx">flatMap</span><span class="p">(</span><span class="nx">group</span> <span class="o">=&gt;</span> <span class="nx">group</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">throttleTime</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))),</span>
+<span class="p">).</span><span class="nx">subscribe</span><span class="p">(</span>
+	<span class="c1">//Do your stuff
+</span><span class="c1"></span><span class="p">);</span></code></pre></div>
 <p>Without RxJS:</p>
 
 <p>Too much to write.</p>

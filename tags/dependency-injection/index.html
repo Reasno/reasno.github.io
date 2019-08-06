@@ -21,6 +21,8 @@
     
 
     
+      <link rel="stylesheet" href="/css/syntax.css">
+    
 
     
       
@@ -157,7 +159,7 @@ if (!doNotTrack) {
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
-$this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('local'); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk('s3'); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
+&lt;?php $this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
     </div>
   </div>
 </div>
