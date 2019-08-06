@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dependency Injection on Garbage Collected</title>
-    <link>https://guxi.me/tags/dependency-injection/</link>
-    <description>Recent content in Dependency Injection on Garbage Collected</description>
+    <title>Laravel on Garbage Collected</title>
+    <link>https://guxi.me/tags/laravel/</link>
+    <description>Recent content in Laravel on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 05 Aug 2019 23:11:10 +0800</lastBuildDate>
     
-	<atom:link href="https://guxi.me/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://guxi.me/tags/laravel/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,17 +20,6 @@
       <description>Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &amp;ldquo;contextual binding&amp;rdquo;, aka inject instances conditionally based on some runtime value.
 In Laravel it looks like this:
 $this-&amp;gt;app-&amp;gt;when(PhotoController::class) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&amp;gt;app-&amp;gt;when([VideoController::class, UploadController::class]) -&amp;gt;needs(Filesystem::class) -&amp;gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.</description>
-    </item>
-    
-    <item>
-      <title>Manual Injection</title>
-      <link>https://guxi.me/posts/manual-injection/</link>
-      <pubDate>Thu, 27 Jun 2019 21:06:28 +0800</pubDate>
-      
-      <guid>https://guxi.me/posts/manual-injection/</guid>
-      <description>Came across this pic from twitter.
-If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
- A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion.</description>
     </item>
     
   </channel>
