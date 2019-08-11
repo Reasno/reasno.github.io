@@ -12,13 +12,13 @@
     
     
     <item>
-      <title>Rethink Clean Architecture</title>
+      <title>Rethink The Clean Architecture</title>
       <link>https://guxi.me/posts/rethink-clean-architecture/</link>
       <pubDate>Sun, 11 Aug 2019 21:56:39 +0800</pubDate>
       
       <guid>https://guxi.me/posts/rethink-clean-architecture/</guid>
       <description>The Clean Architecture is more like a fantasy. It is like a wonderland we will never be in.
-I would enjoy and appreciate a work where all business domains, application domains, and transports and UIs, etc. are all orthogonal. In reality, they are all wired together like a mess. It is no mess created by engineer though. The world is chaotic by itself, so do all the business around it. Imagine your boss tell your team to add a new button to your website, and you find your business rule has no definition concerning what this button should triggers, so you have to update your JSON API, add new test cases, and add new event to your event sourcing bus, and change whatever is affected all the way down to the database level.</description>
+I would enjoy and appreciate a work where all business domains, application domains, and transports and UIs, etc. are all orthogonal. In reality, they are all wired together like a mess. It is no mess created by engineer though. The world is chaotic by itself, so do all the business around it. Imagine your boss tell your team to add a new button to your website, and you find your business rule has no definition related to this button what so ever, so you have to update your JSON API, add new test cases, and add new event to your event sourcing bus, and change whatever is affected all the way down to the database level.</description>
     </item>
     
   </channel>
