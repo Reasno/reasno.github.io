@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Aug 2019 21:56:39 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2019 08:26:23 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Purposed PHP Dialect: P&#43;&#43;</title>
+      <link>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</link>
+      <pubDate>Mon, 12 Aug 2019 08:26:23 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</guid>
+      <description>The first time I saw P++ my reaction was &amp;ldquo;meh, it is not going anywhere&amp;rdquo;. Anything breaks backward compatibility and abandons existing user base will get punished eventually. Python community took a decade to heal from the wound caused by Python3. In short, I believe it is not worth it to trade backward compatibility for language design purity. I also wrote a blog about Vue3 changes on its new functional APIs.</description>
+    </item>
     
     <item>
       <title>Rethink The Clean Architecture</title>
@@ -18,7 +27,7 @@
       
       <guid>https://guxi.me/posts/rethink-clean-architecture/</guid>
       <description>The Clean Architecture is more like a fantasy. It is like a wonderland we will never be in.
-I would enjoy and appreciate a work where all business domains, application domains, and transports and UIs, etc. are all orthogonal. In reality, they are all wired together like a mess. It is no mess created by engineer though. The world is chaotic by itself, so do all the business around it. Imagine your boss tell your team to add a new button to your website, and you find your business rule has no definition related to this button what so ever, so you have to update your JSON API, add new test cases, and add new event to your event sourcing bus, and change whatever is affected all the way down to the database level.</description>
+I would enjoy and appreciate a work where all business domains, application domains, and transports and UIs, etc. are all orthogonal. In reality, they are all wired together like a mess. It is no mess created by engineer though. The world is chaotic by itself, so do all the business around it. Imagine your boss tell your team to add a new button to your website, and you find your business rule doesn&amp;rsquo;t cover this button what so ever, so you have to update your JSON API, add new test cases, and add new event to your event sourcing bus, and change whatever is affected all the way down to the database level.</description>
     </item>
     
     <item>

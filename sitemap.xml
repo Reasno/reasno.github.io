@@ -3,6 +3,34 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://guxi.me/</loc>
+    <lastmod>2019-08-12T08:26:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/php/</loc>
+    <lastmod>2019-08-12T08:26:23+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2019-08-12T08:26:23+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</loc>
+    <lastmod>2019-08-12T08:26:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2019-08-12T08:26:23+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/tags/architecture/</loc>
     <lastmod>2019-08-11T21:56:39+08:00</lastmod>
     <priority>0</priority>
@@ -15,35 +43,12 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/</loc>
-    <lastmod>2019-08-11T21:56:39+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2019-08-11T21:56:39+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/posts/rethink-clean-architecture/</loc>
     <lastmod>2019-08-11T21:56:39+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://guxi.me/tags/</loc>
-    <lastmod>2019-08-11T21:56:39+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/tags/laravel/</loc>
-    <lastmod>2019-08-06T21:39:20+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/php/</loc>
     <lastmod>2019-08-06T21:39:20+08:00</lastmod>
     <priority>0</priority>
   </url>

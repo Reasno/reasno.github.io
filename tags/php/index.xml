@@ -6,10 +6,19 @@
     <description>Recent content in PHP on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Aug 2019 21:39:20 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2019 08:26:23 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/php/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Purposed PHP Dialect: P&#43;&#43;</title>
+      <link>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</link>
+      <pubDate>Mon, 12 Aug 2019 08:26:23 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</guid>
+      <description>The first time I saw P++ my reaction was &amp;ldquo;meh, it is not going anywhere&amp;rdquo;. Anything breaks backward compatibility and abandons existing user base will get punished eventually. Python community took a decade to heal from the wound caused by Python3. In short, I believe it is not worth it to trade backward compatibility for language design purity. I also wrote a blog about Vue3 changes on its new functional APIs.</description>
+    </item>
     
     <item>
       <title>Unboxing Taylor Otwell&#39;s Laravel Cloud</title>
