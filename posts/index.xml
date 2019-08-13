@@ -6,20 +6,39 @@
     <description>Recent content in Posts on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Aug 2019 12:55:17 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2019 08:26:23 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Compress Url Parameters Without a Storage</title>
-      <link>https://guxi.me/posts/compress-url-parameters-without-a-storage/</link>
-      <pubDate>Tue, 13 Aug 2019 12:55:17 +0800</pubDate>
+      <title>Purposed PHP Dialect: P&#43;&#43;</title>
+      <link>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</link>
+      <pubDate>Mon, 12 Aug 2019 08:26:23 +0800</pubDate>
       
-      <guid>https://guxi.me/posts/compress-url-parameters-without-a-storage/</guid>
-      <description>In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.
-They usually end up like this:
-https://example.com/callback?user=tom&amp;amp;uid=145123555&amp;amp;timestamp=123456678&amp;amp;aid=123123123&amp;amp;pid=1251241241234&amp;amp;action_type=click&amp;amp;imei=125123123123123&amp;amp;andriod_id=12523652352&amp;amp;sign=1235124124.... Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering Error 413: request entity too large. I know nginx throws it.</description>
+      <guid>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</guid>
+      <description>The first time I saw P++ my reaction was &amp;ldquo;meh, it is not going anywhere&amp;rdquo;. Anything breaks backward compatibility and abandons existing user base will get punished eventually. Python community took a decade to heal from the wound caused by Python3. In short, I believe it is not worth it to trade backward compatibility for language design purity. I also wrote a blog about Vue3 changes on its new functional APIs.</description>
+    </item>
+    
+    <item>
+      <title>Rethink The Clean Architecture</title>
+      <link>https://guxi.me/posts/rethink-clean-architecture/</link>
+      <pubDate>Sun, 11 Aug 2019 21:56:39 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/rethink-clean-architecture/</guid>
+      <description>The Clean Architecture is more like a fantasy. It is like a wonderland we will never be in.
+I would enjoy and appreciate a work where all business domains, application domains, and transports and UIs, etc. are all orthogonal. In reality, they are all wired together like a mess. It is no mess created by engineer though. The world is chaotic by itself, so do all the business around it. Imagine your boss tell your team to add a new button to your website, and you find your business rule doesn&amp;rsquo;t cover this button what so ever, so you have to update your JSON API, add new test cases, and add new event to your event sourcing bus, and change whatever is affected all the way down to the database level.</description>
+    </item>
+    
+    <item>
+      <title>Unboxing Taylor Otwell&#39;s Laravel Cloud</title>
+      <link>https://guxi.me/posts/unboxing-taylor-otwell-s-laravel-cloud/</link>
+      <pubDate>Tue, 06 Aug 2019 21:39:20 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/unboxing-taylor-otwell-s-laravel-cloud/</guid>
+      <description>Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &amp;ldquo;too much BS&amp;rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled.</description>
     </item>
     
     <item>

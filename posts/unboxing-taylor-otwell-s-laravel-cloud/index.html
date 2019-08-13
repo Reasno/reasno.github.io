@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected  | Manual Injection</title>
+    <title>Garbage Collected  | Unboxing Taylor Otwell&#39;s Laravel Cloud</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -30,33 +30,33 @@
 
     
 
-    <meta property="og:title" content="Manual Injection" />
-<meta property="og:description" content="Came across this pic from twitter.
-If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
- A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion." />
+    <meta property="og:title" content="Unboxing Taylor Otwell&#39;s Laravel Cloud" />
+<meta property="og:description" content="Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;too much BS&rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://guxi.me/posts/manual-injection/" />
-<meta property="article:published_time" content="2019-06-27T21:06:28&#43;08:00"/>
-<meta property="article:modified_time" content="2019-06-27T21:06:28&#43;08:00"/>
+<meta property="og:url" content="https://guxi.me/posts/unboxing-taylor-otwell-s-laravel-cloud/" />
+<meta property="article:published_time" content="2019-08-06T21:39:20&#43;08:00"/>
+<meta property="article:modified_time" content="2019-08-06T21:39:20&#43;08:00"/>
 
-<meta itemprop="name" content="Manual Injection">
-<meta itemprop="description" content="Came across this pic from twitter.
-If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
- A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion.">
-
-
-<meta itemprop="datePublished" content="2019-06-27T21:06:28&#43;08:00" />
-<meta itemprop="dateModified" content="2019-06-27T21:06:28&#43;08:00" />
-<meta itemprop="wordCount" content="184">
+<meta itemprop="name" content="Unboxing Taylor Otwell&#39;s Laravel Cloud">
+<meta itemprop="description" content="Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;too much BS&rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled.">
 
 
+<meta itemprop="datePublished" content="2019-08-06T21:39:20&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-06T21:39:20&#43;08:00" />
+<meta itemprop="wordCount" content="270">
 
-<meta itemprop="keywords" content="twitter,dependency injection,coding suggestion," />
+
+
+<meta itemprop="keywords" content="laravel,php," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Manual Injection"/>
-<meta name="twitter:description" content="Came across this pic from twitter.
-If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
- A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion."/>
+<meta name="twitter:title" content="Unboxing Taylor Otwell&#39;s Laravel Cloud"/>
+<meta name="twitter:description" content="Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;too much BS&rdquo;. Forks are still available everywhere though. Here is my fork.
+I cloned the repository and skimmed through most of the classes. Here are my takeaways.
+ Dependency Injection is used very lightly. The service container is mostly underfilled."/>
 
       
 <script type="application/javascript">
@@ -155,41 +155,40 @@ if (!doNotTrack) {
           
         POSTS
       </p>
-      <h1 class="f1 athelas mb1">Manual Injection</h1>
+      <h1 class="f1 athelas mb1">Unboxing Taylor Otwell&#39;s Laravel Cloud</h1>
       
-      <time class="f6 mv4 dib tracked" datetime="2019-06-27T21:06:28&#43;08:00">June 27, 2019</time>
+      <time class="f6 mv4 dib tracked" datetime="2019-08-06T21:39:20&#43;08:00">August 6, 2019</time>
       
       
     </header>
 
-    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Came across this pic from <a href="twitter.com">twitter</a>.</p>
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Taylor Otwell, the author of Laravel, recently put up a public copy of his unfinished work Laravel Cloud in GitHub. It was taken down by himself briefly after, due to what he described as &ldquo;<a href="https://twitter.com/taylorotwell/status/1157346751738712064">too much BS</a>&rdquo;. Forks are still available everywhere though. <a href="https://github.com/Reasno/laravel-cloud.git">Here is my fork.</a></p>
 
-<p><img src="/images/react-dependency-injection.jpeg" alt="React" /></p>
+<p>I cloned the repository and skimmed through most of the classes. Here are my takeaways.</p>
 
-<p>If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?</p>
+<ol>
+<li><p>Dependency Injection is used very lightly. The service container is mostly underfilled. The only things registered are third-party services (S3, Digital Ocean, etc.)  or external libraries (YAML parser, etc.).</p></li>
 
-<ul>
-<li>A: It is good code.</li>
-<li>B: It is bad code.</li>
-</ul>
+<li><p>No Extra layers. Just Model-Controller-View. I thought I would introduce a service layer for a complex business like this. But no, Taylor didn&rsquo;t do it.</p></li>
 
-<p>I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion. The dependency graph is crystal clear, and component naming is super neat.</p>
+<li><p>The factory classes are widely adopted. It was not a surprise after seeing so few DI delegated to the service container. Like I wrote in <a href="/posts/contextual-dependency-injection-is-a-myth/">my previous blog</a>, factory classes leave more discoverable traces of how logics are composed in a business domain.</p></li>
 
-<p>It is sometimes tedious to do dependency injection by hand. But clever shortcut is a path full of dragons. I gather you could use a DI framework if it is well-known among maintainers, but it is always the safest choice to do it by hand.</p>
+<li><p>Tayler is at liberty to use real-time facades, wielding its magic fearlessly. The code does seem much cleaner after boilerplates out of the way.</p></li>
 
-<p>In general, different languages usually have a different preference towards automated DI and manual DI. In PHP and Java, I see more DI work delegated to framework. But in newer languages like Go and Rust, manual injection gets the upper hand.</p>
+<li><p>Models sometimes have added the responsibility of interfering with domain logic. Probably a consequence of No.2.</p></li>
+
+<li><p>An inheritance hierarchy can be found in certain models. I originally thought It should be avoided in Laravel as active record pattern do not favor inheritance. (But the underlying database table are different.)</p></li>
+</ol>
+
+<p>Overall, I think Laravel Cloud is unquestionably not a sincere pilgrim of traditional programming patterns, yet the code of which is stunningly elegant and pragmatic. Fairly sure I will poach some of its coding style as my own.</p>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/twitter" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">twitter</a>
+     <a href="/tags/laravel" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">laravel</a>
    </li>
   
    <li class="list">
-     <a href="/tags/dependency-injection" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">dependency injection</a>
-   </li>
-  
-   <li class="list">
-     <a href="/tags/coding-suggestion" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">coding suggestion</a>
+     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">php</a>
    </li>
   
 </ul>
@@ -215,11 +214,11 @@ if (!doNotTrack) {
     <ul class="pa0 list">
 	   
 	     <li  class="mb2">
-          <a href="/posts/rethink-clean-architecture/">Rethink The Clean Architecture</a>
+          <a href="/posts/contextual-dependency-injection-is-a-myth/">Contextual Dependency Injection Is a Myth</a>
         </li>
 	    
 	     <li  class="mb2">
-          <a href="/posts/contextual-dependency-injection-is-a-myth/">Contextual Dependency Injection Is a Myth</a>
+          <a href="/posts/purposed-php-dialect-p-plus-plus/">Purposed PHP Dialect: P&#43;&#43;</a>
         </li>
 	    
 	     <li  class="mb2">
@@ -227,15 +226,7 @@ if (!doNotTrack) {
         </li>
 	    
 	     <li  class="mb2">
-          <a href="/posts/ad-server-rewrite-goals-and-non-goals/">Ad Server Rewrite: Goals and Non Goals</a>
-        </li>
-	    
-	     <li  class="mb2">
-          <a href="/posts/good-code-are-easy-to-remove/">Good Code Are Easy to Remove</a>
-        </li>
-	    
-	     <li  class="mb2">
-          <a href="/posts/industry-on-service-mesh/">Industry on Service Mesh</a>
+          <a href="/posts/when-do-we-need-php/">When Do We Need PHP</a>
         </li>
 	    
     </ul>
