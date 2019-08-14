@@ -17,9 +17,10 @@
       <pubDate>Tue, 13 Aug 2019 12:55:17 +0800</pubDate>
       
       <guid>https://guxi.me/posts/compress-url-parameters-without-a-storage/</guid>
-      <description>In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.
-They usually end up like this:
-https://example.com/callback?user=tom&amp;amp;uid=145123555&amp;amp;timestamp=123456678&amp;amp;aid=123123123&amp;amp;pid=1251241241234&amp;amp;action_type=click&amp;amp;imei=125123123123123&amp;amp;andriod_id=12523652352&amp;amp;sign=1235124124.... Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering Error 413: request entity too large. I know nginx throws it.</description>
+      <description>&lt;p&gt;In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.&lt;/p&gt;
+
+&lt;p&gt;Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering &lt;strong&gt;Error 413: request entity too large&lt;/strong&gt;. I know nginx throws it.&lt;/p&gt;
+</description>
     </item>
     
     <item>
