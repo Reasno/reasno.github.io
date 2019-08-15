@@ -22,6 +22,18 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
     </item>
     
     <item>
+      <title>Compress Url Parameters Without a Storage</title>
+      <link>https://guxi.me/posts/compress-url-parameters-without-a-storage/</link>
+      <pubDate>Tue, 13 Aug 2019 12:55:17 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/compress-url-parameters-without-a-storage/</guid>
+      <description>&lt;p&gt;In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.&lt;/p&gt;
+
+&lt;p&gt;Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering &lt;strong&gt;Error 413: request entity too large&lt;/strong&gt;. I know nginx throws it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Purposed PHP Dialect: P&#43;&#43;</title>
       <link>https://guxi.me/posts/purposed-php-dialect-p-plus-plus/</link>
       <pubDate>Mon, 12 Aug 2019 08:26:23 +0800</pubDate>

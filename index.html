@@ -204,6 +204,41 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/compress-url-parameters-without-a-storage/" class="color-inherit dim link">
+            Compress Url Parameters Without a Storage
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          <p>In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.</p>
+
+<p>Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering <strong>Error 413: request entity too large</strong>. I know nginx throws it.</p>
+
+        </div>
+          <a href="/posts/compress-url-parameters-without-a-storage/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="/posts/purposed-php-dialect-p-plus-plus/" class="db grow">
+            <img src="https://guxi.me/images/PHP-logo.svg" class="img" alt="image from Purposed PHP Dialect: P&#43;&#43;">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/purposed-php-dialect-p-plus-plus/" class="color-inherit dim link">
             Purposed PHP Dialect: P&#43;&#43;
             </a>
@@ -279,64 +314,132 @@ I cloned the repository and skimmed through most of the classes. Here are my tak
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/contextual-dependency-injection-is-a-myth/" class="color-inherit dim link">
-            Contextual Dependency Injection Is a Myth
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Sometimes in your daily programming life, you would want to inject different object instances based on the current route or module. For example, you want to connect to Database Foo for route /foo and Database Bar for route /bar. It seems a clever idea to do what is called a &ldquo;contextual binding&rdquo;, aka inject instances conditionally based on some runtime value.
-In Laravel it looks like this:
-&lt;?php $this-&gt;app-&gt;when(PhotoController::class) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;local&#39;); }); $this-&gt;app-&gt;when([VideoController::class, UploadController::class]) -&gt;needs(Filesystem::class) -&gt;give(function () { return Storage::disk(&#39;s3&#39;); });  This code looks nice and handy at first glance, but in my experience, they are often doing more harm than any good.
-        </div>
-          <a href="/posts/contextual-dependency-injection-is-a-myth/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
+        <ul class="f5 fw4 mb4 dib mr3">
         
         
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="link black dim">
+            <li class="link black dim pa2"><a href="/posts/contextual-dependency-injection-is-a-myth/" class="link black dim pa2">
+              Contextual Dependency Injection Is a Myth
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="link black dim pa2">
               Kubernetes on Premise: Top 5 Fallacies (Part One)
-            </a>
-          </h2>
+            </a></li>
         
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/" class="link black dim">
+            <li class="link black dim pa2"><a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/" class="link black dim pa2">
               Never Force Yourself to Learn New Skills Without a Concrete Project
-            </a>
-          </h2>
+            </a></li>
         
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/ad-server-rewrite-goals-and-non-goals/" class="link black dim">
+            <li class="link black dim pa2"><a href="/posts/ad-server-rewrite-goals-and-non-goals/" class="link black dim pa2">
               Ad Server Rewrite: Goals and Non Goals
-            </a>
-          </h2>
+            </a></li>
         
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/epoll-and-event-loop-just-enough-you-need-for-interview/" class="link black dim">
+            <li class="link black dim pa2"><a href="/posts/epoll-and-event-loop-just-enough-you-need-for-interview/" class="link black dim pa2">
               Epoll and Event Loop: Just Enough You Need for Interview
-            </a>
-          </h2>
+            </a></li>
         
-
+            <li class="link black dim pa2"><a href="/posts/transactions-are-not-atomic/" class="link black dim pa2">
+              Transactions Are Not Atomic
+            </a></li>
+        
+      
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/coding-suggestion" class="link black dim pa2" > coding-suggestion <small>(5)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/php" class="link black dim pa2" > php <small>(5)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/advertising" class="link black dim pa2" > advertising <small>(3)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/rxjs" class="link black dim pa2" > rxjs <small>(3)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/dependency-injection" class="link black dim pa2" > dependency-injection <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/go" class="link black dim pa2" > go <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/laravel" class="link black dim pa2" > laravel <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/mysql" class="link black dim pa2" > mysql <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/tensorflow" class="link black dim pa2" > tensorflow <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/twitter" class="link black dim pa2" > twitter <small>(2)</small></a>
+          </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+   
+        </ul>
         
         
           <a href="/posts/" class="link db f6 pa2 br3 bg-mid-gray white dim w4 tc">All Posts</a>
