@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2019-08-12T08:26:23&#43;08:00"/>
+<meta property="og:updated_time" content="2019-08-15T22:42:25&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -179,6 +179,31 @@ if (!doNotTrack) {
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/beware-of-backpressure/" class="color-inherit dim link">
+            Beware of Backpressure
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          One of my junior dev was frustrated today. He was supposed to read from a file stream with NodeJS, piping that into the database. However, he got errors thrown everywhere when dealing with larger files. I helped him identified the problem. He had been dumping async calls (the database insertion) faster than the call could be handled.
+I remotely remember I run into a similar issue years ago when I wrote a web scraper in NodeJS.
+        </div>
+          <a href="/posts/beware-of-backpressure/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/purposed-php-dialect-p-plus-plus/" class="color-inherit dim link">
             Purposed PHP Dialect: P&#43;&#43;
             </a>
@@ -280,36 +305,18 @@ In Laravel it looks like this:
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="color-inherit dim link">
-            Kubernetes on Premise: Top 5 Fallacies (Part One)
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          As the saying goes, Kubernetes is gradually eating the world of software. In the last year, we have switched our on premise infrastructure from Docker Swarm to Kubernetes. Adopting Kubernetes on the cloud is one thing; adopting it on premise and making it production ready is quite another. Many lessons have been learned along our journey. For those who have played with Kubernetes in the vacuum, there are probably some hidden deadly trap yet to be revealed.
-        </div>
-          <a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="link black dim">
+              Kubernetes on Premise: Top 5 Fallacies (Part One)
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/" class="link black dim">
@@ -326,12 +333,6 @@ In Laravel it looks like this:
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="/posts/epoll-and-event-loop-just-enough-you-need-for-interview/" class="link black dim">
               Epoll and Event Loop: Just Enough You Need for Interview
-            </a>
-          </h2>
-        
-          <h2 class="f5 fw4 mb4 dib mr3">
-            <a href="/posts/transactions-are-not-atomic/" class="link black dim">
-              Transactions Are Not Atomic
             </a>
           </h2>
         
