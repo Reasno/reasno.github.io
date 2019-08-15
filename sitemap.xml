@@ -43,6 +43,12 @@
   </url>
   
   <url>
+    <loc>https://guxi.me/tags/javascript/</loc>
+    <lastmod>2019-08-15T22:42:25+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/posts/compress-url-parameters-without-a-storage/</loc>
     <lastmod>2019-08-13T12:55:17+08:00</lastmod>
   </url>
