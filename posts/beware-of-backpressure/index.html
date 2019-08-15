@@ -176,19 +176,19 @@ if (!doNotTrack) {
 <p>But backpressure can still hit you hard where you least expected. I recommend reading about backpressure <a href="https://nodejs.org/es/docs/guides/backpressuring-in-streams">here</a>.</p>
 
 <p>In the end I would like to showcase a hand crafted backpressure defense in our production code, with the excellent RxJS library.</p>
-<div class="highlight"><pre class="chroma"><code class="language-ts" data-lang="ts">		<span class="nx">fromEvent</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">).</span><span class="nx">pipe</span><span class="p">(</span>
-			<span class="nx">takeUntil</span><span class="p">(</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)),</span>
-			<span class="nx">bufferCount</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
-		<span class="p">).</span><span class="nx">subscribe</span><span class="p">(</span>
-			<span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-				<span class="nx">call</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
-				<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-					<span class="k">if</span> <span class="p">(</span><span class="nx">call</span><span class="p">.</span><span class="nx">isPaused</span><span class="p">())</span> <span class="p">{</span>
-						<span class="nx">call</span><span class="p">.</span><span class="nx">resume</span><span class="p">();</span>
-					<span class="p">}</span>
-				<span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
-			<span class="p">}</span>
-		<span class="p">);</span></code></pre></div><ul class="pa0">
+<div class="highlight"><pre class="chroma"><code class="language-ts" data-lang="ts"><span class="nx">fromEvent</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">).</span><span class="nx">pipe</span><span class="p">(</span>
+  <span class="nx">takeUntil</span><span class="p">(</span><span class="nx">fromEvent</span><span class="p">(</span><span class="nx">call</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)),</span>
+  <span class="nx">bufferCount</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+<span class="p">).</span><span class="nx">subscribe</span><span class="p">(</span>
+  <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">call</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">call</span><span class="p">.</span><span class="nx">isPaused</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">call</span><span class="p">.</span><span class="nx">resume</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">);</span></code></pre></div><ul class="pa0">
   
    <li class="list">
      <a href="/tags/stream" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Stream</a>
