@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>advertising on Garbage Collected</title>
+    <title>Advertising on Garbage Collected</title>
     <link>https://guxi.me/tags/advertising/</link>
-    <description>Recent content in advertising on Garbage Collected</description>
+    <description>Recent content in Advertising on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Aug 2019 12:55:17 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 09 Oct 2019 12:58:36 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/advertising/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Parties in Online Advertising</title>
+      <link>https://guxi.me/posts/parties-in-online-advertising/</link>
+      <pubDate>Wed, 09 Oct 2019 12:58:36 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/parties-in-online-advertising/</guid>
+      <description>I am going to give a talk highlighting elementary concepts in online advertising. It is a good time to review all the basics.
+DSP Demand-side platforms receive an ad request that they must answer by a time set by the SSP or ad exchange. The time allowed can be as low as 100 ms and range up to a few seconds. DSPs decide whether they want to bid. If they do, they must select an ad, determine a bid price, and return their offer to the ad exchange.</description>
+    </item>
     
     <item>
       <title>Compress Url Parameters Without a Storage</title>
