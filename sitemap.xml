@@ -3,54 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://guxi.me/tags/coding-suggestion/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/hyperf/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/hyperf-clean-annotations/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/php/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/tags/advertising/</loc>
     <lastmod>2019-10-09T12:58:36+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://guxi.me/</loc>
+    <lastmod>2019-10-09T12:58:36+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/posts/parties-in-online-advertising/</loc>
     <lastmod>2019-10-09T12:58:36+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2019-10-09T12:58:36+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2019-10-09T12:58:36+08:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -80,6 +57,11 @@
     <loc>https://guxi.me/tags/javascript/</loc>
     <lastmod>2019-08-15T22:42:25+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/compress-url-parameters-without-a-storage/</loc>
+    <lastmod>2019-08-13T12:55:17+08:00</lastmod>
   </url>
   
   <url>
