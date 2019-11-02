@@ -53,7 +53,7 @@
 
 <meta itemprop="datePublished" content="2019-11-02T21:21:14&#43;08:00" />
 <meta itemprop="dateModified" content="2019-11-02T21:21:14&#43;08:00" />
-<meta itemprop="wordCount" content="176">
+<meta itemprop="wordCount" content="178">
 
 
 
@@ -227,7 +227,7 @@ if (!doNotTrack) {
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>注意我们重写了CollectMethod方法，告知 <code>AnnotationCollector</code> 把该类当成 <code>CircuitBreakerAnnotation</code> 来收集。如果不重写这个方法，熔断器切片就无法切入 <code>@FooCircuitBreaker</code>。</p>
+<p>注意我们重写了 <code>CollectMethod</code> 方法，告知 <code>AnnotationCollector</code> 把该类当成 <code>CircuitBreakerAnnotation</code> 来收集。如果不重写这个方法，熔断器切片就无法切入 <code>@FooCircuitBreaker</code>。</p>
 
 <p>在我们的代码中，就可以使用 <code>@FooCircuitBreaker</code> 来替代上述那个特别长的注解了。</p>
 
