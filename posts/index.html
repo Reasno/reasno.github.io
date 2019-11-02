@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/posts/" />
 
-<meta property="og:updated_time" content="2019-10-09T12:58:36&#43;08:00"/>
+<meta property="og:updated_time" content="2019-11-02T21:21:14&#43;08:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -142,6 +142,26 @@ if (!doNotTrack) {
   <article class="pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/hyperf-clean-annotations/" class="link black dim">
+        Hyperf注解整洁之道
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。注解在给我们带来便捷的同时，如果使用不当，也有可能会适得其反，造成可读性、可维护性下降等问题。
+在某些注解中，可能有很多配置项，比如：
+//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引来以下几个问题：
+ 注解中可使用的数据类型表达能力很弱，比如必须用方法的字符串全名来表达方法。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
+下面是一个继承CircuitBreaker的例子。
+&lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state.
+    </div>
+  </div>
+</div>
+</div>
       
         <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -315,25 +335,6 @@ Goals  Strong typed. Strong API contracts. Holistic Observability with logging, 
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       The biggest challenge for intermediate developers to understand event loop is that the articles found around the web are either written for die-hard C programmers or simply too long to read. I will give a try on explaining the event loop/epoll(), and stop at a point where interviewers will be sufficiently satisfied.
 The first thing should be made crystal clear is that things happen on two sides: The kernel and the userspace.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/transactions-are-not-atomic/" class="link black dim">
-        Transactions Are Not Atomic
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      MySQL (InnoDB) transactions are ACID, with A for atomicity.
- An atomic transaction is an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
- The atomicity here is different from the atomicity in concurrent programming.
- An operation acting on shared memory is atomic if it completes in a single step relative to other threads.
- Suppose you want to read a number from a column, add it by an offset, and write it back to the same column.
     </div>
   </div>
 </div>
