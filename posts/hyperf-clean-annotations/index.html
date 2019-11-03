@@ -35,7 +35,7 @@
 在某些注解中，可能有很多配置项，比如：
 //这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
  注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker（熔断器）的例子。
+下面是一个继承CircuitBreaker（熔断器）注解的例子。
 &lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://guxi.me/posts/hyperf-clean-annotations/" />
@@ -47,7 +47,7 @@
 在某些注解中，可能有很多配置项，比如：
 //这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
  注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker（熔断器）的例子。
+下面是一个继承CircuitBreaker（熔断器）注解的例子。
 &lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state.">
 
 
@@ -64,7 +64,7 @@
 在某些注解中，可能有很多配置项，比如：
 //这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
  注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker（熔断器）的例子。
+下面是一个继承CircuitBreaker（熔断器）注解的例子。
 &lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state."/>
 
       
@@ -186,7 +186,7 @@ if (!doNotTrack) {
 
 <p>这里我向大家推荐通过继承的方式配置Hyperf内的注解。</p>
 
-<p>下面是一个继承<a href="https://doc.hyperf.io/#/zh/circuit-breaker">CircuitBreaker（熔断器）</a>的例子。</p>
+<p>下面是一个继承<a href="https://doc.hyperf.io/#/zh/circuit-breaker">CircuitBreaker</a>（熔断器）注解的例子。</p>
 <div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="o">...</span>
