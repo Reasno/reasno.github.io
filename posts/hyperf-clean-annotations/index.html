@@ -31,11 +31,11 @@
     
 
     <meta property="og:title" content="Hyperf 注解整洁之道" />
-<meta property="og:description" content="注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。注解在给我们带来便捷的同时，如果使用不当，也有可能会适得其反，造成可读性、可维护性下降等问题。
+<meta property="og:description" content="注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。和普通编程一样，注解在给我们带来便捷的同时，如果使用不当，也有可能造成可读性、可维护性下降等问题。
 在某些注解中，可能有很多配置项，比如：
-//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引来以下几个问题：
- 注解中可使用的数据类型表达能力很弱，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker的例子。
+//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
+ 注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
+下面是一个继承CircuitBreaker（熔断器）的例子。
 &lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://guxi.me/posts/hyperf-clean-annotations/" />
@@ -43,11 +43,11 @@
 <meta property="article:modified_time" content="2019-11-02T21:21:14&#43;08:00"/>
 
 <meta itemprop="name" content="Hyperf 注解整洁之道">
-<meta itemprop="description" content="注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。注解在给我们带来便捷的同时，如果使用不当，也有可能会适得其反，造成可读性、可维护性下降等问题。
+<meta itemprop="description" content="注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。和普通编程一样，注解在给我们带来便捷的同时，如果使用不当，也有可能造成可读性、可维护性下降等问题。
 在某些注解中，可能有很多配置项，比如：
-//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引来以下几个问题：
- 注解中可使用的数据类型表达能力很弱，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker的例子。
+//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
+ 注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
+下面是一个继承CircuitBreaker（熔断器）的例子。
 &lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state.">
 
 
@@ -60,11 +60,11 @@
 <meta itemprop="keywords" content="Coding Suggestion,Hyperf,PHP," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Hyperf 注解整洁之道"/>
-<meta name="twitter:description" content="注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。注解在给我们带来便捷的同时，如果使用不当，也有可能会适得其反，造成可读性、可维护性下降等问题。
+<meta name="twitter:description" content="注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。和普通编程一样，注解在给我们带来便捷的同时，如果使用不当，也有可能造成可读性、可维护性下降等问题。
 在某些注解中，可能有很多配置项，比如：
-//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引来以下几个问题：
- 注解中可使用的数据类型表达能力很弱，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker的例子。
+//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
+ 注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
+下面是一个继承CircuitBreaker（熔断器）的例子。
 &lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state."/>
 
       
@@ -171,22 +171,22 @@ if (!doNotTrack) {
       
     </header>
 
-    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。注解在给我们带来便捷的同时，如果使用不当，也有可能会适得其反，造成可读性、可维护性下降等问题。</p>
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>注解属于元编程的一种。元编程从字面意思上说就是编写程序的程序。和普通编程一样，注解在给我们带来便捷的同时，如果使用不当，也有可能造成可读性、可维护性下降等问题。</p>
 
 <p>在某些注解中，可能有很多配置项，比如：</p>
 <div class="highlight"><pre class="chroma"><code class="language-ts" data-lang="ts"><span class="c1">//这还不是一个特别夸张的例子
 </span><span class="c1"></span><span class="kd">@CircuitBreaker</span><span class="p">(</span><span class="nx">timeout</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="nx">failCounter</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nx">successCounter</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nx">fallback</span><span class="o">=</span><span class="s2">&#34;App\Service\UserService::searchFallback&#34;</span><span class="p">)</span></code></pre></div>
-<p>如果我们的代码里用很多这样复杂的注解，就会引来以下几个问题：</p>
+<p>如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：</p>
 
 <ul>
-<li>注解中可使用的数据类型表达能力很弱，比如必须用方法的字符串全名来表达方法，容易出错。</li>
+<li>注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。</li>
 <li>离开了IDE的帮助，长注解的可读性变得很差。（比如在Github上）</li>
 <li>同样配置的注解多个地方使用，修改时要改很多地方。</li>
 </ul>
 
 <p>这里我向大家推荐通过继承的方式配置Hyperf内的注解。</p>
 
-<p>下面是一个继承CircuitBreaker的例子。</p>
+<p>下面是一个继承<a href="https://doc.hyperf.io/#/zh/circuit-breaker">CircuitBreaker（熔断器）</a>的例子。</p>
 <div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="o">...</span>
@@ -227,11 +227,11 @@ if (!doNotTrack) {
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>注意我们重写了 <code>CollectMethod</code> 方法，告知 <code>AnnotationCollector</code> 把该类当成 <code>CircuitBreakerAnnotation</code> 来收集。如果不重写这个方法，熔断器切片就无法切入 <code>@FooCircuitBreaker</code>。</p>
+<p>注意我们重写了 <code>CollectMethod</code> 方法，告知 <code>AnnotationCollector</code> 把该类当成 <code>CircuitBreakerAnnotation</code> 来收集。如果不重写这个方法，熔断器切面就无法切入 <code>@FooCircuitBreaker</code>。</p>
 
-<p>在我们的代码中，就可以使用 <code>@FooCircuitBreaker</code> 来替代上述那个特别长的注解了。</p>
+<p>现在，我们的代码中，就可以使用 <code>@FooCircuitBreaker</code> 来替代上述那个特别长的注解了。</p>
 
-<p>除了继承以外，您还可以自己任意组合注解。比如：</p>
+<p>除了继承以外，还可以任意组合注解。比如：</p>
 <div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 
 <span class="o">...</span>
@@ -255,12 +255,12 @@ if (!doNotTrack) {
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">collectClass</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$className</span><span class="p">)</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="nx">AnnotationCollector</span><span class="o">::</span><span class="na">collectMethod</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="nx">Counter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$this</span><span class="p">);</span>
-        <span class="nx">AnnotationCollector</span><span class="o">::</span><span class="na">collectMethod</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="nx">Histogram</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$this</span><span class="p">);</span>
+        <span class="nx">AnnotationCollector</span><span class="o">::</span><span class="na">collectClass</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="nx">Counter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$this</span><span class="p">);</span>
+        <span class="nx">AnnotationCollector</span><span class="o">::</span><span class="na">collectClass</span><span class="p">(</span><span class="nv">$className</span><span class="p">,</span> <span class="nx">Histogram</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="nv">$this</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>您可以用 <code>@Metrics</code> 来替代 <code>@Counter(name=&quot;my_metric&quot;)</code> 和 <code>@Histogram(name=&quot;my_metric&quot;)</code> 两个注解了。</p>
+<p>我们可以用 <code>@Metrics</code> 来替代 <code>@Counter(name=&quot;my_metric&quot;)</code> 和 <code>@Histogram(name=&quot;my_metric&quot;)</code> 两个注解了。</p>
 
 <p>这个技巧还请酌情使用，不要滥用哦。</p>
 <ul class="pa0">
