@@ -33,7 +33,7 @@
     <meta property="og:title" content="云原生Hyperf" />
 <meta property="og:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
-&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;); 在Kubernetes的deployment上配置：
+&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘oK’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
 服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
 &lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // ." />
@@ -45,7 +45,7 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 <meta itemprop="name" content="云原生Hyperf">
 <meta itemprop="description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
-&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;); 在Kubernetes的deployment上配置：
+&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘oK’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
 服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
 &lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // .">
@@ -53,7 +53,7 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 
 <meta itemprop="datePublished" content="2019-12-14T16:27:50&#43;08:00" />
 <meta itemprop="dateModified" content="2019-12-14T16:27:50&#43;08:00" />
-<meta itemprop="wordCount" content="423">
+<meta itemprop="wordCount" content="425">
 
 
 
@@ -62,7 +62,7 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 <meta name="twitter:title" content="云原生Hyperf"/>
 <meta name="twitter:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
-&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;); 在Kubernetes的deployment上配置：
+&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘oK’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
 服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
 &lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // ."/>
@@ -200,9 +200,11 @@ if (!doNotTrack) {
         <span class="k">return</span> <span class="s1">&#39;ok&#39;</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">// in config/Routes.php
-Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;);
-Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// in config/Routes.php
+</span><span class="c1"></span><span class="nx">Router</span><span class="o">::</span><span class="na">addRoute</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">],</span> <span class="s1">&#39;/liveness&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Controller\HealthCheckController@liveness&#39;</span><span class="p">);</span>
+<span class="nx">Router</span><span class="o">::</span><span class="na">addRoute</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">],</span> <span class="s1">&#39;/readiness&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Controller\HealthCheckController@readiness&#39;</span><span class="p">);</span>
+</code></pre></div>
 <p>在Kubernetes的deployment上配置：</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">livenessProbe<span class="p">:</span><span class="w">
 </span><span class="w">  </span>httpGet<span class="p">:</span><span class="w">
@@ -305,19 +307,21 @@ kubectl autoscale deployment hyperf-demo --cpu-percent<span class="o">=</span><s
 <p>其次，我们在开发环境中输出了大量的日志，而在生产环境中，我们需要控制日志数量，避免堵塞日志收集工具。如果最终将日志容易写入到Elasticsearch中的话，更要控制写入速度。我们在生产环境中建议默认只开启WARNING以上级别的日志。</p>
 
 <p>按照官方文档的介绍，我们将框架打印的日志也交给Monolog处理。</p>
-<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">namespace App\Provider;
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">App\Provider</span><span class="p">;</span>
 
-use Hyperf\Logger\LoggerFactory;
-use Psr\Container\ContainerInterface;
+<span class="k">use</span> <span class="nx">Hyperf\Logger\LoggerFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Container\ContainerInterface</span><span class="p">;</span>
 
-class StdoutLoggerFactory
-{
-    public function __invoke(ContainerInterface $container)
-    {
-        $factory = $container-&gt;get(LoggerFactory::class);
-        return $factory-&gt;get(&#39;Sys&#39;, &#39;default&#39;);
-    }
-}</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">StdoutLoggerFactory</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">(</span><span class="nx">ContainerInterface</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$factory</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">LoggerFactory</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nv">$factory</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Sys&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="c1">// config/autoload/dependencies.php
 </span><span class="c1"></span><span class="k">return</span> <span class="p">[</span>
 	<span class="nx">Hyperf\Contract\StdoutLoggerInterface</span><span class="o">::</span><span class="na">class</span> <span class="o">=&gt;</span> <span class="nx">App\Provider\StdoutLoggerFactory</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
@@ -331,38 +335,40 @@ class StdoutLoggerFactory
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">composer require league/flysystem
 composer require league/flysystem-aws-s3-v3</code></pre></div>
 <p>按照Hyperf DI的官方文档创建工厂类并绑定关系。</p>
-<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">namespace App\Provider;
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">App\Provider</span><span class="p">;</span>
 
-use Aws\S3\S3Client;
-use Hyperf\Contract\ConfigInterface;
-use Hyperf\Guzzle\CoroutineHandler;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
-use League\Flysystem\Config;
-use League\Flysystem\Filesystem;
-use Psr\Container\ContainerInterface;
+<span class="k">use</span> <span class="nx">Aws\S3\S3Client</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Hyperf\Contract\ConfigInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Hyperf\Guzzle\CoroutineHandler</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\Adapter\Local</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\AwsS3v3\AwsS3Adapter</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\Config</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\Filesystem</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Container\ContainerInterface</span><span class="p">;</span>
 
-class FileSystemFactory
-{
-    public function __invoke(ContainerInterface $container)
-    {
-        $config = $container-&gt;get(ConfigInterface::class);
-        if ($config-&gt;get(&#39;app_env&#39;) === &#39;dev&#39;) {
-            return new Filesystem(new Local(__DIR__ . &#39;/../../runtime&#39;));
-        }
-        $options = $container-&gt;get(ConfigInterface::class)-&gt;get(&#39;file&#39;);
-        $adapter = $this-&gt;adapterFromArray($options);
-        return new Filesystem($adapter, new Config($options));
-    }
+<span class="k">class</span> <span class="nc">FileSystemFactory</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">(</span><span class="nx">ContainerInterface</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$config</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">ConfigInterface</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$config</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;app_env&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;dev&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nx">Filesystem</span><span class="p">(</span><span class="k">new</span> <span class="nx">Local</span><span class="p">(</span><span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/../../runtime&#39;</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="nv">$options</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">ConfigInterface</span><span class="o">::</span><span class="na">class</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">);</span>
+        <span class="nv">$adapter</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">adapterFromArray</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Filesystem</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Config</span><span class="p">(</span><span class="nv">$options</span><span class="p">));</span>
+    <span class="p">}</span>
 
-    private function adapterFromArray(array $options): AwsS3Adapter
-    {
-    	// 协程化S3客户端
-        $options = array_merge($options, [&#39;http_handler&#39; =&gt; new CoroutineHandler()]);
-        $client = new S3Client($options);
-        return new AwsS3Adapter($client, $options[&#39;bucket_name&#39;], &#39;&#39;, [&#39;override_visibility_on_copy&#39; =&gt; true]);
-    }
-}</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">adapterFromArray</span><span class="p">(</span><span class="k">array</span> <span class="nv">$options</span><span class="p">)</span><span class="o">:</span> <span class="nx">AwsS3Adapter</span>
+    <span class="p">{</span>
+    	<span class="c1">// 协程化S3客户端
+</span><span class="c1"></span>        <span class="nv">$options</span> <span class="o">=</span> <span class="nx">array_merge</span><span class="p">(</span><span class="nv">$options</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;http_handler&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">CoroutineHandler</span><span class="p">()]);</span>
+        <span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">S3Client</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">AwsS3Adapter</span><span class="p">(</span><span class="nv">$client</span><span class="p">,</span> <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;bucket_name&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;override_visibility_on_copy&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="c1">// config/autoload/dependencies.php
 </span><span class="c1"></span><span class="k">return</span> <span class="p">[</span>
 	<span class="nx">Hyperf\Contract\StdoutLoggerInterface</span><span class="o">::</span><span class="na">class</span> <span class="o">=&gt;</span> <span class="nx">App\Provider\StdoutLoggerFactory</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
@@ -397,17 +403,13 @@ return [
 
 <p>如果您已经配置了base模式并使用一进程，则在服务监控时则不用再启动独立监控进程了。在Controller增加如下路由即可：</p>
 <div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-	<span class="c1">//...
-</span><span class="c1"></span>	
-	<span class="c1">// 将/metrics路由绑到这里。
-</span><span class="c1"></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">metrics</span><span class="p">(</span><span class="nx">CollectorRegistry</span> <span class="nv">$registry</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nv">$renderer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RenderTextFormat</span><span class="p">();</span>
-        <span class="k">return</span> <span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$registry</span><span class="o">-&gt;</span><span class="na">getMetricFamilySamples</span><span class="p">());</span>
-    <span class="p">}</span>
-
-    <span class="c1">// ...
-</span></code></pre></div>
+<span class="c1">// 将/metrics路由绑到这里。
+</span><span class="c1"></span><span class="k">public</span> <span class="k">function</span> <span class="nf">metrics</span><span class="p">(</span><span class="nx">CollectorRegistry</span> <span class="nv">$registry</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$renderer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RenderTextFormat</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$registry</span><span class="o">-&gt;</span><span class="na">getMetricFamilySamples</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>如果您使用的Prometheus支持从服务注解中发现爬取目标，只要在Service中添加Prometheus注解即可。</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">kind<span class="p">:</span><span class="w"> </span>Service<span class="w">
 </span><span class="w"></span>metadata<span class="p">:</span><span class="w">
