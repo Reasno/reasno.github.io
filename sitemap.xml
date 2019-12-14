@@ -3,12 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://guxi.me/tags/docker/</loc>
+    <lastmod>2019-12-14T16:27:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/</loc>
     <lastmod>2019-12-14T16:27:50+08:00</lastmod>
   </url>
   
   <url>
+    <loc>https://guxi.me/tags/hyperf/</loc>
+    <lastmod>2019-12-14T16:27:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/kubernetes/</loc>
+    <lastmod>2019-12-14T16:27:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/php/</loc>
+    <lastmod>2019-12-14T16:27:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/posts/</loc>
+    <lastmod>2019-12-14T16:27:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
     <lastmod>2019-12-14T16:27:50+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -25,26 +55,8 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/tags/hyperf/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/posts/hyperf-clean-annotations/</loc>
     <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/php/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -139,12 +151,6 @@
   <url>
     <loc>https://guxi.me/tags/dependency-injection/</loc>
     <lastmod>2019-08-05T23:11:10+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/kubernetes/</loc>
-    <lastmod>2019-07-29T13:08:10+08:00</lastmod>
     <priority>0</priority>
   </url>
   
