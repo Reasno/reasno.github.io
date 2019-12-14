@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected  | 云原生Hyperf</title>
+    <title>Garbage Collected  | 云原生Hyperf骨架包</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -30,7 +30,7 @@
 
     
 
-    <meta property="og:title" content="云原生Hyperf" />
+    <meta property="og:title" content="云原生Hyperf骨架包" />
 <meta property="og:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
@@ -42,7 +42,7 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 <meta property="article:published_time" content="2019-12-14T16:27:50&#43;08:00"/>
 <meta property="article:modified_time" content="2019-12-14T16:27:50&#43;08:00"/>
 
-<meta itemprop="name" content="云原生Hyperf">
+<meta itemprop="name" content="云原生Hyperf骨架包">
 <meta itemprop="description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
@@ -59,7 +59,7 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 
 <meta itemprop="keywords" content="Kubernetes,Hyperf,Docker,PHP," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="云原生Hyperf"/>
+<meta name="twitter:title" content="云原生Hyperf骨架包"/>
 <meta name="twitter:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
@@ -153,7 +153,7 @@ if (!doNotTrack) {
 
       <div class="tc-l pv6 ph3 ph4-ns">
         
-          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">云原生Hyperf</h1>
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">云原生Hyperf骨架包</h1>
           
         
       </div>
@@ -172,7 +172,7 @@ if (!doNotTrack) {
           
         POSTS
       </p>
-      <h1 class="f1 athelas mb1">云原生Hyperf</h1>
+      <h1 class="f1 athelas mb1">云原生Hyperf骨架包</h1>
       
       <time class="f6 mv4 dib tracked" datetime="2019-12-14T16:27:50&#43;08:00">December 14, 2019</time>
       
