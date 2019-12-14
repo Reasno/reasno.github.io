@@ -416,7 +416,7 @@ composer require league/flysystem-aws-s3-v3</code></pre></div>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">kind<span class="p">:</span><span class="w"> </span>Service<span class="w">
 </span><span class="w"></span>metadata<span class="p">:</span><span class="w">
 </span><span class="w">  </span>annotations<span class="p">:</span><span class="w">
-</span><span class="w">    </span>prometheus.io/port<span class="p">:</span><span class="w"> </span><span class="s2">&#34;80&#34;</span><span class="w">
+</span><span class="w">    </span>prometheus.io/port<span class="p">:</span><span class="w"> </span><span class="s2">&#34;9501&#34;</span><span class="w">
 </span><span class="w">    </span>prometheus.io/scrape<span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
 </span><span class="w">    </span>prometheus.io/path<span class="p">:</span><span class="w"> </span><span class="s2">&#34;/metrics&#34;</span></code></pre></div>
 <p>如果您使用Nginx Ingress，您可以配置开启Opentracing。（<a href="https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/opentracing/">nginx ingress文档</a>）</p>
