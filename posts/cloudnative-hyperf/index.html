@@ -53,7 +53,7 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 
 <meta itemprop="datePublished" content="2019-12-14T16:27:50&#43;08:00" />
 <meta itemprop="dateModified" content="2019-12-14T16:27:50&#43;08:00" />
-<meta itemprop="wordCount" content="425">
+<meta itemprop="wordCount" content="427">
 
 
 
@@ -376,19 +376,21 @@ composer require league/flysystem-aws-s3-v3</code></pre></div>
 <span class="p">];</span>
 </code></pre></div>
 <p>我们按照Hyperf习惯的方式新建一下config/autoload/file.php，并配置S3秘钥等信息：</p>
-<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">// config/autoload/file.php
-return [
-    &#39;credentials&#39; =&gt; [
-        &#39;key&#39; =&gt; env(&#39;S3_KEY&#39;),
-        &#39;secret&#39; =&gt; env(&#39;S3_SECRET&#39;),
-    ],
-    &#39;region&#39; =&gt; env(&#39;S3_REGION&#39;),
-    &#39;version&#39; =&gt; &#39;latest&#39;,
-    &#39;bucket_endpoint&#39; =&gt; false,
-    &#39;use_path_style_endpoint&#39; =&gt; true,
-    &#39;endpoint&#39; =&gt; env(&#39;S3_ENDPOINT&#39;),
-    &#39;bucket_name&#39; =&gt; env(&#39;S3_BUCKET&#39;),
-];</code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// config/autoload/file.php
+</span><span class="c1"></span><span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;credentials&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_KEY&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;secret&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_SECRET&#39;</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;region&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_REGION&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;version&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;latest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket_endpoint&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;use_path_style_endpoint&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;endpoint&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_ENDPOINT&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;bucket_name&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">),</span>
+<span class="p">];</span>
+</code></pre></div>
 <p>和日志一样，在开发调试时，我们上传使用的是Runtime文件夹，而在生产环境中，则会上传图片至MinIO。日后需要上传至阿里云，只要安装league/flysystem的阿里云适配器：</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">composer require aliyuncs/aliyun-oss-flysystem</code></pre></div>
 <p>并按需重写FileSystemFactory即可。</p>
@@ -433,6 +435,8 @@ return [
 <h2 id="完整示例">完整示例</h2>
 
 <p>一个完整的骨架包可以在我的GitHub找到：<a href="https://github.com/Reasno/cloudnative-hyperf">https://github.com/Reasno/cloudnative-hyperf</a></p>
+
+<p><strong><em>实际上Kubernetes的部署方式多种多样。任何骨架包都不可能适用所有情况。</em></strong></p>
 <ul class="pa0">
   
    <li class="list">
