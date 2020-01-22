@@ -31,7 +31,8 @@
     
 
     <meta property="og:title" content="云原生Hyperf骨架包" />
-<meta property="og:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+<meta property="og:description" content="2020-01-22 日更新：现已提供Hyperf Helm chart。详见repo。
+ Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
@@ -43,7 +44,8 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 <meta property="article:modified_time" content="2019-12-14T16:27:50&#43;08:00"/>
 
 <meta itemprop="name" content="云原生Hyperf骨架包">
-<meta itemprop="description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+<meta itemprop="description" content="2020-01-22 日更新：现已提供Hyperf Helm chart。详见repo。
+ Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
@@ -53,14 +55,15 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 
 <meta itemprop="datePublished" content="2019-12-14T16:27:50&#43;08:00" />
 <meta itemprop="dateModified" content="2019-12-14T16:27:50&#43;08:00" />
-<meta itemprop="wordCount" content="427">
+<meta itemprop="wordCount" content="431">
 
 
 
 <meta itemprop="keywords" content="kubernetes,hyperf,docker,php," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="云原生Hyperf骨架包"/>
-<meta name="twitter:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+<meta name="twitter:description" content="2020-01-22 日更新：现已提供Hyperf Helm chart。详见repo。
+ Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
@@ -180,6 +183,10 @@ if (!doNotTrack) {
     </header>
 
     <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<blockquote>
+<p>2020-01-22 日更新：现已提供Hyperf Helm chart。详见<a href="https://github.com/Reasno/cloudnative-hyperf">repo</a>。</p>
+</blockquote>
 
 <p>Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。</p>
 
