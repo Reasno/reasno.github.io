@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2019-12-14T16:27:50&#43;08:00"/>
+<meta property="og:updated_time" content="2020-01-22T16:04:50&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -177,6 +177,32 @@ if (!doNotTrack) {
   <div class="db pv4 ph3 ph0-l no-underline dark-gray">
     <div class="flex flex-column flex-row-ns">
       
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="color-inherit dim link">
+            Why You Should Avoid Using Request Scope Injection in NestJs
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          NestJS 6 comes with all-new injection scope support. Namely, instead of enforcing every object managed by DI container to be a singleton, you can now freely assign three types of injection scope to them: singleton, request, and transient.
+We adopted the request-scoped injection in our project to achieve distributed tracing as well as context-aware logging. The result turned out to be not so great.
+For starters, the request-scoped injection is way too expensive.
+        </div>
+          <a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
           
         
         <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
@@ -287,33 +313,6 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/compress-url-parameters-without-a-storage/" class="color-inherit dim link">
-            Compress Url Parameters Without a Storage
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          <p>In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.</p>
-
-<p>Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering <strong>Error 413: request entity too large</strong>. I know nginx throws it.</p>
-
-        </div>
-          <a href="/posts/compress-url-parameters-without-a-storage/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
@@ -321,6 +320,10 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         <h1 class="f3">More</h1>
         <ul class="f5 fw4 mb4 dib mr3">
         
+        
+            <li class="link black dim pa2"><a href="/posts/compress-url-parameters-without-a-storage/" class="link black dim pa2">
+              Compress Url Parameters Without a Storage
+            </a></li>
         
             <li class="link black dim pa2"><a href="/posts/purposed-php-dialect-p-plus-plus/" class="link black dim pa2">
               Purposed PHP Dialect: P&#43;&#43;
@@ -340,10 +343,6 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         
             <li class="link black dim pa2"><a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="link black dim pa2">
               Kubernetes on Premise: Top 5 Fallacies (Part One)
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/" class="link black dim pa2">
-              Never Force Yourself to Learn New Skills Without a Concrete Project
             </a></li>
         
       
@@ -417,6 +416,12 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         
           <li class="link black dim pa2" >
             <a href="/tags/twitter" class="link black dim pa2" > twitter <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/typescript" class="link black dim pa2" > typescript <small>(2)</small></a>
           </li>
         
         
