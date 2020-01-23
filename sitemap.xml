@@ -43,6 +43,23 @@
   </url>
   
   <url>
+    <loc>https://guxi.me/tags/nestjs/</loc>
+    <lastmod>2020-01-22T16:04:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/typescript/</loc>
+    <lastmod>2020-01-22T16:04:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/</loc>
+    <lastmod>2020-01-22T16:04:50+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/tags/docker/</loc>
     <lastmod>2019-12-14T16:27:50+08:00</lastmod>
     <priority>0</priority>
@@ -83,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/posts/parties-in-online-advertising/</loc>
-    <lastmod>2019-10-09T12:58:36+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/tags/advertising/</loc>
     <lastmod>2019-10-09T12:58:36+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/parties-in-online-advertising/</loc>
+    <lastmod>2019-10-09T12:58:36+08:00</lastmod>
   </url>
   
   <url>
@@ -196,12 +213,6 @@
   <url>
     <loc>https://guxi.me/posts/ad-server-rewrite-goals-and-non-goals/</loc>
     <lastmod>2019-07-26T10:08:36+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/typescript/</loc>
-    <lastmod>2019-07-26T10:08:36+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

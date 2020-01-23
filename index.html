@@ -204,6 +204,32 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
   <div class="db pv4 ph3 ph0-l no-underline dark-gray">
     <div class="flex flex-column flex-row-ns">
       
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="color-inherit dim link">
+            Why You Should Avoid Using Request-scoped Injection in NestJS
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          NestJS 6 comes with all-new injection scope support. Namely, instead of enforcing every object managed by DI container to be a singleton, you can now freely assign three types of injection scope to them: singleton, request, and transient.
+We adopted the request-scoped injection in our project to achieve distributed tracing as well as context-aware logging. The result turned out to be not so great.
+For starters, the request-scoped injection is way too expensive.
+        </div>
+          <a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
           
         
         <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
@@ -219,7 +245,8 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+          2020-01-22 日更新：现已提供Hyperf Helm chart。详见repo。
+ Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
@@ -289,31 +316,6 @@ DSP Demand-side platforms receive an ad request that they must answer by a time 
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/beware-of-backpressure/" class="color-inherit dim link">
-            Beware of Backpressure
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          One of my junior dev was frustrated today. He was supposed to read from a file stream with NodeJS, piping that into the database. However, he got errors thrown everywhere when dealing with larger files. I helped him identified the problem. He had been dumping async calls (the database insertion) faster than the call could be handled.
-I remotely remember I run into a similar issue years ago when I wrote a web scraper in NodeJS.
-        </div>
-          <a href="/posts/beware-of-backpressure/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
@@ -321,6 +323,10 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         <h1 class="f3">More</h1>
         <ul class="f5 fw4 mb4 dib mr3">
         
+        
+            <li class="link black dim pa2"><a href="/posts/beware-of-backpressure/" class="link black dim pa2">
+              Beware of Backpressure
+            </a></li>
         
             <li class="link black dim pa2"><a href="/posts/compress-url-parameters-without-a-storage/" class="link black dim pa2">
               Compress Url Parameters Without a Storage
@@ -340,10 +346,6 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         
             <li class="link black dim pa2"><a href="/posts/contextual-dependency-injection-is-a-myth/" class="link black dim pa2">
               Contextual Dependency Injection Is a Myth
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="link black dim pa2">
-              Kubernetes on Premise: Top 5 Fallacies (Part One)
             </a></li>
         
       
@@ -417,6 +419,12 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         
           <li class="link black dim pa2" >
             <a href="/tags/twitter" class="link black dim pa2" > twitter <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/typescript" class="link black dim pa2" > typescript <small>(2)</small></a>
           </li>
         
         

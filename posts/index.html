@@ -165,12 +165,30 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="link black dim">
+        Why You Should Avoid Using Request-scoped Injection in NestJS
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      NestJS 6 comes with all-new injection scope support. Namely, instead of enforcing every object managed by DI container to be a singleton, you can now freely assign three types of injection scope to them: singleton, request, and transient.
+We adopted the request-scoped injection in our project to achieve distributed tracing as well as context-aware logging. The result turned out to be not so great.
+For starters, the request-scoped injection is way too expensive.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="/posts/cloudnative-hyperf/" class="link black dim">
         云原生Hyperf骨架包
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+      2020-01-22 日更新：现已提供Hyperf Helm chart。详见repo。
+ Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
 生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
 &lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
 livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
@@ -331,21 +349,6 @@ In Laravel it looks like this:
 </div>
 </div>
       
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/" class="link black dim">
-        Never Force Yourself to Learn New Skills Without a Concrete Project
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      As the job demand is going nowhere in a decade, a lot of new guys want to get into programming. There are numerous courses online, teaching a variety of skills in programming. There are also new shinning frameworks climbing up GitHub trending every day. I see a lot of people, typically newly graduated students, get confused. There seems to be an endless stream of knowledge to learn. How many skills are enough?
-    </div>
-  </div>
-</div>
-</div>
-      
     </section>
 
 <ul class="pagination">
@@ -382,12 +385,23 @@ In Laravel it looks like this:
     <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
     
     
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/posts/page/3/">3</a></li>
+    
+    
     <li class="page-item">
     <a href="/posts/page/2/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
     </li>
     
     <li class="page-item">
-        <a href="/posts/page/2/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/posts/page/3/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>
