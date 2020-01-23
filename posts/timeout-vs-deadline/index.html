@@ -53,7 +53,7 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
 
 
 
-<meta itemprop="keywords" content="microservice,resilience,gRPC," />
+<meta itemprop="keywords" content="microservice,resilience,grpc," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Timeout vs Deadline"/>
 <meta name="twitter:description" content="One of the first few things I feel strange about gRPC is that gRPC terminate unfinished request based on a deadline mechanism instead of the more common timeout mechanism.
@@ -175,7 +175,8 @@ if (!doNotTrack) {
 <p>I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t put my mind to it until recently. But now I realize it is a quite clever design.</p>
 
 <p>Suppose we have three services chaining together:</p>
-<div class="highlight"><pre class="chroma">ShopService-&gt;OrderService-&gt;PaymentService.</pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">ShopService</span><span class="o">-&gt;</span><span class="nx">OrderService</span><span class="o">-&gt;</span><span class="nx">PaymentService</span><span class="p">.</span>
+</code></pre></div>
 <p>Suppose the <code>ShopService</code> sends a request to the <code>OrderService</code> and ask it to timeout after 5 seconds. How soon should <code>OrderService</code> timeout the requests to <code>PayService</code>? Another 5 seconds? 3 seconds? Either way, you are placing your self in a guessing game, since there is no way to know how long has gone before the <code>OrderService</code> actually receives the request from <code>ShopService</code>. You end up terminating the subsequent call either too early or too late.</p>
 
 <p>The above dilemma vanishes with the help of deadline.  The <code>ShopService</code> simply asks the <code>OrderService</code> for a response before <strong><em>Thu Jan 23 2020 15:48:24</em></strong> and <code>OrderService</code> then can mindlessly obey and ask the same to <code>PaymentService</code>. You are guaranteed only the necessary period of waiting will be happen between services so long they have a consistent notion of time.</p>
@@ -192,7 +193,7 @@ if (!doNotTrack) {
    </li>
   
    <li class="list">
-     <a href="/tags/grpc" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gRPC</a>
+     <a href="/tags/grpc" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">grpc</a>
    </li>
   
 </ul>
