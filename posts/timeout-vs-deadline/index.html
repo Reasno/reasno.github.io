@@ -49,7 +49,7 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
 
 <meta itemprop="datePublished" content="2020-01-23T15:23:15&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-23T15:23:15&#43;08:00" />
-<meta itemprop="wordCount" content="243">
+<meta itemprop="wordCount" content="255">
 
 
 
@@ -182,6 +182,8 @@ if (!doNotTrack) {
 <p>The above dilemma vanishes with the help of deadline.  The <code>ShopService</code> simply asks the <code>OrderService</code> for a response before <strong><em>Thu Jan 23 2020 15:48:24</em></strong> and <code>OrderService</code> then can mindlessly obey and ask the same to <code>PaymentService</code>. You are guaranteed only the necessary period of waiting will be happen between services so long they have a consistent notion of time.</p>
 
 <p>While a little bit unintuitive, deadlines are more microservice friendly than timeouts.</p>
+
+<p>PS. I read a blog post saying deadlines are distributed timeouts. Precisely!</p>
 <ul class="pa0">
   
    <li class="list">
