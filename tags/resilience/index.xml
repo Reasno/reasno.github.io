@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>resilience on Garbage Collected</title>
+    <link>https://guxi.me/tags/resilience/</link>
+    <description>Recent content in resilience on Garbage Collected</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Jan 2020 15:23:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://guxi.me/tags/resilience/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Timeout vs Deadline</title>
+      <link>https://guxi.me/posts/timeout-vs-deadline/</link>
+      <pubDate>Thu, 23 Jan 2020 15:23:15 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/timeout-vs-deadline/</guid>
+      <description>One of the first few things I feel strange about gRPC is that gRPC terminate unfinished request based on a deadline mechanism instead of the more common timeout mechanism.
+In pseudo-code:
+var timeout = 5 * time.Second; var deadline = time.Now() + 5 * time.Second; As you can see, the deadline mechanism is less straight-forward at first glance. So why bother?
+I thought this might be another &amp;ldquo;Google&amp;rdquo; thing, so I didn&amp;rsquo;t put my mind to it until recently.</description>
+    </item>
+    
+  </channel>
+</rss>

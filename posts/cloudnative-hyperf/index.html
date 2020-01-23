@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Garbage Collected  | 云原生Hyperf骨架包</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.55.6" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+      <link rel="stylesheet" href="/css/syntax.css">
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="云原生Hyperf骨架包" />
+<meta property="og:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
+&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
+livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
+服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
+&lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://guxi.me/posts/cloudnative-hyperf/" />
+<meta property="article:published_time" content="2019-12-14T16:27:50&#43;08:00"/>
+<meta property="article:modified_time" content="2019-12-14T16:27:50&#43;08:00"/>
+
+<meta itemprop="name" content="云原生Hyperf骨架包">
+<meta itemprop="description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
+&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
+livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
+服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
+&lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // .">
+
+
+<meta itemprop="datePublished" content="2019-12-14T16:27:50&#43;08:00" />
+<meta itemprop="dateModified" content="2019-12-14T16:27:50&#43;08:00" />
+<meta itemprop="wordCount" content="427">
+
+
+
+<meta itemprop="keywords" content="kubernetes,hyperf,docker,php," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="云原生Hyperf骨架包"/>
+<meta name="twitter:description" content="Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
+&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
+livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
+服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
+&lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // ."/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-10190882-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://guxi.me/images/Kubernetes_logo_without_workmark.svg');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://guxi.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Garbage Collected
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+<a href="https://twitter.com/Reasno_g" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+<a href="https://github.com/Reasno" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">云原生Hyperf骨架包</h1>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">云原生Hyperf骨架包</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2019-12-14T16:27:50&#43;08:00">December 14, 2019</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l">
+
+<p>Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。</p>
+
+<h2 id="生命周期">生命周期</h2>
+
+<p>容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">App\Controller</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">HealthCheckController</span> <span class="k">extends</span> <span class="nx">AbstractController</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">liveness</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;ok&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">readiness</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;ok&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// in config/Routes.php
+</span><span class="c1"></span><span class="nx">Router</span><span class="o">::</span><span class="na">addRoute</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">],</span> <span class="s1">&#39;/liveness&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Controller\HealthCheckController@liveness&#39;</span><span class="p">);</span>
+<span class="nx">Router</span><span class="o">::</span><span class="na">addRoute</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">],</span> <span class="s1">&#39;/readiness&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Controller\HealthCheckController@readiness&#39;</span><span class="p">);</span>
+</code></pre></div>
+<p>在Kubernetes的deployment上配置：</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">livenessProbe<span class="p">:</span><span class="w">
+</span><span class="w">  </span>httpGet<span class="p">:</span><span class="w">
+</span><span class="w">    </span>path<span class="p">:</span><span class="w"> </span>/liveness<span class="w">
+</span><span class="w">    </span>port<span class="p">:</span><span class="w"> </span><span class="m">9501</span><span class="w">
+</span><span class="w">  </span>failureThreshold<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span>periodSeconds<span class="p">:</span><span class="w"> </span><span class="m">10</span><span class="w">
+</span><span class="w"></span>readinessProbe<span class="p">:</span><span class="w">
+</span><span class="w">  </span>httpGet<span class="p">:</span><span class="w">
+</span><span class="w">    </span>path<span class="p">:</span><span class="w"> </span>/readiness<span class="w">
+</span><span class="w">    </span>port<span class="p">:</span><span class="w"> </span><span class="m">9501</span><span class="w">
+</span><span class="w">  </span>failureThreshold<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span>periodSeconds<span class="p">:</span><span class="w"> </span><span class="m">10</span></code></pre></div>
+<p>当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。</p>
+
+<p>服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有<code>terminationGracePeriodSeconds</code>这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// config/autoload/server.php
+</span><span class="c1">// ...
+</span><span class="c1"></span><span class="s1">&#39;callbacks&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="nx">SwooleEvent</span><span class="o">::</span><span class="na">ON_BEFORE_START</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">Hyperf\Framework\Bootstrap\ServerStartCallback</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;beforeStart&#39;</span><span class="p">],</span>
+    <span class="nx">SwooleEvent</span><span class="o">::</span><span class="na">ON_WORKER_START</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">Hyperf\Framework\Bootstrap\WorkerStartCallback</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;onWorkerStart&#39;</span><span class="p">],</span>
+    <span class="nx">SwooleEvent</span><span class="o">::</span><span class="na">ON_PIPE_MESSAGE</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">Hyperf\Framework\Bootstrap\PipeMessageCallback</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;onPipeMessage&#39;</span><span class="p">],</span>
+    <span class="nx">SwooleEvent</span><span class="o">::</span><span class="na">ON_WORKER_EXIT</span> <span class="o">=&gt;</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">Swoole\Timer</span><span class="o">::</span><span class="na">clearAll</span><span class="p">();</span>
+    <span class="p">},</span>
+<span class="p">],</span>
+<span class="c1">// ...
+</span></code></pre></div>
+<h2 id="运行模式">运行模式</h2>
+
+<p>Swoole Server包含两种运行模式。单线程模式（SWOOLE_BASE）和进程模式（SWOOLE_PROCESS）。</p>
+
+<p>Hyperf官方骨架包默认的是Process模式。在传统服务部署时Process模式会帮我们管理进程，而在Kubernetes部署时，Kubernetes以及Kubernetes的Ingress或Sidecar已经承担了一些诸如拉起、均衡、连接保持的部分职能，使用Process略显冗余。</p>
+
+<p>Docker官方鼓励“一个容器一个进程(one process per container)”的方式。这里我们采用Base模式，且只启动一进程(worker_num=1)。</p>
+
+<blockquote>
+<p>Swoole官网对Base模式的优点定义是：1,BASE模式没有IPC开销，性能更好。2，BASE模式代码更简单，不容易出错</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// config/autoload/server.php
+</span><span class="c1">// ...
+</span><span class="c1"></span><span class="s1">&#39;mode&#39;</span> <span class="o">=&gt;</span> <span class="nx">SWOOLE_BASE</span><span class="p">,</span>
+<span class="c1">// ...
+</span><span class="c1"></span><span class="s1">&#39;settings&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;enable_coroutine&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;worker_num&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;pid_file&#39;</span> <span class="o">=&gt;</span> <span class="nx">BASE_PATH</span> <span class="o">.</span> <span class="s1">&#39;/runtime/hyperf.pid&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;open_tcp_nodelay&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;max_coroutine&#39;</span> <span class="o">=&gt;</span> <span class="mi">100000</span><span class="p">,</span>
+    <span class="s1">&#39;open_http2_protocol&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;max_request&#39;</span> <span class="o">=&gt;</span> <span class="mi">100000</span><span class="p">,</span>
+    <span class="s1">&#39;socket_buffer_size&#39;</span> <span class="o">=&gt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span>
+<span class="p">],</span>
+<span class="c1">// ...
+</span></code></pre></div>
+<p>设置每个容器一个进程后，我们的扩容与缩容可以更细腻。试想如果1个容器里有16个进程，那么我们扩容后的进程数只能是16的倍数，而每个容器一个进程，我们可以将进程总数设为为任意自然数。</p>
+
+<p>因为每个容器只有一个进程，这里我们限制每个容器最多使用一个核。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">resources<span class="p">:</span><span class="w">
+</span><span class="w">  </span>requests<span class="p">:</span><span class="w">
+</span><span class="w">    </span>cpu<span class="p">:</span><span class="w"> </span><span class="s2">&#34;1&#34;</span><span class="w">
+</span><span class="w">  </span>limits<span class="p">:</span><span class="w">
+</span><span class="w">    </span>cpu<span class="p">:</span><span class="w"> </span><span class="s2">&#34;1&#34;</span></code></pre></div>
+<p>然后我们通过配置Horizontal Pod Autoscaler来实现根据服务压力自动扩容。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 最少1进程，最多100进程，目标CPU使用率50%</span>
+kubectl autoscale deployment hyperf-demo --cpu-percent<span class="o">=</span><span class="m">50</span> --min<span class="o">=</span><span class="m">1</span> --max<span class="o">=</span><span class="m">100</span></code></pre></div>
+<h2 id="日志处理">日志处理</h2>
+
+<p>Docker容器的最佳实践是将日志打印到标准输出和标准错误中。Hyperf日志分为系统日志和应用日志，其中系统日志已经打印到了标准输出中，而应用日志默认打印到了runtime文件夹下。这在容器环境中显然不够灵活。我们将两者都打印到标准输出中。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// config/autoload/logger.php
+</span><span class="c1"></span><span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;handler&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="nx">Monolog\Handler\ErrorLogHandler</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+            <span class="s1">&#39;constructor&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;messageType&#39;</span> <span class="o">=&gt;</span> <span class="nx">Monolog\Handler\ErrorLogHandler</span><span class="o">::</span><span class="na">OPERATING_SYSTEM</span><span class="p">,</span>
+                <span class="s1">&#39;level&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;APP_ENV&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;prod&#39;</span>
+                <span class="o">?</span> <span class="nx">Monolog\Logger</span><span class="o">::</span><span class="na">WARNING</span>
+                <span class="o">:</span> <span class="nx">Monolog\Logger</span><span class="o">::</span><span class="na">DEBUG</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;formatter&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;APP_ENV&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;prod&#39;</span>
+            <span class="o">?</span> <span class="nx">Monolog\Formatter\JsonFormatter</span><span class="o">::</span><span class="na">class</span>
+            <span class="o">:</span> <span class="nx">Monolog\Formatter\LineFormatter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;PsrLogMessageProcessor&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="nx">Monolog\Processor\PsrLogMessageProcessor</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</code></pre></div>
+<p>仔细查看上面的配置会发现我们针对不同环境变量做了不同处理。</p>
+
+<p>首先，我们在生产环境输出JSON化的结构性日志，这是因为FluentBit、Filebeat等日志收集工具都可以原生解析JSON日志，进行分发、过滤、修改，避免复杂的grok正则匹配。而在开发环境中，JSON日志就没那么友好了，一旦涉及到转义可读性就直线下降。所以在开发环境中我们还是使用LineFormatter输出日志。</p>
+
+<p>其次，我们在开发环境中输出了大量的日志，而在生产环境中，我们需要控制日志数量，避免堵塞日志收集工具。如果最终将日志容易写入到Elasticsearch中的话，更要控制写入速度。我们在生产环境中建议默认只开启WARNING以上级别的日志。</p>
+
+<p>按照官方文档的介绍，我们将框架打印的日志也交给Monolog处理。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">App\Provider</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Hyperf\Logger\LoggerFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Container\ContainerInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">StdoutLoggerFactory</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">(</span><span class="nx">ContainerInterface</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$factory</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">LoggerFactory</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nv">$factory</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;Sys&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// config/autoload/dependencies.php
+</span><span class="c1"></span><span class="k">return</span> <span class="p">[</span>
+	<span class="nx">Hyperf\Contract\StdoutLoggerInterface</span><span class="o">::</span><span class="na">class</span> <span class="o">=&gt;</span> <span class="nx">App\Provider\StdoutLoggerFactory</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+<span class="p">];</span>
+</code></pre></div>
+<h2 id="文件处理">文件处理</h2>
+
+<p>有状态的应用是无法任意扩容的。PHP应用常见状态无非是Session、日志、文件上传等。Session可用Redis存储，日志上一节已经介绍，本节介绍一下文件的处理。</p>
+
+<p>文件建议使用对象存储的形式上传到云端。阿里云、七牛云等都是常见的供应商。私有部署解决方案也包含MinIO、Ceph等。为了避免供应商锁定，建议使用统一的抽象层，而不是直接依赖供应商提供的SDK。league/flysystem是包括Laravel在内等多个主流框架的共同选择。这里我们引入League\Flysystem包，并通过aws S3 API对接MinIO存储。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">composer require league/flysystem
+composer require league/flysystem-aws-s3-v3</code></pre></div>
+<p>按照Hyperf DI的官方文档创建工厂类并绑定关系。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">App\Provider</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Aws\S3\S3Client</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Hyperf\Contract\ConfigInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Hyperf\Guzzle\CoroutineHandler</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\Adapter\Local</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\AwsS3v3\AwsS3Adapter</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\Config</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">League\Flysystem\Filesystem</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Container\ContainerInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">FileSystemFactory</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__invoke</span><span class="p">(</span><span class="nx">ContainerInterface</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$config</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">ConfigInterface</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$config</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;app_env&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;dev&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nx">Filesystem</span><span class="p">(</span><span class="k">new</span> <span class="nx">Local</span><span class="p">(</span><span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/../../runtime&#39;</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="nv">$options</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">ConfigInterface</span><span class="o">::</span><span class="na">class</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">);</span>
+        <span class="nv">$adapter</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">adapterFromArray</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Filesystem</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Config</span><span class="p">(</span><span class="nv">$options</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">function</span> <span class="nf">adapterFromArray</span><span class="p">(</span><span class="k">array</span> <span class="nv">$options</span><span class="p">)</span><span class="o">:</span> <span class="nx">AwsS3Adapter</span>
+    <span class="p">{</span>
+    	<span class="c1">// 协程化S3客户端
+</span><span class="c1"></span>        <span class="nv">$options</span> <span class="o">=</span> <span class="nx">array_merge</span><span class="p">(</span><span class="nv">$options</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;http_handler&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">CoroutineHandler</span><span class="p">()]);</span>
+        <span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">S3Client</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">AwsS3Adapter</span><span class="p">(</span><span class="nv">$client</span><span class="p">,</span> <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;bucket_name&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;override_visibility_on_copy&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// config/autoload/dependencies.php
+</span><span class="c1"></span><span class="k">return</span> <span class="p">[</span>
+	<span class="nx">Hyperf\Contract\StdoutLoggerInterface</span><span class="o">::</span><span class="na">class</span> <span class="o">=&gt;</span> <span class="nx">App\Provider\StdoutLoggerFactory</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+	<span class="nx">League\Flysystem\Filesystem</span><span class="o">::</span><span class="na">class</span> <span class="o">=&gt;</span> <span class="nx">App\Provider\FileSystemFactory</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+<span class="p">];</span>
+</code></pre></div>
+<p>我们按照Hyperf习惯的方式新建一下config/autoload/file.php，并配置S3秘钥等信息：</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// config/autoload/file.php
+</span><span class="c1"></span><span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;credentials&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_KEY&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;secret&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_SECRET&#39;</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;region&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_REGION&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;version&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;latest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bucket_endpoint&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;use_path_style_endpoint&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;endpoint&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_ENDPOINT&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;bucket_name&#39;</span> <span class="o">=&gt;</span> <span class="nx">env</span><span class="p">(</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">),</span>
+<span class="p">];</span>
+</code></pre></div>
+<p>和日志一样，在开发调试时，我们上传使用的是Runtime文件夹，而在生产环境中，则会上传图片至MinIO。日后需要上传至阿里云，只要安装league/flysystem的阿里云适配器：</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">composer require aliyuncs/aliyun-oss-flysystem</code></pre></div>
+<p>并按需重写FileSystemFactory即可。</p>
+
+<h2 id="追踪与监控">追踪与监控</h2>
+
+<p>链路追踪与服务监控本身不是Kubernetes提供的功能，但是因为云原生全景图内的技术栈可以非常好的互相配合，所以通常建议搭配使用。</p>
+
+<p>Hyperf 链路追踪文档：<a href="https://doc.hyperf.io/#/zh-cn/tracer">https://doc.hyperf.io/#/zh-cn/tracer</a></p>
+
+<p>Hyperf 服务监控文档：<a href="https://doc.hyperf.io/#/zh-cn/metric">https://doc.hyperf.io/#/zh-cn/metric</a></p>
+
+<p>如果您已经配置了base模式并使用一进程，则在服务监控时则不用再启动独立监控进程了。在Controller增加如下路由即可：</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// 将/metrics路由绑到这里。
+</span><span class="c1"></span><span class="k">public</span> <span class="k">function</span> <span class="nf">metrics</span><span class="p">(</span><span class="nx">CollectorRegistry</span> <span class="nv">$registry</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$renderer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RenderTextFormat</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="nv">$registry</span><span class="o">-&gt;</span><span class="na">getMetricFamilySamples</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>如果您使用的Prometheus支持从服务注解中发现爬取目标，只要在Service中添加Prometheus注解即可。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">kind<span class="p">:</span><span class="w"> </span>Service<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>annotations<span class="p">:</span><span class="w">
+</span><span class="w">    </span>prometheus.io/port<span class="p">:</span><span class="w"> </span><span class="s2">&#34;9501&#34;</span><span class="w">
+</span><span class="w">    </span>prometheus.io/scrape<span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span><span class="w">    </span>prometheus.io/path<span class="p">:</span><span class="w"> </span><span class="s2">&#34;/metrics&#34;</span></code></pre></div>
+<p>如果您使用Nginx Ingress，您可以配置开启Opentracing。（<a href="https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/opentracing/">nginx ingress文档</a>）</p>
+
+<p>先在Nginx Ingress Configmap中配置一下使用的Tracer。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">zipkin-collector-host<span class="p">:</span><span class="w"> </span>zipkin.default.svc.cluster.local<span class="w">
+</span><span class="w"></span>jaeger-collector-host<span class="p">:</span><span class="w"> </span>jaeger-agent.default.svc.cluster.local<span class="w">
+</span><span class="w"></span>datadog-collector-host<span class="p">:</span><span class="w"> </span>datadog-agent.default.svc.cluster.local</code></pre></div>
+<p>再在Ingress注解中开启opentracing。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">kind<span class="p">:</span><span class="w"> </span>Ingress<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>annotations<span class="p">:</span><span class="w">
+</span><span class="w">    </span>nginx.ingress.kubernetes.io/enable-opentracing<span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span></code></pre></div>
+<p>这样就可以将Nginx Ingress和Hyperf之间的链路打通了。</p>
+
+<h2 id="完整示例">完整示例</h2>
+
+<p>一个完整的骨架包可以在我的GitHub找到：<a href="https://github.com/Reasno/cloudnative-hyperf">https://github.com/Reasno/cloudnative-hyperf</a></p>
+
+<p><strong><em>实际上Kubernetes的部署方式多种多样。任何骨架包都不可能适用所有情况。</em></strong></p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/kubernetes" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">kubernetes</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/hyperf" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">hyperf</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/docker" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">docker</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">php</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+      <script src="https://utteranc.es/client.js"
+        repo="Reasno/reasno.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l"><div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">What&#39;s in this posts</p>
+      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#生命周期">生命周期</a></li>
+<li><a href="#运行模式">运行模式</a></li>
+<li><a href="#日志处理">日志处理</a></li>
+<li><a href="#文件处理">文件处理</a></li>
+<li><a href="#追踪与监控">追踪与监控</a></li>
+<li><a href="#完整示例">完整示例</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/hyperf-clean-annotations/">Hyperf 注解整洁之道</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/purposed-php-dialect-p-plus-plus/">Purposed PHP Dialect: P&#43;&#43;</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/unboxing-taylor-otwell-s-laravel-cloud/">Unboxing Taylor Otwell&#39;s Laravel Cloud</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/contextual-dependency-injection-is-a-myth/">Contextual Dependency Injection Is a Myth</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/">Kubernetes on Premise: Top 5 Fallacies (Part One)</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/">Never Force Yourself to Learn New Skills Without a Concrete Project</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/when-do-we-need-php/">When Do We Need PHP</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
+    &copy; 2020 Garbage Collected
+  </a>
+    <div>
+
+
+
+<a href="https://twitter.com/Reasno_g" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+<a href="https://github.com/Reasno" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2019-10-09T12:58:36&#43;08:00"/>
+<meta property="og:updated_time" content="2020-01-23T15:23:15&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -179,6 +179,99 @@ if (!doNotTrack) {
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/timeout-vs-deadline/" class="color-inherit dim link">
+            Timeout vs Deadline
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          One of the first few things I feel strange about gRPC is that gRPC terminate unfinished request based on a deadline mechanism instead of the more common timeout mechanism.
+In pseudo-code:
+var timeout = 5 * time.Second; var deadline = time.Now() + 5 * time.Second; As you can see, the deadline mechanism is less straight-forward at first glance. So why bother?
+I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t put my mind to it until recently.
+        </div>
+          <a href="/posts/timeout-vs-deadline/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+          
+        
+        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
+          <a href="/posts/cloudnative-hyperf/" class="db grow">
+            <img src="https://guxi.me/images/Kubernetes_logo_without_workmark.svg" class="img" alt="image from 云原生Hyperf骨架包">
+          </a>
+        </div>
+      
+      <div class="blah w-100 w-60-ns pl3-ns">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/cloudnative-hyperf/" class="color-inherit dim link">
+            云原生Hyperf骨架包
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
+生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
+&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
+livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
+服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
+&lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // .
+        </div>
+          <a href="/posts/cloudnative-hyperf/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/hyperf-clean-annotations/" class="color-inherit dim link">
+            Hyperf 注解整洁之道
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          注解是元编程的一种。元编程从字面意思上说就是编写程序的程序。和普通编程一样，注解在给我们带来便捷的同时，如果使用不当，也有可能造成可读性、可维护性下降等问题。
+在某些注解中，可能有很多配置项，比如：
+//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
+ 注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在GitHub上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
+下面是一个继承CircuitBreaker（熔断器）注解的例子。
+&lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state.
+        </div>
+          <a href="/posts/hyperf-clean-annotations/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/parties-in-online-advertising/" class="color-inherit dim link">
             Parties in Online Advertising
             </a>
@@ -221,98 +314,6 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/compress-url-parameters-without-a-storage/" class="color-inherit dim link">
-            Compress Url Parameters Without a Storage
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          <p>In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.</p>
-
-<p>Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering <strong>Error 413: request entity too large</strong>. I know nginx throws it.</p>
-
-        </div>
-          <a href="/posts/compress-url-parameters-without-a-storage/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-          
-        
-        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
-          <a href="/posts/purposed-php-dialect-p-plus-plus/" class="db grow">
-            <img src="https://guxi.me/images/PHP-logo.svg" class="img" alt="image from Purposed PHP Dialect: P&#43;&#43;">
-          </a>
-        </div>
-      
-      <div class="blah w-100 w-60-ns pl3-ns">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/purposed-php-dialect-p-plus-plus/" class="color-inherit dim link">
-            Purposed PHP Dialect: P&#43;&#43;
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          The first time I saw P++ my reaction was &ldquo;meh, it is not going anywhere&rdquo;. Anything breaks backward compatibility and abandons existing user base will get punished eventually. Python community took a decade to heal from the wound caused by Python3. In short, I believe it is not worth it to trade backward compatibility for language design purity. I also wrote a blog about Vue3 changes on its new functional APIs.
-        </div>
-          <a href="/posts/purposed-php-dialect-p-plus-plus/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-          
-        
-        <div class="pr3-ns mb4 mb0-ns w-100 w-40-ns">
-          <a href="/posts/rethink-clean-architecture/" class="db grow">
-            <img src="https://guxi.me/images/the-clean-architecture.png" class="img" alt="image from Rethink The Clean Architecture">
-          </a>
-        </div>
-      
-      <div class="blah w-100 w-60-ns pl3-ns">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/rethink-clean-architecture/" class="color-inherit dim link">
-            Rethink The Clean Architecture
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          The Clean Architecture is more like a fantasy. It is like a wonderland we will never be in.
-I would enjoy and appreciate a work where all business domains, application domains, and transports and UIs, etc. are all orthogonal. In reality, they are all wired together like a mess. It is no mess created by engineer though. The world is chaotic by itself, so do all the business around it. Imagine your boss tell your team to add a new button to your website, and you find your business rule doesn&rsquo;t cover this button what so ever, so you have to update your JSON API, add new test cases, and add new event to your event sourcing bus, and change whatever is affected all the way down to the database level.
-        </div>
-          <a href="/posts/rethink-clean-architecture/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
@@ -320,6 +321,18 @@ I would enjoy and appreciate a work where all business domains, application doma
         <h1 class="f3">More</h1>
         <ul class="f5 fw4 mb4 dib mr3">
         
+        
+            <li class="link black dim pa2"><a href="/posts/compress-url-parameters-without-a-storage/" class="link black dim pa2">
+              Compress Url Parameters Without a Storage
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/purposed-php-dialect-p-plus-plus/" class="link black dim pa2">
+              Purposed PHP Dialect: P&#43;&#43;
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/rethink-clean-architecture/" class="link black dim pa2">
+              Rethink The Clean Architecture
+            </a></li>
         
             <li class="link black dim pa2"><a href="/posts/unboxing-taylor-otwell-s-laravel-cloud/" class="link black dim pa2">
               Unboxing Taylor Otwell&#39;s Laravel Cloud
@@ -333,29 +346,17 @@ I would enjoy and appreciate a work where all business domains, application doma
               Kubernetes on Premise: Top 5 Fallacies (Part One)
             </a></li>
         
-            <li class="link black dim pa2"><a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/" class="link black dim pa2">
-              Never Force Yourself to Learn New Skills Without a Concrete Project
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/ad-server-rewrite-goals-and-non-goals/" class="link black dim pa2">
-              Ad Server Rewrite: Goals and Non Goals
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/epoll-and-event-loop-just-enough-you-need-for-interview/" class="link black dim pa2">
-              Epoll and Event Loop: Just Enough You Need for Interview
-            </a></li>
-        
       
         
         
           <li class="link black dim pa2" >
-            <a href="/tags/coding-suggestion" class="link black dim pa2" > coding-suggestion <small>(5)</small></a>
+            <a href="/tags/php" class="link black dim pa2" > php <small>(7)</small></a>
           </li>
         
         
         
           <li class="link black dim pa2" >
-            <a href="/tags/php" class="link black dim pa2" > php <small>(5)</small></a>
+            <a href="/tags/coding-suggestion" class="link black dim pa2" > coding-suggestion <small>(6)</small></a>
           </li>
         
         
@@ -380,6 +381,18 @@ I would enjoy and appreciate a work where all business domains, application doma
         
           <li class="link black dim pa2" >
             <a href="/tags/go" class="link black dim pa2" > go <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/hyperf" class="link black dim pa2" > hyperf <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/kubernetes" class="link black dim pa2" > kubernetes <small>(2)</small></a>
           </li>
         
         
@@ -439,6 +452,12 @@ I would enjoy and appreciate a work where all business domains, application doma
         
         
         
+        
+        
+        
+        
+        
+        
    
         </ul>
         
@@ -455,7 +474,7 @@ I would enjoy and appreciate a work where all business domains, application doma
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
-    &copy; 2019 Garbage Collected
+    &copy; 2020 Garbage Collected
   </a>
     <div>
 
