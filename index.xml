@@ -284,5 +284,14 @@ I once heard a Haskell fan said that she thought lazy execution was what set Has
       <description>Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://guxi.me/posts/coding_standard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://guxi.me/posts/coding_standard/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
