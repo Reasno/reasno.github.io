@@ -47,11 +47,11 @@ For starters, the request-scoped injection is way too expensive.">
 
 <meta itemprop="datePublished" content="2020-01-22T16:04:50&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-22T16:04:50&#43;08:00" />
-<meta itemprop="wordCount" content="454">
+<meta itemprop="wordCount" content="453">
 
 
 
-<meta itemprop="keywords" content="NestJS,TypeScript," />
+<meta itemprop="keywords" content="nestjs,typescript," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Why You Should Avoid Using Request-scoped Injection in NestJS"/>
 <meta name="twitter:description" content="NestJS 6 comes with all-new injection scope support. Namely, instead of enforcing every object managed by DI container to be a singleton, you can now freely assign three types of injection scope to them: singleton, request, and transient.
@@ -185,15 +185,15 @@ if (!doNotTrack) {
 
 <p>This way, the context object will contain all you need for distributed tracing and context-aware logging. If web server agnosticism is your thing, you can define your own context class and passing it instead. To further reduce memory allocation and garbage collection you can take advantage of the <a href="https://github.com/coopernurse/node-pool">object pool pattern</a>.</p>
 
-<p>Request scope in NestJS can still be useful, especially when you are not controlling the call chain, e.g. when the library constrains the function signature. Use it as a last resort to access requests, but certainly not your first choice.</p>
+<p>Request scope in NestJS are still relavent, especially when you are not controlling the call chain, e.g. when the library constrains the function signature. Use it as a last resort to access requests, but certainly not your first choice.</p>
 <ul class="pa0">
   
    <li class="list">
-     <a href="/tags/nestjs" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">NestJS</a>
+     <a href="/tags/nestjs" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">nestjs</a>
    </li>
   
    <li class="list">
-     <a href="/tags/typescript" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">TypeScript</a>
+     <a href="/tags/typescript" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">typescript</a>
    </li>
   
 </ul>

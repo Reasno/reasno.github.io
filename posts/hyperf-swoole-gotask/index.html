@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Garbage Collected  | 使用Hyperf插入100万行数据到MongoDB，能行吗</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.55.6" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+      <link rel="stylesheet" href="/css/syntax.css">
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="使用Hyperf插入100万行数据到MongoDB，能行吗" />
+<meta property="og:description" content="得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
+一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
+要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
+ 在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。
+ 这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。
+人一旦习惯了epoll，对阻塞IO真的是很难容忍。
+有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。
+理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。
+算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？
+在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：
+ 遇到CPU密集型的操作，扔进来。 遇到暂时无法协程化的IO操作（如MongoDB），扔进来。 遇到某些组件不支持协程，扔进来。  前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。
+最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
+当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。
+简单示意就是这样：
+package main import ( &#34;github.com/reasno/gotask/pkg/gotask&#34; ) // App sample type App struct{} // Hi returns greeting message. func (a *App) Hi(name interface{}, r *interface{}) error { *r = map[string]interface{}{ &#34;hello&#34;: name, } return nil } func main() { gotask.Register(new(App)) gotask.Run() }&lt;?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://guxi.me/posts/hyperf-swoole-gotask/" />
+<meta property="article:published_time" content="2020-03-27T18:34:28&#43;08:00"/>
+<meta property="article:modified_time" content="2020-03-27T18:34:28&#43;08:00"/>
+
+<meta itemprop="name" content="使用Hyperf插入100万行数据到MongoDB，能行吗">
+<meta itemprop="description" content="得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
+一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
+要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
+ 在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。
+ 这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。
+人一旦习惯了epoll，对阻塞IO真的是很难容忍。
+有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。
+理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。
+算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？
+在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：
+ 遇到CPU密集型的操作，扔进来。 遇到暂时无法协程化的IO操作（如MongoDB），扔进来。 遇到某些组件不支持协程，扔进来。  前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。
+最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
+当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。
+简单示意就是这样：
+package main import ( &#34;github.com/reasno/gotask/pkg/gotask&#34; ) // App sample type App struct{} // Hi returns greeting message. func (a *App) Hi(name interface{}, r *interface{}) error { *r = map[string]interface{}{ &#34;hello&#34;: name, } return nil } func main() { gotask.Register(new(App)) gotask.Run() }&lt;?">
+
+
+<meta itemprop="datePublished" content="2020-03-27T18:34:28&#43;08:00" />
+<meta itemprop="dateModified" content="2020-03-27T18:34:28&#43;08:00" />
+<meta itemprop="wordCount" content="273">
+
+
+
+<meta itemprop="keywords" content="Hyperf,Swoole,go,php,gotask," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用Hyperf插入100万行数据到MongoDB，能行吗"/>
+<meta name="twitter:description" content="得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
+一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
+要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
+ 在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。
+ 这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。
+人一旦习惯了epoll，对阻塞IO真的是很难容忍。
+有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。
+理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。
+算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？
+在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：
+ 遇到CPU密集型的操作，扔进来。 遇到暂时无法协程化的IO操作（如MongoDB），扔进来。 遇到某些组件不支持协程，扔进来。  前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。
+最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
+当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。
+简单示意就是这样：
+package main import ( &#34;github.com/reasno/gotask/pkg/gotask&#34; ) // App sample type App struct{} // Hi returns greeting message. func (a *App) Hi(name interface{}, r *interface{}) error { *r = map[string]interface{}{ &#34;hello&#34;: name, } return nil } func main() { gotask.Register(new(App)) gotask.Run() }&lt;?"/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-10190882-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://guxi.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Garbage Collected
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+<a href="https://twitter.com/Reasno_g" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+<a href="https://github.com/Reasno" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">使用Hyperf插入100万行数据到MongoDB，能行吗</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-03-27T18:34:28&#43;08:00">March 27, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。</p>
+
+<p>不过，也有几次睡不着觉的时候，基本都是因为生态的问题。</p>
+
+<p>一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。</p>
+
+<p>要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。</p>
+
+<blockquote>
+<p>在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。</p>
+</blockquote>
+
+<p>这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。</p>
+
+<p>人一旦习惯了epoll，对阻塞IO真的是很难容忍。</p>
+
+<p>有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。</p>
+
+<p>理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。</p>
+
+<p>算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？</p>
+
+<p>在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：</p>
+
+<ol>
+<li>遇到CPU密集型的操作，扔进来。</li>
+<li>遇到暂时无法协程化的IO操作（如MongoDB），扔进来。</li>
+<li>遇到某些组件不支持协程，扔进来。</li>
+</ol>
+
+<p>前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。</p>
+
+<p>最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。</p>
+
+<p>当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。</p>
+
+<p>简单示意就是这样：</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/reasno/gotask/pkg/gotask&#34;</span>
+<span class="p">)</span>
+<span class="c1">// App sample
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">App</span> <span class="kd">struct</span><span class="p">{}</span>
+
+<span class="c1">// Hi returns greeting message.
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">App</span><span class="p">)</span> <span class="nf">Hi</span><span class="p">(</span><span class="nx">name</span> <span class="kd">interface</span><span class="p">{},</span> <span class="nx">r</span> <span class="o">*</span><span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="o">*</span><span class="nx">r</span> <span class="p">=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+        <span class="s">&#34;hello&#34;</span><span class="p">:</span> <span class="nx">name</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">gotask</span><span class="p">.</span><span class="nf">Register</span><span class="p">(</span><span class="nb">new</span><span class="p">(</span><span class="nx">App</span><span class="p">))</span>
+    <span class="nx">gotask</span><span class="p">.</span><span class="nf">Run</span><span class="p">()</span>
+<span class="p">}</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">Reasno\GoTask\Relay\CoroutineSocketRelay</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Spiral\Goridge\RPC</span><span class="p">;</span>
+<span class="k">use</span> <span class="k">function</span> <span class="nf">Swoole\Coroutine\run</span><span class="p">;</span>
+
+<span class="k">require_once</span> <span class="s2">&#34;../vendor/autoload.php&#34;</span><span class="p">;</span>
+
+<span class="nx">run</span><span class="p">(</span><span class="k">function</span><span class="p">(){</span>
+    <span class="nv">$task</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RPC</span><span class="p">(</span>
+        <span class="k">new</span> <span class="nx">CoroutineSocketRelay</span><span class="p">(</span><span class="s2">&#34;127.0.0.1&#34;</span><span class="p">,</span> <span class="mi">6001</span><span class="p">)</span>
+    <span class="p">);</span>
+    <span class="nx">var_dump</span><span class="p">(</span><span class="nv">$task</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s2">&#34;App.Hi&#34;</span><span class="p">,</span> <span class="s2">&#34;Reasno&#34;</span><span class="p">));</span>
+    <span class="c1">// 打印 [ &#34;hello&#34; =&gt; &#34;Reasno&#34; ]
+</span><span class="c1"></span><span class="p">});</span>
+</code></pre></div>
+<p>查一下MongoDB看看。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">public function goInsert(GoTask $task)
+{
+    return $task-&gt;call(&#39;App.Insert&#39;, json_encode([&#39;random&#39; =&gt; rand(1, 10000)]), RELAY::PAYLOAD_RAW);
+}</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">App</span><span class="p">)</span> <span class="nf">Insert</span><span class="p">(</span><span class="nx">record</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">doc</span> <span class="nx">bson</span><span class="p">.</span><span class="nx">D</span>
+    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">bson</span><span class="p">.</span><span class="nf">UnmarshalExtJSON</span><span class="p">(</span><span class="nx">record</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">doc</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="nx">collection</span> <span class="o">:=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nf">Database</span><span class="p">(</span><span class="s">&#34;testing&#34;</span><span class="p">).</span><span class="nf">Collection</span><span class="p">(</span><span class="s">&#34;numbers&#34;</span><span class="p">)</span>
+    <span class="nx">ctx</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">WithTimeout</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="mi">5</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nx">docs</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">docs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">doc</span>
+    <span class="p">}</span>
+    <span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">collection</span><span class="p">.</span><span class="nf">InsertMany</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">docs</span><span class="p">[:])</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="o">*</span><span class="nx">r</span> <span class="p">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">InsertedIDs</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span></code></pre></div>
+<p>每个请求插100行，先请求HTTP到Hyperf，Hyperf再走进程通讯到GO。mbp上压一下。</p>
+<div class="highlight"><pre class="chroma">Concurrency Level:      100
+Time taken for tests:   1.940 seconds
+Complete requests:      10000
+Failed requests:        0
+Keep-Alive requests:    10000
+Total transferred:      28510000 bytes
+HTML transferred:       27010000 bytes
+Requests per second:    5154.65 [#/sec] (mean)
+Time per request:       19.400 [ms] (mean)
+Time per request:       0.194 [ms] (mean, across all concurrent requests)
+Transfer rate:          14351.46 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.3      0       4
+Processing:     2   19  18.9     13     149
+Waiting:        2   19  18.9     13     149
+Total:          2   19  19.0     13     149</pre></div>
+<p>1.9秒，一共插了100 * 10000 = 一百万行进入mongo。</p>
+
+<p>目前对这个结果还是很满意的。</p>
+
+<p>当然，还有很多地方可以改进。</p>
+
+<p>上面这个Benchmark可以在这个项目中找到：</p>
+
+<p><a href="https://github.com/Reasno/gotask-benchmark">https://github.com/Reasno/gotask-benchmark</a></p>
+
+<p>欢迎来跑一下。</p>
+
+<p>最后是项目本身，已开源，名字叫gotask，很朴素，请大家给个star</p>
+
+<p><a href="https://github.com/Reasno/gotask">https://github.com/Reasno/gotask</a></p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/hyperf" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Hyperf</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/swoole" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Swoole</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/go" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">go</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">php</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/gotask" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gotask</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+      <script src="https://utteranc.es/client.js"
+        repo="Reasno/reasno.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/cloudnative-hyperf/">云原生Hyperf骨架包</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/hyperf-clean-annotations/">Hyperf 注解整洁之道</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/when-do-we-need-php/">When Do We Need PHP</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/purposed-php-dialect-p-plus-plus/">Purposed PHP Dialect: P&#43;&#43;</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/unboxing-taylor-otwell-s-laravel-cloud/">Unboxing Taylor Otwell&#39;s Laravel Cloud</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/contextual-dependency-injection-is-a-myth/">Contextual Dependency Injection Is a Myth</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/">Never Force Yourself to Learn New Skills Without a Concrete Project</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/options-take-a-toll/">Options Take a Toll</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
+    &copy; 2020 Garbage Collected
+  </a>
+    <div>
+
+
+
+<a href="https://twitter.com/Reasno_g" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+<a href="https://github.com/Reasno" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

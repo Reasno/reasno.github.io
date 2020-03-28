@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2020-01-22T16:04:50&#43;08:00"/>
+<meta property="og:updated_time" content="2020-03-27T18:34:28&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -179,6 +179,72 @@ if (!doNotTrack) {
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/hyperf-swoole-gotask/" class="color-inherit dim link">
+            使用Hyperf插入100万行数据到MongoDB，能行吗
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
+一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
+要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
+ 在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。
+ 这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。
+人一旦习惯了epoll，对阻塞IO真的是很难容忍。
+有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。
+理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。
+算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？
+在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：
+ 遇到CPU密集型的操作，扔进来。 遇到暂时无法协程化的IO操作（如MongoDB），扔进来。 遇到某些组件不支持协程，扔进来。  前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。
+最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
+当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。
+简单示意就是这样：
+package main import ( &#34;github.com/reasno/gotask/pkg/gotask&#34; ) // App sample type App struct{} // Hi returns greeting message. func (a *App) Hi(name interface{}, r *interface{}) error { *r = map[string]interface{}{ &#34;hello&#34;: name, } return nil } func main() { gotask.Register(new(App)) gotask.Run() }&lt;?
+        </div>
+          <a href="/posts/hyperf-swoole-gotask/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/timeout-vs-deadline/" class="color-inherit dim link">
+            Timeout vs Deadline
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          One of the first few things I feel strange about gRPC is that gRPC terminate unfinished request based on a deadline mechanism instead of the more common timeout mechanism.
+In pseudo-code:
+var timeout = 5 * time.Second; var deadline = time.Now() + 5 * time.Second; As you can see, the deadline mechanism is less straight-forward at first glance. So why bother?
+I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t put my mind to it until recently.
+        </div>
+          <a href="/posts/timeout-vs-deadline/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="color-inherit dim link">
             Why You Should Avoid Using Request-scoped Injection in NestJS
             </a>
@@ -264,56 +330,6 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/parties-in-online-advertising/" class="color-inherit dim link">
-            Parties in Online Advertising
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          I am going to give a talk highlighting elementary concepts in online advertising. It is a good time to review all the basics.
-DSP Demand-side platforms receive an ad request that they must answer by a time set by the SSP or ad exchange. The time allowed can be as low as 100 ms and range up to a few seconds. DSPs decide whether they want to bid. If they do, they must select an ad, determine a bid price, and return their offer to the ad exchange.
-        </div>
-          <a href="/posts/parties-in-online-advertising/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/beware-of-backpressure/" class="color-inherit dim link">
-            Beware of Backpressure
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          One of my junior dev was frustrated today. He was supposed to read from a file stream with NodeJS, piping that into the database. However, he got errors thrown everywhere when dealing with larger files. I helped him identified the problem. He had been dumping async calls (the database insertion) faster than the call could be handled.
-I remotely remember I run into a similar issue years ago when I wrote a web scraper in NodeJS.
-        </div>
-          <a href="/posts/beware-of-backpressure/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
@@ -321,6 +337,14 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         <h1 class="f3">More</h1>
         <ul class="f5 fw4 mb4 dib mr3">
         
+        
+            <li class="link black dim pa2"><a href="/posts/parties-in-online-advertising/" class="link black dim pa2">
+              Parties in Online Advertising
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/beware-of-backpressure/" class="link black dim pa2">
+              Beware of Backpressure
+            </a></li>
         
             <li class="link black dim pa2"><a href="/posts/compress-url-parameters-without-a-storage/" class="link black dim pa2">
               Compress Url Parameters Without a Storage
@@ -338,19 +362,11 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
               Unboxing Taylor Otwell&#39;s Laravel Cloud
             </a></li>
         
-            <li class="link black dim pa2"><a href="/posts/contextual-dependency-injection-is-a-myth/" class="link black dim pa2">
-              Contextual Dependency Injection Is a Myth
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/kubernetes-on-premise-top-5-fallacies-part-one/" class="link black dim pa2">
-              Kubernetes on Premise: Top 5 Fallacies (Part One)
-            </a></li>
-        
       
         
         
           <li class="link black dim pa2" >
-            <a href="/tags/php" class="link black dim pa2" > php <small>(7)</small></a>
+            <a href="/tags/php" class="link black dim pa2" > php <small>(8)</small></a>
           </li>
         
         
@@ -368,6 +384,18 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         
         
           <li class="link black dim pa2" >
+            <a href="/tags/go" class="link black dim pa2" > go <small>(3)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/hyperf" class="link black dim pa2" > hyperf <small>(3)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
             <a href="/tags/rxjs" class="link black dim pa2" > rxjs <small>(3)</small></a>
           </li>
         
@@ -375,18 +403,6 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
         
           <li class="link black dim pa2" >
             <a href="/tags/dependency-injection" class="link black dim pa2" > dependency-injection <small>(2)</small></a>
-          </li>
-        
-        
-        
-          <li class="link black dim pa2" >
-            <a href="/tags/go" class="link black dim pa2" > go <small>(2)</small></a>
-          </li>
-        
-        
-        
-          <li class="link black dim pa2" >
-            <a href="/tags/hyperf" class="link black dim pa2" > hyperf <small>(2)</small></a>
           </li>
         
         
@@ -424,6 +440,16 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
           <li class="link black dim pa2" >
             <a href="/tags/typescript" class="link black dim pa2" > typescript <small>(2)</small></a>
           </li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         

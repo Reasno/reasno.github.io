@@ -29,22 +29,22 @@
     
 
     
-      <link href="https://guxi.me/tags/go/index.xml" rel="alternate" type="application/rss+xml" title="Garbage Collected" />
-      <link href="https://guxi.me/tags/go/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
+      <link href="https://guxi.me/posts/index.xml" rel="alternate" type="application/rss+xml" title="Garbage Collected" />
+      <link href="https://guxi.me/posts/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
     
 
-    <meta property="og:title" content="go" />
+    <meta property="og:title" content="Posts" />
 <meta property="og:description" content="A collection of my ephemeral thoughts" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://guxi.me/tags/go/" />
+<meta property="og:url" content="https://guxi.me/posts/" />
 
 <meta property="og:updated_time" content="2020-03-27T18:34:28&#43;08:00"/>
 
-<meta itemprop="name" content="go">
+<meta itemprop="name" content="Posts">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="go"/>
+<meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content="A collection of my ephemeral thoughts"/>
 
       
@@ -129,7 +129,7 @@ if (!doNotTrack) {
 
       <div class="tc-l pv3 ph3 ph4-ns">
         <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          go
+          Posts
         </h1>
         
       </div>
@@ -139,87 +139,113 @@ if (!doNotTrack) {
 
     <main class="pb7" role="main">
       
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “go”</p>
-    </div>
-  </article>
-  <div class="mw8 center">    
+  <article class="pa3 pa4-ns nested-copy-line-height nested-img">
+    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray"></section>
     <section class="flex-ns flex-wrap justify-around mt5">
       
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/hyperf-swoole-gotask/" class="link black dim">
-        使用Hyperf插入100万行数据到MongoDB，能行吗
+      <a href="/posts/beauty-of-lazy-execution/" class="link black dim">
+        Beauty of Lazy Execution
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
-不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
-一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
-要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
- 在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。
- 这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。
-人一旦习惯了epoll，对阻塞IO真的是很难容忍。
-有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。
-理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。
-算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？
-在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：
- 遇到CPU密集型的操作，扔进来。 遇到暂时无法协程化的IO操作（如MongoDB），扔进来。 遇到某些组件不支持协程，扔进来。  前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。
-最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
-当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。
-简单示意就是这样：
-package main import ( &#34;github.com/reasno/gotask/pkg/gotask&#34; ) // App sample type App struct{} // Hi returns greeting message. func (a *App) Hi(name interface{}, r *interface{}) error { *r = map[string]interface{}{ &#34;hello&#34;: name, } return nil } func main() { gotask.Register(new(App)) gotask.Run() }&lt;?
+      I have done some quick&rsquo;n&rsquo;dirty bid data processing with Apache Beam in past weeks. As someone who try to stay away from JVM, I am not a big data expert at all. However the working with apache beam is a blast (Using JAVA!). The lazy execution style feels right a home. I love wiring a various component into a topology, and only start processing when data arrives.
+I once heard a Haskell fan said that she thought lazy execution was what set Haskell apart from other programing languages.
     </div>
   </div>
 </div>
-
-        </div>
+</div>
       
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/when-do-we-need-php/" class="link black dim">
-        When Do We Need PHP
+      <a href="/posts/industry-on-service-mesh/" class="link black dim">
+        Industry on Service Mesh
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      When we started huijiwiki.com, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.
-Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.
-Go as well as Rust has a very different nature compared to PHP.
+      Just read a thread in twitter from Matt Klein, where he basically summarized his opinion about complex tooling like service mesh. Though it is not straightforward to me that Matt, the creator of envoy, is actually dissuading people from jumping on the mesh train, his opinion is not really a fresh one. It seems to be a more and more accepted idea that service mesh are not for every body. It solves a domain of problems that only the top of the pyramid would encounter but meanwhile introduces a bunch of other headaches.
     </div>
   </div>
 </div>
-
-        </div>
+</div>
       
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/options-take-a-toll/" class="link black dim">
-        Options Take a Toll
+      <a href="/posts/coding_standard/" class="link black dim">
+        
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Vue community exploded due to changes in Vue 3. Some comments are full of gunpowder with regards to the recent functional API RFC. Let me show my opinions up front:
- A. OSS authors clearly deserve more respect.
- B. I think functional API generally are more expressive compared to the old one.
-  However I would like to provide a counter argument to a very point the defender of RFC made.
+      
     </div>
   </div>
 </div>
-
-        </div>
+</div>
       
     </section>
-  </div>
+
+<ul class="pagination">
+    
+    <li class="page-item">
+        <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    </li>
+    
+    <li class="page-item">
+    <a href="/posts/page/2/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/posts/">1</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/posts/page/2/">2</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item active"><a class="page-link" href="/posts/page/3/">3</a></li>
+    
+    
+    <li class="page-item disabled">
+    <a href="" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    
+    <li class="page-item">
+        <a href="/posts/page/3/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    </li>
+    
+</ul>
+</article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
