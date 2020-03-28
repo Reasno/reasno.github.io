@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Go</title>
+      <link>https://guxi.me/tags/go/</link>
+      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Hyperf</title>
       <link>https://guxi.me/tags/hyperf/</link>
       <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
@@ -35,15 +44,6 @@
       <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
       
       <guid>https://guxi.me/tags/swoole/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://guxi.me/tags/go/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
-      
-      <guid>https://guxi.me/tags/go/</guid>
       <description></description>
     </item>
     

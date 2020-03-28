@@ -17,7 +17,7 @@
       <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
       
       <guid>https://guxi.me/posts/hyperf-swoole-gotask/</guid>
-      <description>得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+      <description>得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
 不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
 一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
 要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
