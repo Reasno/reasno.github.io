@@ -6,24 +6,15 @@
     <description>Recent content in Tags on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2020 18:34:28 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2020 11:15:31 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Go</title>
-      <link>https://guxi.me/tags/go/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
-      
-      <guid>https://guxi.me/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Hyperf</title>
       <link>https://guxi.me/tags/hyperf/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
+      <pubDate>Wed, 08 Apr 2020 11:15:31 +0800</pubDate>
       
       <guid>https://guxi.me/tags/hyperf/</guid>
       <description></description>
@@ -32,7 +23,7 @@
     <item>
       <title>PHP</title>
       <link>https://guxi.me/tags/php/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
+      <pubDate>Wed, 08 Apr 2020 11:15:31 +0800</pubDate>
       
       <guid>https://guxi.me/tags/php/</guid>
       <description></description>
@@ -41,18 +32,9 @@
     <item>
       <title>Swoole</title>
       <link>https://guxi.me/tags/swoole/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
+      <pubDate>Wed, 08 Apr 2020 11:15:31 +0800</pubDate>
       
       <guid>https://guxi.me/tags/swoole/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gotask</title>
-      <link>https://guxi.me/tags/gotask/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
-      
-      <guid>https://guxi.me/tags/gotask/</guid>
       <description></description>
     </item>
     
@@ -260,6 +242,15 @@
       <pubDate>Fri, 19 Jul 2019 19:38:06 +0800</pubDate>
       
       <guid>https://guxi.me/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>https://guxi.me/tags/go/</link>
+      <pubDate>Thu, 18 Jul 2019 12:57:59 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/go/</guid>
       <description></description>
     </item>
     

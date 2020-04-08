@@ -4,54 +4,42 @@
   
   <url>
     <loc>https://guxi.me/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/go/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/hyperf/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
+    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/php/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
+    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://guxi.me/posts/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
+    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/swoole/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
+    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/interrupted-sleep/</loc>
+    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
+    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/gotask/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/hyperf-swoole-gotask/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
   </url>
   
   <url>
@@ -273,6 +261,12 @@
   </url>
   
   <url>
+    <loc>https://guxi.me/tags/go/</loc>
+    <lastmod>2019-07-18T12:57:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/posts/when-do-we-need-php/</loc>
     <lastmod>2019-07-18T12:57:59+08:00</lastmod>
   </url>
@@ -355,6 +349,11 @@
   
   <url>
     <loc>https://guxi.me/posts/coding_standard/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/hyperf-swoole-gotask/</loc>
     <priority>0</priority>
   </url>
   
