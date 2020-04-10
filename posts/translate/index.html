@@ -29,23 +29,53 @@
     
 
     
-      <link href="https://guxi.me/tags/swoole/index.xml" rel="alternate" type="application/rss+xml" title="Garbage Collected" />
-      <link href="https://guxi.me/tags/swoole/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
-    
 
-    <meta property="og:title" content="Swoole" />
-<meta property="og:description" content="A collection of my ephemeral thoughts" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://guxi.me/tags/swoole/" />
+    <meta property="og:title" content="" />
+<meta property="og:description" content="Productivity Out of Box Any component
+Native Coroutine
+Plugable Components
+Production-grade coroutine framework
+High performance
+Production ready
+Microservice
+Abundant Components
+Distributed
+Tested" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://guxi.me/posts/translate/" />
 
-<meta property="og:updated_time" content="2020-04-08T11:15:31&#43;08:00"/>
 
-<meta itemprop="name" content="Swoole">
-<meta itemprop="description" content="A collection of my ephemeral thoughts">
+<meta itemprop="name" content="">
+<meta itemprop="description" content="Productivity Out of Box Any component
+Native Coroutine
+Plugable Components
+Production-grade coroutine framework
+High performance
+Production ready
+Microservice
+Abundant Components
+Distributed
+Tested">
 
+
+
+<meta itemprop="wordCount" content="22">
+
+
+
+<meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Swoole"/>
-<meta name="twitter:description" content="A collection of my ephemeral thoughts"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Productivity Out of Box Any component
+Native Coroutine
+Plugable Components
+Production-grade coroutine framework
+High performance
+Production ready
+Microservice
+Abundant Components
+Distributed
+Tested"/>
 
       
 <script type="application/javascript">
@@ -65,9 +95,11 @@ if (!doNotTrack) {
   <body class="ma0 avenir bg-near-white production">
 
     
+   
+  
 
   <header>
-    <div class="pb3-m pb6-l bg-black">
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://guxi.me/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -127,55 +159,71 @@ if (!doNotTrack) {
   </div>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          Swoole
-        </h1>
-        
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “Swoole”</p>
-    </div>
-  </article>
-  <div class="mw8 center">    
-    <section class="flex-ns flex-wrap justify-around mt5">
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/interrupted-sleep/" class="link black dim">
-        Swoole pattern: 可中断的睡眠
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      前置阅读：linux信号表
- 假设我们有一个监控任务，每5秒钟将监控结果上报。
-$buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
- 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
-正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
-在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
-我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
-$exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
-然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
-$exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。
-    </div>
-  </div>
-</div>
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
 
-        </div>
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1"></h1>
       
+      <time class="f6 mv4 dib tracked" datetime="0001-01-01T00:00:00Z">January 1, 0001</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Productivity Out of Box
+Any component</p>
+
+<p>Native Coroutine</p>
+
+<p>Plugable Components</p>
+
+<p>Production-grade coroutine framework</p>
+
+<p>High performance</p>
+
+<p>Production ready</p>
+
+<p>Microservice</p>
+
+<p>Abundant Components</p>
+
+<p>Distributed</p>
+
+<p>Tested</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
+      
+      <script src="https://utteranc.es/client.js"
+        repo="Reasno/reasno.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
     </section>
-  </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">

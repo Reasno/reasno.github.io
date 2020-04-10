@@ -358,6 +358,11 @@
   </url>
   
   <url>
+    <loc>https://guxi.me/posts/translate/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/about/</loc>
   </url>
   

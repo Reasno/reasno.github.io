@@ -40,7 +40,7 @@ $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { wh
 我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
 $exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
 然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，可以说时一个经典Pattern。
+ 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
 $exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://guxi.me/posts/interrupted-sleep/" />
@@ -57,13 +57,13 @@ $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { wh
 我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
 $exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
 然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，可以说时一个经典Pattern。
+ 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
 $exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。">
 
 
 <meta itemprop="datePublished" content="2020-04-08T11:15:31&#43;08:00" />
 <meta itemprop="dateModified" content="2020-04-08T11:15:31&#43;08:00" />
-<meta itemprop="wordCount" content="102">
+<meta itemprop="wordCount" content="104">
 
 
 
@@ -79,7 +79,7 @@ $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { wh
 我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
 $exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
 然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，可以说时一个经典Pattern。
+ 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
 $exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。"/>
 
       
@@ -233,7 +233,7 @@ go(function() use ($exited, $buffer) {
 <li>如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。</li>
 </ol>
 
-<p>事实上，我们需要的是<strong>可以中断的睡眠</strong>。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，可以说时一个经典Pattern。</p>
+<p>事实上，我们需要的是<strong>可以中断的睡眠</strong>。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。</p>
 <div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">$exited = new Channel();
 $buffer = [];
 $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) {
@@ -252,7 +252,9 @@ go(function() use ($exited) {
 })</code></pre></div>
 <p>我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。</p>
 
-<p>在Hyperf中我已经提了一个PR，广泛采用了可以被唤醒的睡眠，使得Hyperf所有组件可以正确响应SIGTERM。这样在Kubernetes上滚动更新Hyperf更柔滑了。云原生不是喊口号，需要每一个细节的打磨。</p>
+<p>在Hyperf 1.1.25后，广泛采用了可以被唤醒的睡眠，使得Hyperf所有组件可以正确响应SIGTERM。这样在Kubernetes上滚动更新Hyperf更柔滑了。</p>
+
+<p>云原生不是喊口号，每一个细节都值得打磨。</p>
 <ul class="pa0">
   
    <li class="list">
