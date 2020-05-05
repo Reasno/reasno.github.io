@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Swoole Sleep</title>
+      <title>Interruptible Swoole Sleep</title>
       <link>https://guxi.me/posts/swoole-sleep/</link>
       <pubDate>Tue, 05 May 2020 23:44:50 +0800</pubDate>
       
@@ -32,7 +32,7 @@ $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { wh
     </item>
     
     <item>
-      <title>Socket.io Server</title>
+      <title>Socket.io Server For Hyperf</title>
       <link>https://guxi.me/posts/socketio-server/</link>
       <pubDate>Tue, 05 May 2020 23:27:59 +0800</pubDate>
       

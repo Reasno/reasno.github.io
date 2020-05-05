@@ -14,6 +14,11 @@
   </url>
   
   <url>
+    <loc>https://guxi.me/posts/swoole-sleep/</loc>
+    <lastmod>2020-05-05T23:44:50+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/tags/php/</loc>
     <lastmod>2020-05-05T23:44:50+08:00</lastmod>
     <priority>0</priority>
@@ -29,11 +34,6 @@
     <loc>https://guxi.me/tags/swoole/</loc>
     <lastmod>2020-05-05T23:44:50+08:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/swoole-sleep/</loc>
-    <lastmod>2020-05-05T23:44:50+08:00</lastmod>
   </url>
   
   <url>
@@ -139,14 +139,14 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/tags/advertising/</loc>
+    <loc>https://guxi.me/posts/parties-in-online-advertising/</loc>
     <lastmod>2019-10-09T12:58:36+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://guxi.me/posts/parties-in-online-advertising/</loc>
+    <loc>https://guxi.me/tags/advertising/</loc>
     <lastmod>2019-10-09T12:58:36+08:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>

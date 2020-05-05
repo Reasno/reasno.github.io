@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected  | Swoole Sleep</title>
+    <title>Garbage Collected  | Interruptible Swoole Sleep</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -30,7 +30,7 @@
 
     
 
-    <meta property="og:title" content="Swoole Sleep" />
+    <meta property="og:title" content="Interruptible Swoole Sleep" />
 <meta property="og:description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。
 $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
  那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
@@ -48,7 +48,7 @@ $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { wh
 <meta property="article:published_time" content="2020-05-05T23:44:50&#43;08:00"/>
 <meta property="article:modified_time" content="2020-05-05T23:44:50&#43;08:00"/>
 
-<meta itemprop="name" content="Swoole Sleep">
+<meta itemprop="name" content="Interruptible Swoole Sleep">
 <meta itemprop="description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。
 $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
  那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
@@ -71,7 +71,7 @@ $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { wh
 
 <meta itemprop="keywords" content="Swoole,PHP,Hyperf," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Swoole Sleep"/>
+<meta name="twitter:title" content="Interruptible Swoole Sleep"/>
 <meta name="twitter:description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。
 $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
  那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
@@ -182,7 +182,7 @@ if (!doNotTrack) {
           
         POSTS
       </p>
-      <h1 class="f1 athelas mb1">Swoole Sleep</h1>
+      <h1 class="f1 athelas mb1">Interruptible Swoole Sleep</h1>
       
       <time class="f6 mv4 dib tracked" datetime="2020-05-05T23:44:50&#43;08:00">May 5, 2020</time>
       
@@ -308,7 +308,7 @@ go(function() use ($buffer) {
         </li>
 	    
 	     <li  class="mb2">
-          <a href="/posts/socketio-server/">Socket.io Server</a>
+          <a href="/posts/socketio-server/">Socket.io Server For Hyperf</a>
         </li>
 	    
 	     <li  class="mb2">
