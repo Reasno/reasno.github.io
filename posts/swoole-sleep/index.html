@@ -31,56 +31,26 @@
     
 
     <meta property="og:title" content="Interruptible Swoole Sleep" />
-<meta property="og:description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。
-&lt;?php $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })   也可以使用Swoole Timer实现，这里先略过。
- 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
-正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
-在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
-我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
-&lt;?php $exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } })  对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
-然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。
- 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。
-  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，可以说是一个经典Pattern。" />
+<meta property="og:description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://guxi.me/posts/swoole-sleep/" />
 <meta property="article:published_time" content="2020-05-05T23:44:50&#43;08:00"/>
 <meta property="article:modified_time" content="2020-05-05T23:44:50&#43;08:00"/>
 
 <meta itemprop="name" content="Interruptible Swoole Sleep">
-<meta itemprop="description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。
-&lt;?php $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })   也可以使用Swoole Timer实现，这里先略过。
- 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
-正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
-在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
-我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
-&lt;?php $exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } })  对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
-然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。
- 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。
-  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，可以说是一个经典Pattern。">
+<meta itemprop="description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？">
 
 
 <meta itemprop="datePublished" content="2020-05-05T23:44:50&#43;08:00" />
 <meta itemprop="dateModified" content="2020-05-05T23:44:50&#43;08:00" />
-<meta itemprop="wordCount" content="104">
+<meta itemprop="wordCount" content="103">
 
 
 
 <meta itemprop="keywords" content="Swoole,PHP,Hyperf," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Interruptible Swoole Sleep"/>
-<meta name="twitter:description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。
-&lt;?php $buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })   也可以使用Swoole Timer实现，这里先略过。
- 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
-正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
-在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
-我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
-&lt;?php $exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } })  对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
-然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。
- 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。
-  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，可以说是一个经典Pattern。"/>
+<meta name="twitter:description" content="假设我们有一个监控任务，每5秒钟将监控结果上报。那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？"/>
 
       
 <script type="application/javascript">
@@ -186,8 +156,7 @@ if (!doNotTrack) {
       
     </header>
 
-    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>假设我们有一个监控任务，每5秒钟将监控结果上报。</p>
-<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
 <span class="nv">$buffer</span> <span class="o">=</span> <span class="p">[];</span>
 <span class="c1">// 另一个协程在填充buffer
 </span><span class="c1"></span><span class="nx">go</span><span class="p">(</span><span class="k">function</span><span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$buffer</span><span class="p">)</span> <span class="p">{</span>
