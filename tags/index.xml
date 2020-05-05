@@ -6,7 +6,7 @@
     <description>Recent content in Tags on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2020 23:27:59 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2020 23:44:50 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,27 @@
     <item>
       <title>Hyperf</title>
       <link>https://guxi.me/tags/hyperf/</link>
-      <pubDate>Tue, 05 May 2020 23:27:59 +0800</pubDate>
+      <pubDate>Tue, 05 May 2020 23:44:50 +0800</pubDate>
       
       <guid>https://guxi.me/tags/hyperf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PHP</title>
+      <link>https://guxi.me/tags/php/</link>
+      <pubDate>Tue, 05 May 2020 23:44:50 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/php/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Swoole</title>
+      <link>https://guxi.me/tags/swoole/</link>
+      <pubDate>Tue, 05 May 2020 23:44:50 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/swoole/</guid>
       <description></description>
     </item>
     
@@ -35,24 +53,6 @@
       <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
       
       <guid>https://guxi.me/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>PHP</title>
-      <link>https://guxi.me/tags/php/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
-      
-      <guid>https://guxi.me/tags/php/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Swoole</title>
-      <link>https://guxi.me/tags/swoole/</link>
-      <pubDate>Fri, 27 Mar 2020 18:34:28 +0800</pubDate>
-      
-      <guid>https://guxi.me/tags/swoole/</guid>
       <description></description>
     </item>
     
@@ -102,7 +102,7 @@
     </item>
     
     <item>
-      <title>Typescript</title>
+      <title>TypeScript</title>
       <link>https://guxi.me/tags/typescript/</link>
       <pubDate>Wed, 22 Jan 2020 16:04:50 +0800</pubDate>
       
