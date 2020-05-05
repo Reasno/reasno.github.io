@@ -218,30 +218,7 @@ if (!doNotTrack) {
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          有小伙伴抱怨道，WebSocket Server感觉太原始，没有“框架感”。
-Http 是一个表达能力非常丰富的协议。除了Header，Body等基本定义外，通过一系列RFC，它还带来了一些广泛接受的规范，比如querystring是怎么划分的，formdata是什么样的，multipart又是什么样的。基于这些规范，框架可以灵活的设计路由器、控制器、请求对象、响应对象等等。
-我们今天讨论的主角，WebSocket协议，虽然也是建立在Http之上，但是却没有定义Frame的内容应该是什么样的。
-Frame里可以是JSON：
-{&#34;event&#34;: &#34;orderCreated&#34;, &#34;data&#34;:{&#34;orderId&#34;: 123}} 也可以是字符串
-orderCreated|orderId:123 还可以是二进制
-0101010101010101 所以作为框架来讲，处理WebSocket是没有抓手的。有点类似于封装TCP Server，只能做到管理连接建立和关闭这样的颗粒度，Frame里的信息只能黑箱处理。于是小伙伴在用WebSocket Server时，便会觉得没有Http Server封装度高。
-当我们对Frame约定一个结构时，框架就大有可为了。
-Socket.io就是一套非常流行的WebSocket应用层协议。（Socket.io不止于WebSocket，不过在2020年的今天，不支持WebSocket的浏览器基本绝迹，其他XHR Polling等方式也就边缘化了）。
-我们先过于简略地来看一下Socket.io协议。
-0 是连接建立。
-1 是连接关闭。
-2 是天王盖地虎 (ping)
-3 是宝塔镇河妖 (pong)
-4 是传递信息。
-传递信息时又要细分。
-42 是一条新信息。
-43 是一条回复信息。
-42123 是一条id为123的信息。
-43123 是对刚才123号信息的回复。
-发送信息时，内容是一个JSON数组，数组第一个参数固定是事件名。 比如
-42123[&#34;orderCreated&#34;, {&#34;orderId&#34;: 123}] 约定了如上的基本结构，框架就有发挥空间了。
-在Hyperf1.1.30版本中，你可以这样创建一个Socket.io服务。
-&lt;?php /** * @SocketIONamespace(&#34;/&#34;) */ class SocketIOController extends BaseNamespace { /** * @Event(&#34;event&#34;) * @param string $data */ public function onEvent(Socket $socket, $data) { return &#39;Event Received: &#39; .
+          有小伙伴抱怨道，WebSocket Server感觉太原始，没有“框架感”。希望Socket.io协议的支持，可以让WebSocket更好用，不再有开篇提到的困惑。
         </div>
           <a href="/posts/socketio-server/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
         
