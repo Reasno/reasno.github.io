@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Garbage Collected  | Swoole pattern: 可中断的睡眠</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.55.6" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+      <link rel="stylesheet" href="/css/syntax.css">
+    
+
+    
+      
+    
+
+    
+
+    <meta property="og:title" content="Swoole pattern: 可中断的睡眠" />
+<meta property="og:description" content="前置阅读：linux信号表
+ 假设我们有一个监控任务，每5秒钟将监控结果上报。
+$buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
+ 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
+正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
+在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
+我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
+$exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
+然而细心的同学会发现这样还有两个潜在的问题。
+ 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
+$exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://guxi.me/posts/interrupted-sleep/" />
+<meta property="article:published_time" content="2020-04-08T11:15:31&#43;08:00"/>
+<meta property="article:modified_time" content="2020-04-08T11:15:31&#43;08:00"/>
+
+<meta itemprop="name" content="Swoole pattern: 可中断的睡眠">
+<meta itemprop="description" content="前置阅读：linux信号表
+ 假设我们有一个监控任务，每5秒钟将监控结果上报。
+$buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
+ 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
+正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
+在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
+我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
+$exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
+然而细心的同学会发现这样还有两个潜在的问题。
+ 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
+$exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。">
+
+
+<meta itemprop="datePublished" content="2020-04-08T11:15:31&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-08T11:15:31&#43;08:00" />
+<meta itemprop="wordCount" content="104">
+
+
+
+<meta itemprop="keywords" content="Hyperf,Swoole,PHP," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Swoole pattern: 可中断的睡眠"/>
+<meta name="twitter:description" content="前置阅读：linux信号表
+ 假设我们有一个监控任务，每5秒钟将监控结果上报。
+$buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
+ 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
+正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
+在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
+我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
+$exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
+然而细心的同学会发现这样还有两个潜在的问题。
+ 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
+$exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。"/>
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-10190882-5', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    
+  </head>
+
+  <body class="ma0 avenir bg-near-white production">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://guxi.me/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Garbage Collected
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+<a href="https://twitter.com/Reasno_g" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+<a href="https://github.com/Reasno" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Swoole pattern: 可中断的睡眠</h1>
+      
+      <time class="f6 mv4 dib tracked" datetime="2020-04-08T11:15:31&#43;08:00">April 8, 2020</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><blockquote>
+<p>前置阅读：<a href="https://wiki.swoole.com/#/other/signal?id=linux-%e4%bf%a1%e5%8f%b7%e5%88%97%e8%a1%a8">linux信号表</a></p>
+</blockquote>
+
+<p>假设我们有一个监控任务，每5秒钟将监控结果上报。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">$buffer = [];
+// 另一个协程在填充buffer
+go(function() use ($buffer) {
+    while (true) {
+        sleep(5);
+        sendBatch($buffer);
+    }
+})</code></pre></div>
+<blockquote>
+<p>也可以使用Swoole Timer实现，这里先略过。</p>
+</blockquote>
+
+<p>那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？</p>
+
+<p>正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。</p>
+
+<p>在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。</p>
+
+<p>我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">$exited = false;
+$buffer = [];
+$server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) {
+    $exited = true;
+});
+go(function() use ($exited, $buffer) {
+    while (true) {
+        sleep(5);
+        sendBatch($buffer);
+        if ($exited) {
+            break;
+        }
+    }
+})</code></pre></div>
+<p>对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。</p>
+
+<p>然而细心的同学会发现这样还有两个潜在的问题。</p>
+
+<ol>
+<li>程序总是要完成最后一次睡眠后才退出，不是很及时。</li>
+<li>如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。</li>
+</ol>
+
+<p>事实上，我们需要的是<strong>可以中断的睡眠</strong>。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。</p>
+<div class="highlight"><pre class="chroma"><code class="language-php" data-lang="php">$exited = new Channel();
+$buffer = [];
+$server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) {
+    go(function() use ($exited, $buffer){
+        $exited-&gt;close();
+    });
+});
+go(function() use ($exited) {
+    while (true) {
+        $exited-&gt;pop(5);
+        sendBatch($buffer);
+        if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) {
+            break;
+        }
+    }
+})</code></pre></div>
+<p>我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。</p>
+
+<p>在Hyperf 1.1.25后，广泛采用了可以被唤醒的睡眠，使得Hyperf所有组件可以正确响应SIGTERM。这样在Kubernetes上滚动更新Hyperf更柔滑了。</p>
+
+<p>云原生不是喊口号，每一个细节都值得打磨。</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/hyperf" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Hyperf</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/swoole" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Swoole</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/php" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">PHP</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+      <script src="https://utteranc.es/client.js"
+        repo="Reasno/reasno.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/cloudnative-hyperf/">云原生Hyperf骨架包</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/hyperf-clean-annotations/">Hyperf 注解整洁之道</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/purposed-php-dialect-p-plus-plus/">Purposed PHP Dialect: P&#43;&#43;</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/unboxing-taylor-otwell-s-laravel-cloud/">Unboxing Taylor Otwell&#39;s Laravel Cloud</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/contextual-dependency-injection-is-a-myth/">Contextual Dependency Injection Is a Myth</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/never-force-yourself-to-learn-new-skills-without-a-concrete-project/">Never Force Yourself to Learn New Skills Without a Concrete Project</a>
+        </li>
+	    
+	     <li  class="mb2">
+          <a href="/posts/when-do-we-need-php/">When Do We Need PHP</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
+    &copy; 2020 Garbage Collected
+  </a>
+    <div>
+
+
+
+<a href="https://twitter.com/Reasno_g" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+<a href="https://github.com/Reasno" target="_blank" class="link-transition github link dib z-999 pt3 pt0-l mr1" title="Github link" rel="noopener" aria-label="follow on Github——Opens in a new window">
+  <svg  height="32px"  style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <path d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"/>
+</svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>
