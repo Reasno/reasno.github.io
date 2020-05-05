@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/tags/" />
 
-<meta property="og:updated_time" content="2020-03-27T18:34:28&#43;08:00"/>
+<meta property="og:updated_time" content="2020-05-05T23:27:59&#43;08:00"/>
 
 <meta itemprop="name" content="Tags">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -528,7 +528,7 @@ The first thing should be made crystal clear is that things happen on two sides:
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
 不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
 一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
 要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
@@ -600,7 +600,7 @@ Go as well as Rust has a very different nature compared to PHP.
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
 不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
 一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
 要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
@@ -682,12 +682,50 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="/posts/socketio-server/" class="link black dim">
+        Socket.io Server
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      有小伙伴抱怨道，WebSocket Server感觉太原始，没有“框架感”。
+Http 是一个表达能力非常丰富的协议。除了Header，Body等基本定义外，通过一系列RFC，它还带来了一些广泛接受的规范，比如querystring是怎么划分的，formdata是什么样的，multipart又是什么样的。基于这些规范，框架可以灵活的设计路由器、控制器、请求对象、响应对象等等。
+我们今天讨论的主角，WebSocket协议，虽然也是建立在Http之上，但是却没有定义Frame的内容应该是什么样的。
+Frame里可以是JSON：
+{&#34;event&#34;: &#34;orderCreated&#34;, &#34;data&#34;:{&#34;orderId&#34;: 123}} 也可以是字符串
+orderCreated|orderId:123 还可以是二进制
+0101010101010101 所以作为框架来讲，处理WebSocket是没有抓手的。有点类似于封装TCP Server，只能做到管理连接建立和关闭这样的颗粒度，Frame里的信息只能黑箱处理。于是小伙伴在用WebSocket Server时，便会觉得没有Http Server封装度高。
+当我们对Frame约定一个结构时，框架就大有可为了。
+Socket.io就是一套非常流行的WebSocket应用层协议。（Socket.io不止于WebSocket，不过在2020年的今天，不支持WebSocket的浏览器基本绝迹，其他XHR Polling等方式也就边缘化了）。
+我们先过于简略地来看一下Socket.io协议。
+0 是连接建立。
+1 是连接关闭。
+2 是天王盖地虎 (ping)
+3 是宝塔镇河妖 (pong)
+4 是传递信息。
+传递信息时又要细分。
+42 是一条新信息。
+43 是一条回复信息。
+42123 是一条id为123的信息。
+43123 是对刚才123号信息的回复。
+发送信息时，内容是一个JSON数组，数组第一个参数固定是事件名。 比如
+42123[&#34;orderCreated&#34;, {&#34;orderId&#34;: 123}] 约定了如上的基本结构，框架就有发挥空间了。
+在Hyperf1.1.30版本中，你可以这样创建一个Socket.io服务。
+&lt;?php /** * @SocketIONamespace(&#34;/&#34;) */ class SocketIOController extends BaseNamespace { /** * @Event(&#34;event&#34;) * @param string $data */ public function onEvent(Socket $socket, $data) { return &#39;Event Received: &#39; .
+    </div>
+  </div>
+</div>
+
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="/posts/hyperf-swoole-gotask/" class="link black dim">
         使用Hyperf插入100万行数据到MongoDB，能行吗
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
 不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
 一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
 要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
@@ -1009,7 +1047,7 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
 不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
 一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
 要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
@@ -1344,7 +1382,7 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
 不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
 一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
 要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
@@ -1502,6 +1540,51 @@ Goals  Strong typed. Strong API contracts. Holistic Observability with logging, 
  A. OSS authors clearly deserve more respect.
  B. I think functional API generally are more expressive compared to the old one.
   However I would like to provide a counter argument to a very point the defender of RFC made.
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
+          <a href="/tags/websocket" class="link blue hover-black">
+            Tag: websocket
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/socketio-server/" class="link black dim">
+        Socket.io Server
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      有小伙伴抱怨道，WebSocket Server感觉太原始，没有“框架感”。
+Http 是一个表达能力非常丰富的协议。除了Header，Body等基本定义外，通过一系列RFC，它还带来了一些广泛接受的规范，比如querystring是怎么划分的，formdata是什么样的，multipart又是什么样的。基于这些规范，框架可以灵活的设计路由器、控制器、请求对象、响应对象等等。
+我们今天讨论的主角，WebSocket协议，虽然也是建立在Http之上，但是却没有定义Frame的内容应该是什么样的。
+Frame里可以是JSON：
+{&#34;event&#34;: &#34;orderCreated&#34;, &#34;data&#34;:{&#34;orderId&#34;: 123}} 也可以是字符串
+orderCreated|orderId:123 还可以是二进制
+0101010101010101 所以作为框架来讲，处理WebSocket是没有抓手的。有点类似于封装TCP Server，只能做到管理连接建立和关闭这样的颗粒度，Frame里的信息只能黑箱处理。于是小伙伴在用WebSocket Server时，便会觉得没有Http Server封装度高。
+当我们对Frame约定一个结构时，框架就大有可为了。
+Socket.io就是一套非常流行的WebSocket应用层协议。（Socket.io不止于WebSocket，不过在2020年的今天，不支持WebSocket的浏览器基本绝迹，其他XHR Polling等方式也就边缘化了）。
+我们先过于简略地来看一下Socket.io协议。
+0 是连接建立。
+1 是连接关闭。
+2 是天王盖地虎 (ping)
+3 是宝塔镇河妖 (pong)
+4 是传递信息。
+传递信息时又要细分。
+42 是一条新信息。
+43 是一条回复信息。
+42123 是一条id为123的信息。
+43123 是对刚才123号信息的回复。
+发送信息时，内容是一个JSON数组，数组第一个参数固定是事件名。 比如
+42123[&#34;orderCreated&#34;, {&#34;orderId&#34;: 123}] 约定了如上的基本结构，框架就有发挥空间了。
+在Hyperf1.1.30版本中，你可以这样创建一个Socket.io服务。
+&lt;?php /** * @SocketIONamespace(&#34;/&#34;) */ class SocketIOController extends BaseNamespace { /** * @Event(&#34;event&#34;) * @param string $data */ public function onEvent(Socket $socket, $data) { return &#39;Event Received: &#39; .
     </div>
   </div>
 </div>

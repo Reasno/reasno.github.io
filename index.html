@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2020-03-27T18:34:28&#43;08:00"/>
+<meta property="og:updated_time" content="2020-05-05T23:27:59&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -179,12 +179,59 @@ if (!doNotTrack) {
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/socketio-server/" class="color-inherit dim link">
+            Socket.io Server
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          有小伙伴抱怨道，WebSocket Server感觉太原始，没有“框架感”。
+Http 是一个表达能力非常丰富的协议。除了Header，Body等基本定义外，通过一系列RFC，它还带来了一些广泛接受的规范，比如querystring是怎么划分的，formdata是什么样的，multipart又是什么样的。基于这些规范，框架可以灵活的设计路由器、控制器、请求对象、响应对象等等。
+我们今天讨论的主角，WebSocket协议，虽然也是建立在Http之上，但是却没有定义Frame的内容应该是什么样的。
+Frame里可以是JSON：
+{&#34;event&#34;: &#34;orderCreated&#34;, &#34;data&#34;:{&#34;orderId&#34;: 123}} 也可以是字符串
+orderCreated|orderId:123 还可以是二进制
+0101010101010101 所以作为框架来讲，处理WebSocket是没有抓手的。有点类似于封装TCP Server，只能做到管理连接建立和关闭这样的颗粒度，Frame里的信息只能黑箱处理。于是小伙伴在用WebSocket Server时，便会觉得没有Http Server封装度高。
+当我们对Frame约定一个结构时，框架就大有可为了。
+Socket.io就是一套非常流行的WebSocket应用层协议。（Socket.io不止于WebSocket，不过在2020年的今天，不支持WebSocket的浏览器基本绝迹，其他XHR Polling等方式也就边缘化了）。
+我们先过于简略地来看一下Socket.io协议。
+0 是连接建立。
+1 是连接关闭。
+2 是天王盖地虎 (ping)
+3 是宝塔镇河妖 (pong)
+4 是传递信息。
+传递信息时又要细分。
+42 是一条新信息。
+43 是一条回复信息。
+42123 是一条id为123的信息。
+43123 是对刚才123号信息的回复。
+发送信息时，内容是一个JSON数组，数组第一个参数固定是事件名。 比如
+42123[&#34;orderCreated&#34;, {&#34;orderId&#34;: 123}] 约定了如上的基本结构，框架就有发挥空间了。
+在Hyperf1.1.30版本中，你可以这样创建一个Socket.io服务。
+&lt;?php /** * @SocketIONamespace(&#34;/&#34;) */ class SocketIOController extends BaseNamespace { /** * @Event(&#34;event&#34;) * @param string $data */ public function onEvent(Socket $socket, $data) { return &#39;Event Received: &#39; .
+        </div>
+          <a href="/posts/socketio-server/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/hyperf-swoole-gotask/" class="color-inherit dim link">
             使用Hyperf插入100万行数据到MongoDB，能行吗
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
+          得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
 不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
 一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
 要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
@@ -301,35 +348,6 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/hyperf-clean-annotations/" class="color-inherit dim link">
-            Hyperf 注解整洁之道
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          注解是元编程的一种。元编程从字面意思上说就是编写程序的程序。和普通编程一样，注解在给我们带来便捷的同时，如果使用不当，也有可能造成可读性、可维护性下降等问题。
-在某些注解中，可能有很多配置项，比如：
-//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
- 注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在GitHub上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker（熔断器）注解的例子。
-&lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state.
-        </div>
-          <a href="/posts/hyperf-clean-annotations/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
@@ -337,6 +355,10 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
         <h1 class="f3">More</h1>
         <ul class="f5 fw4 mb4 dib mr3">
         
+        
+            <li class="link black dim pa2"><a href="/posts/hyperf-clean-annotations/" class="link black dim pa2">
+              Hyperf 注解整洁之道
+            </a></li>
         
             <li class="link black dim pa2"><a href="/posts/parties-in-online-advertising/" class="link black dim pa2">
               Parties in Online Advertising
@@ -356,10 +378,6 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
         
             <li class="link black dim pa2"><a href="/posts/rethink-clean-architecture/" class="link black dim pa2">
               Rethink The Clean Architecture
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/unboxing-taylor-otwell-s-laravel-cloud/" class="link black dim pa2">
-              Unboxing Taylor Otwell&#39;s Laravel Cloud
             </a></li>
         
       
@@ -384,13 +402,13 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
         
         
           <li class="link black dim pa2" >
-            <a href="/tags/go" class="link black dim pa2" > go <small>(3)</small></a>
+            <a href="/tags/hyperf" class="link black dim pa2" > hyperf <small>(4)</small></a>
           </li>
         
         
         
           <li class="link black dim pa2" >
-            <a href="/tags/hyperf" class="link black dim pa2" > hyperf <small>(3)</small></a>
+            <a href="/tags/go" class="link black dim pa2" > go <small>(3)</small></a>
           </li>
         
         
@@ -440,6 +458,8 @@ livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10r
           <li class="link black dim pa2" >
             <a href="/tags/typescript" class="link black dim pa2" > typescript <small>(2)</small></a>
           </li>
+        
+        
         
         
         

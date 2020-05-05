@@ -4,17 +4,40 @@
   
   <url>
     <loc>https://guxi.me/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/go/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/hyperf/</loc>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/socketio-server/</loc>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/websocket/</loc>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/go/</loc>
     <lastmod>2020-03-27T18:34:28+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -26,19 +49,7 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/tags/swoole/</loc>
-    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
     <lastmod>2020-03-27T18:34:28+08:00</lastmod>
     <priority>0</priority>
   </url>

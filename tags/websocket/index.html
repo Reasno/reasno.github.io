@@ -29,22 +29,22 @@
     
 
     
-      <link href="https://guxi.me/tags/hyperf/index.xml" rel="alternate" type="application/rss+xml" title="Garbage Collected" />
-      <link href="https://guxi.me/tags/hyperf/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
+      <link href="https://guxi.me/tags/websocket/index.xml" rel="alternate" type="application/rss+xml" title="Garbage Collected" />
+      <link href="https://guxi.me/tags/websocket/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
     
 
-    <meta property="og:title" content="Hyperf" />
+    <meta property="og:title" content="WebSocket" />
 <meta property="og:description" content="A collection of my ephemeral thoughts" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://guxi.me/tags/hyperf/" />
+<meta property="og:url" content="https://guxi.me/tags/websocket/" />
 
 <meta property="og:updated_time" content="2020-05-05T23:27:59&#43;08:00"/>
 
-<meta itemprop="name" content="Hyperf">
+<meta itemprop="name" content="WebSocket">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hyperf"/>
+<meta name="twitter:title" content="WebSocket"/>
 <meta name="twitter:description" content="A collection of my ephemeral thoughts"/>
 
       
@@ -129,7 +129,7 @@ if (!doNotTrack) {
 
       <div class="tc-l pv3 ph3 ph4-ns">
         <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          Hyperf
+          WebSocket
         </h1>
         
       </div>
@@ -141,7 +141,7 @@ if (!doNotTrack) {
       
   <article class="cf pa3 pa4-m pa4-l">
     <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “Hyperf”</p>
+      <p>Below you will find pages that utilize the taxonomy term “WebSocket”</p>
     </div>
   </article>
   <div class="mw8 center">    
@@ -181,83 +181,6 @@ Socket.io就是一套非常流行的WebSocket应用层协议。（Socket.io不�
 42123[&#34;orderCreated&#34;, {&#34;orderId&#34;: 123}] 约定了如上的基本结构，框架就有发挥空间了。
 在Hyperf1.1.30版本中，你可以这样创建一个Socket.io服务。
 &lt;?php /** * @SocketIONamespace(&#34;/&#34;) */ class SocketIOController extends BaseNamespace { /** * @Event(&#34;event&#34;) * @param string $data */ public function onEvent(Socket $socket, $data) { return &#39;Event Received: &#39; .
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/hyperf-swoole-gotask/" class="link black dim">
-        使用Hyperf插入100万行数据到MongoDB，能行吗
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发体验非常愉悦。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
-不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
-一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
-要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
- 在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。
- 这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。
-人一旦习惯了epoll，对阻塞IO真的是很难容忍。
-有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。
-理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。
-算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？
-在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：
- 遇到CPU密集型的操作，扔进来。 遇到暂时无法协程化的IO操作（如MongoDB），扔进来。 遇到某些组件不支持协程，扔进来。  前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。
-最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
-当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。
-简单示意就是这样：
-package main import ( &#34;github.com/reasno/gotask/pkg/gotask&#34; ) // App sample type App struct{} // Hi returns greeting message. func (a *App) Hi(name interface{}, r *interface{}) error { *r = map[string]interface{}{ &#34;hello&#34;: name, } return nil } func main() { gotask.Register(new(App)) gotask.Run() }&lt;?
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/cloudnative-hyperf/" class="link black dim">
-        云原生Hyperf骨架包
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      2020-01-22 日更新：现已提供Hyperf Helm chart。详见repo。
- Hyperf官方提供了容器镜像，配置选项又非常开放，将Hyperf部署于云端本身并不复杂。下面我们以Kubernetes为例，对Hyperf默认的骨架包进行一些改造，使它可以优雅的运行于Kubernetes上。本文不是Kubernetes的入门介绍，需要读者已经对Kubernetes有一定了解。
-生命周期 容器在Kubernetes上启动以后，Kubernetes会对容器进行两项检查: Liveness Probe和Readiness Probe。Liveness Probe如果没有通过，容器会被重启，而Readiness Probe没有通过，则会暂时将服务从发现列表中移除。当Hyperf作为HTTP Web server启动时，我们只需要添加两条路由就行了。
-&lt;?php namespace App\Controller; class HealthCheckController extends AbstractController { public function liveness() { return &#39;ok&#39;; } public function readiness() { return &#39;ok&#39;; } } &lt;?php // in config/Routes.php Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/liveness&#39;, &#39;App\Controller\HealthCheckController@liveness&#39;); Router::addRoute([&#39;GET&#39;, &#39;HEAD&#39;], &#39;/readiness&#39;, &#39;App\Controller\HealthCheckController@readiness&#39;);  在Kubernetes的deployment上配置：
-livenessProbe:httpGet:path:/livenessport:9501failureThreshold:1periodSeconds:10readinessProbe:httpGet:path:/readinessport:9501failureThreshold:1periodSeconds:10 当然这里我们只是简单了返回‘ok’，显然不能真正检查出健康状况。实际的检查要考虑业务具体场景和业务依赖的资源。例如对于重数据库服务我们可以检查数据库的连接池，如果连接池已满就暂时在Readiness Probe返回状态码503。
-服务在Kubernetes销毁时，Kubernetes会先发来SIGTERM信号。进程有terminationGracePeriodSeconds这么长的时间（默认60秒）来自行结束。如果到时间后还没结束，Kubernetes就会发来SIGINT信号来强制杀死进程。Swoole本身是可以正确响应SIGTERM结束服务的，正常情况下不会丢失任何运行中的连接。实际生产中，如果Swoole没有响应SIGTERM退出，很有可能是因为服务端注册的定时器没有被清理。我们可以在OnWorkerExit处清理定时器来保证顺利退出。
-&lt;?php // config/autoload/server.php // ... &#39;callbacks&#39; =&gt; [ SwooleEvent::ON_BEFORE_START =&gt; [Hyperf\Framework\Bootstrap\ServerStartCallback::class, &#39;beforeStart&#39;], SwooleEvent::ON_WORKER_START =&gt; [Hyperf\Framework\Bootstrap\WorkerStartCallback::class, &#39;onWorkerStart&#39;], SwooleEvent::ON_PIPE_MESSAGE =&gt; [Hyperf\Framework\Bootstrap\PipeMessageCallback::class, &#39;onPipeMessage&#39;], SwooleEvent::ON_WORKER_EXIT =&gt; function () { Swoole\Timer::clearAll(); }, ], // .
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/hyperf-clean-annotations/" class="link black dim">
-        Hyperf 注解整洁之道
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      注解是元编程的一种。元编程从字面意思上说就是编写程序的程序。和普通编程一样，注解在给我们带来便捷的同时，如果使用不当，也有可能造成可读性、可维护性下降等问题。
-在某些注解中，可能有很多配置项，比如：
-//这还不是一个特别夸张的例子 @CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) 如果我们的代码里用很多这样复杂的注解，就会引发以下几个问题：
- 注解中可使用的数据类型表达能力有限，比如必须用方法的字符串全名来表达方法，容易出错。 离开了IDE的帮助，长注解的可读性变得很差。（比如在GitHub上） 同样配置的注解多个地方使用，修改时要改很多地方。  这里我向大家推荐通过继承的方式配置Hyperf内的注解。
-下面是一个继承CircuitBreaker（熔断器）注解的例子。
-&lt;?php ... /** * @Annotation * @Target({&#34;METHOD&#34;}) * * Shorthand for CircuitBreaker(timeout=0.05, failCounter=1, successCounter=1, fallback=&#34;App\Service\UserService::searchFallback&#34;) */ class FooCircuitBreakerAnnotation extends CircuitBreakerAnnotation { /** * @var float */ public $timeout = 0.05; /** * @var string */ public $fallback = UserService::class.&#39;::searchFallback&#39;; /** * The counter required to reset to a close state. * @var int */ public $successCounter = 1; /** * The counter required to reset to a open state.
     </div>
   </div>
 </div>
