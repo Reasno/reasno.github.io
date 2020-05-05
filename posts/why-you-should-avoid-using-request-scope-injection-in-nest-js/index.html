@@ -47,7 +47,7 @@ For starters, the request-scoped injection is way too expensive.">
 
 <meta itemprop="datePublished" content="2020-01-22T16:04:50&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-22T16:04:50&#43;08:00" />
-<meta itemprop="wordCount" content="454">
+<meta itemprop="wordCount" content="453">
 
 
 
@@ -185,7 +185,7 @@ if (!doNotTrack) {
 
 <p>This way, the context object will contain all you need for distributed tracing and context-aware logging. If web server agnosticism is your thing, you can define your own context class and passing it instead. To further reduce memory allocation and garbage collection you can take advantage of the <a href="https://github.com/coopernurse/node-pool">object pool pattern</a>.</p>
 
-<p>Request scope in NestJS can still be useful, especially when you are not controlling the call chain, e.g. when the library constrains the function signature. Use it as a last resort to access requests, but certainly not your first choice.</p>
+<p>Request scope in NestJS are still relavent, especially when you are not controlling the call chain, e.g. when the library constrains the function signature. Use it as a last resort to access requests, but certainly not your first choice.</p>
 <ul class="pa0">
   
    <li class="list">
