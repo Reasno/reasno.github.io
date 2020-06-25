@@ -6,10 +6,21 @@
     <description>Recent content on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 May 2020 23:44:50 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2020 13:49:21 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Keys to Fast Development</title>
+      <link>https://guxi.me/posts/key-to-fast-development/</link>
+      <pubDate>Thu, 25 Jun 2020 13:49:21 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/key-to-fast-development/</guid>
+      <description>I have been on both sides. Sometimes people are amazed at our project grounding up from zero so soon, and some other times people are questioning why our project progress is that slow.
+It was said that compiled/strong-typed languages were faster at runtime, but slower to code. While it is true to a certain degree, it rarely matters in commercial applications.
+There was also a common belief that enforcing code qualities by means of TDD/Code review/testing-in-general would increase the time to launch.</description>
+    </item>
     
     <item>
       <title>Interruptible Swoole Sleep</title>

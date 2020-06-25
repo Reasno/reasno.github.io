@@ -43,7 +43,7 @@
 
 <meta itemprop="datePublished" content="2020-05-05T23:27:59&#43;08:00" />
 <meta itemprop="dateModified" content="2020-05-05T23:27:59&#43;08:00" />
-<meta itemprop="wordCount" content="144">
+<meta itemprop="wordCount" content="152">
 
 
 
@@ -206,7 +206,7 @@ if (!doNotTrack) {
 <span class="sd">/**
 </span><span class="sd"> * @SocketIONamespace(&#34;/&#34;)
 </span><span class="sd"> */</span>
-<span class="k">class</span> <span class="nc">SocketIOController</span> <span class="k">extends</span> <span class="nx">BaseNamespace</span>
+<span class="k">class</span> <span class="nc">WebSocketController</span> <span class="k">extends</span> <span class="nx">BaseNamespace</span>
 <span class="p">{</span>
     <span class="sd">/**
 </span><span class="sd">     * @Event(&#34;event&#34;)
@@ -214,7 +214,8 @@ if (!doNotTrack) {
 </span><span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">onEvent</span><span class="p">(</span><span class="nx">Socket</span> <span class="nv">$socket</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="s1">&#39;Event Received: &#39;</span> <span class="o">.</span> <span class="nv">$data</span><span class="p">;</span>
+        <span class="c1">// 应答
+</span><span class="c1"></span>        <span class="k">return</span> <span class="s1">&#39;Event Received: &#39;</span> <span class="o">.</span> <span class="nv">$data</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="sd">/**
@@ -223,9 +224,12 @@ if (!doNotTrack) {
 </span><span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">onJoinRoom</span><span class="p">(</span><span class="nx">Socket</span> <span class="nv">$socket</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-        <span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">emit</span><span class="p">(</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">getSid</span><span class="p">()</span> <span class="o">.</span> <span class="s2">&#34;has joined </span><span class="si">{</span>$data<span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span>
-        <span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">emit</span><span class="p">(</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="s1">&#39;There are &#39;</span> <span class="o">.</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">getAdapter</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">clients</span><span class="p">(</span><span class="nv">$data</span><span class="p">))</span> <span class="o">.</span> <span class="s2">&#34; players in </span><span class="si">{</span>$data<span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span>
+        <span class="c1">// 将当前用户加入房间
+</span><span class="c1"></span>        <span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+        <span class="c1">// 向房间内其他用户推送（不含当前用户）
+</span><span class="c1"></span>        <span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">to</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">emit</span><span class="p">(</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">getSid</span><span class="p">()</span> <span class="o">.</span> <span class="s2">&#34;has joined </span><span class="si">{</span>$data<span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span>
+        <span class="c1">// 向房间内所有人广播（含当前用户）
+</span><span class="c1"></span>        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">emit</span><span class="p">(</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="s1">&#39;There are &#39;</span> <span class="o">.</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$socket</span><span class="o">-&gt;</span><span class="na">getAdapter</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">clients</span><span class="p">(</span><span class="nv">$data</span><span class="p">))</span> <span class="o">.</span> <span class="s2">&#34; players in </span><span class="si">{</span>$data<span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="sd">/**
