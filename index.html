@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2021-03-18T14:20:56&#43;08:00"/>
+<meta property="og:updated_time" content="2020-06-25T13:49:21&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -179,31 +179,6 @@ if (!doNotTrack) {
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/an-elegant-way-to-bootstrap-go-app/" class="color-inherit dim link">
-            An Elegant Way to Bootstrap Go App
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          The twelve-factor methodology has proven its worth over the years. Since its invention many fields in technology have changed, many among them are shining and exciting. In the age of Kubernetes, service mesh and serverless architectures, the twelve-factor methodology has not faded away, but rather has happened to be a good fit for nearly all of those powerful platforms.
-Scaffolding a twelve-factor go app may not be a difficult task for experienced engineers, but certainly presents some challenges to juniors.
-        </div>
-          <a href="/posts/an-elegant-way-to-bootstrap-go-app/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/key-to-fast-development/" class="color-inherit dim link">
             Keys to Fast Development
             </a>
@@ -294,6 +269,33 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
 
           </div>
         
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/timeout-vs-deadline/" class="color-inherit dim link">
+            Timeout vs Deadline
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          One of the first few things I feel strange about gRPC is that gRPC terminate unfinished request based on a deadline mechanism instead of the more common timeout mechanism.
+In pseudo-code:
+var timeout = 5 * time.Second; var deadline = time.Now() + 5 * time.Second; As you can see, the deadline mechanism is less straight-forward at first glance. So why bother?
+I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t put my mind to it until recently.
+        </div>
+          <a href="/posts/timeout-vs-deadline/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
       </section>
 
       
@@ -301,10 +303,6 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
         <h1 class="f3">More</h1>
         <ul class="f5 fw4 mb4 dib mr3">
         
-        
-            <li class="link black dim pa2"><a href="/posts/timeout-vs-deadline/" class="link black dim pa2">
-              Timeout vs Deadline
-            </a></li>
         
             <li class="link black dim pa2"><a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="link black dim pa2">
               Why You Should Avoid Using Request-scoped Injection in NestJS
@@ -322,8 +320,12 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
               Parties in Online Advertising
             </a></li>
         
-            <li class="link black dim pa2"><a href="/posts/beware-of-backpressure/" class="link black dim pa2">
-              Beware of Backpressure
+            <li class="link black dim pa2"><a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="link black dim pa2">
+              Why You Should Avoid Using Request-scoped Injection in NestJS
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/cloudnative-hyperf/" class="link black dim pa2">
+              云原生Hyperf骨架包
             </a></li>
         
       
@@ -348,7 +350,13 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
         
         
           <li class="link black dim pa2" >
-            <a href="/tags/advertising" class="link black dim pa2" > advertising <small>(4)</small></a>
+            <a href="/tags/hyperf" class="link black dim pa2" > hyperf <small>(5)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/go" class="link black dim pa2" > go <small>(3)</small></a>
           </li>
         
         
@@ -361,12 +369,6 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
         
           <li class="link black dim pa2" >
             <a href="/tags/rxjs" class="link black dim pa2" > rxjs <small>(3)</small></a>
-          </li>
-        
-        
-        
-          <li class="link black dim pa2" >
-            <a href="/tags/dependency-injection" class="link black dim pa2" > dependency-injection <small>(2)</small></a>
           </li>
         
         
@@ -385,6 +387,12 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
         
           <li class="link black dim pa2" >
             <a href="/tags/mysql" class="link black dim pa2" > mysql <small>(2)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
+            <a href="/tags/swoole" class="link black dim pa2" > swoole <small>(2)</small></a>
           </li>
         
         
