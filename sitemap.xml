@@ -3,43 +3,87 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://guxi.me/posts/an-elegant-way-to-bootstrap-go-app/</loc>
+    <lastmod>2021-03-18T14:20:56+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/</loc>
-    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/hyperf/</loc>
-    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/php/</loc>
-    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2021-03-18T14:20:56+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://guxi.me/posts/</loc>
-    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
+    <lastmod>2021-03-18T14:20:56+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2021-03-18T14:20:56+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/go/</loc>
+    <lastmod>2021-03-18T14:20:56+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/coding-suggestion/</loc>
+    <lastmod>2020-06-25T13:49:21+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/key-to-fast-development/</loc>
+    <lastmod>2020-06-25T13:49:21+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/hyperf/</loc>
+    <lastmod>2020-05-05T23:44:50+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/swoole-sleep/</loc>
+    <lastmod>2020-05-05T23:44:50+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/php/</loc>
+    <lastmod>2020-05-05T23:44:50+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://guxi.me/tags/swoole/</loc>
-    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
+    <lastmod>2020-05-05T23:44:50+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://guxi.me/posts/interrupted-sleep/</loc>
-    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
+    <loc>https://guxi.me/posts/socketio-server/</loc>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://guxi.me/tags/</loc>
-    <lastmod>2020-04-08T11:15:31+08:00</lastmod>
+    <loc>https://guxi.me/tags/websocket/</loc>
+    <lastmod>2020-05-05T23:27:59+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/gotask/</loc>
+    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/hyperf-swoole-gotask/</loc>
+    <lastmod>2020-03-27T18:34:28+08:00</lastmod>
   </url>
   
   <url>
@@ -97,12 +141,6 @@
   <url>
     <loc>https://guxi.me/posts/cloudnative-hyperf/</loc>
     <lastmod>2019-12-14T16:27:50+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/coding-suggestion/</loc>
-    <lastmod>2019-11-02T21:21:14+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -261,12 +299,6 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/tags/go/</loc>
-    <lastmod>2019-07-18T12:57:59+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/posts/when-do-we-need-php/</loc>
     <lastmod>2019-07-18T12:57:59+08:00</lastmod>
   </url>
@@ -349,16 +381,6 @@
   
   <url>
     <loc>https://guxi.me/posts/coding_standard/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/hyperf-swoole-gotask/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/posts/translate/</loc>
     <priority>0</priority>
   </url>
   

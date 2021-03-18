@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/tags/swoole/" />
 
-<meta property="og:updated_time" content="2020-04-08T11:15:31&#43;08:00"/>
+<meta property="og:updated_time" content="2020-05-05T23:44:50&#43;08:00"/>
 
 <meta itemprop="name" content="Swoole">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -152,22 +152,29 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/interrupted-sleep/" class="link black dim">
-        Swoole pattern: 可中断的睡眠
+      <a href="/posts/swoole-sleep/" class="link black dim">
+        Interruptible Swoole Sleep
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
-      前置阅读：linux信号表
- 假设我们有一个监控任务，每5秒钟将监控结果上报。
-$buffer = []; // 另一个协程在填充buffer go(function() use ($buffer) { while (true) { sleep(5); sendBatch($buffer); } })  也可以使用Swoole Timer实现，这里先略过。
- 那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
-正常情况下，类unix系统，以及Kubernetes都会先给发送SIGTERM信号提示进程退出。我们的程序如果是个好好先生，就应该听从操作系统的劝告，立刻执行收尾工作并退出。如果程序拒不退出，那么操作系统可以发送强制关闭的信号。SIGINT(control-c)、SIGKILL信号这两个信号都属于“强制关闭”。
-在Kuberentes下，总是先发送SIGTERM，如果在一定时间内（默认30s）进程还没有结束，就会SIGKILL。
-我们要做的事，就是在收到SIGTERM时，及时把最后一批数据上报并退出。
-$exited = false; $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { $exited = true; }); go(function() use ($exited, $buffer) { while (true) { sleep(5); sendBatch($buffer); if ($exited) { break; } } }) 对上述程序这样修改，可以保证总是上报完最后一批时结束协程，然后退出。
-然而细心的同学会发现这样还有两个潜在的问题。
- 程序总是要完成最后一次睡眠后才退出，不是很及时。 如果睡眠时间大于操作系统或用户容忍的时间，仍然有可能被杀掉进程丢失最后一次上报。  事实上，我们需要的是可以中断的睡眠。当收到SIGTERM时，立刻醒来上报最后一次并退出。在传统同步编程或Callback编程中，这个不太好实现，但是在CSP编程中，堪称一个经典Pattern。
-$exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, function() use ($exited, $buffer) { go(function() use ($exited, $buffer){ $exited-&gt;close(); }); }); go(function() use ($exited) { while (true) { $exited-&gt;pop(5); sendBatch($buffer); if ($exited-&gt;errCode === SWOOLE_CHANNEL_CLOSED) { break; } } }) 我们完全没有改变编程逻辑，只是巧妙的利用的channel，就实现了可唤醒的睡眠。这里用了关闭channel来代表睡眠被唤醒，使得多个协程可以复用这个channel来监听结束信号。
+      假设我们有一个监控任务，每5秒钟将监控结果上报。那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
+    </div>
+  </div>
+</div>
+
+        </div>
+      
+        <div class="relative w-100  mb4 bg-white">
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/hyperf-swoole-gotask/" class="link black dim">
+        使用Hyperf插入100万行数据到MongoDB，能行吗
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
     </div>
   </div>
 </div>
@@ -181,7 +188,7 @@ $exited = new Channel(); $buffer = []; $server-&gt;on(&#39;workerExit&#39;, func
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
-    &copy; 2020 Garbage Collected
+    &copy; 2021 Garbage Collected
   </a>
     <div>
 

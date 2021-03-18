@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/posts/" />
 
-<meta property="og:updated_time" content="2020-04-08T11:15:31&#43;08:00"/>
+<meta property="og:updated_time" content="2021-03-18T14:20:56&#43;08:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -147,6 +147,77 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="/posts/id-based-throttling/" class="link black dim">
+        Id Based Throttling
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      RxJS is bonkers!
+Imagine you have an unbounded stream of events. Each has a unique id. Now you want to throttle the stream based on id, ie. each id should not appear more often than X minutes.
+With RxJS:
+// Throttle each id in one minute. fromEvent(emitter, &#39;tick&#39;).pipe( groupBy((e: Event) =&gt; e.getId()), flatMap(group =&gt; group.pipe(throttleTime(60 * 1000))), ).subscribe( //Do your stuff ); Without RxJS:
+Too much to write.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/good-code-are-easy-to-remove/" class="link black dim">
+        Good Code Are Easy to Remove
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Over the days I have been thinking about improving my coding one step further. As I was refactoring some company work, this idea came to me.
+One of the least mentioned traits of good code is that you can easily remove a slice of them (from a larger project).
+Think about that. Removability means components are modular, architecture is layered, and abstractions are aptly interfaced. It also means Single Responsibility is enforced, so removing one thing won’t jeopardize another.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/options-take-a-toll/" class="link black dim">
+        Options Take a Toll
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Vue community exploded due to changes in Vue 3. Some comments are full of gunpowder with regards to the recent functional API RFC. Let me show my opinions up front:
+ A. OSS authors clearly deserve more respect.
+ B. I think functional API generally are more expressive compared to the old one.
+  However I would like to provide a counter argument to a very point the defender of RFC made.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/manual-injection/" class="link black dim">
+        Manual Injection
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Came across this pic from twitter.
+If I have an adequate number of audience, I would like to make poll out of it. What do you think about this piece of code?
+ A: It is good code. B: It is bad code.  I have never done react before (Or I have, but not professional). However this piece of code is very readable to me. If I was tasked with the job to maintain this code, I would appreciate the original author for coding in this fashion.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="/posts/beauty-of-lazy-execution/" class="link black dim">
         Beauty of Lazy Execution
       </a>
@@ -184,60 +255,6 @@ I once heard a Haskell fan said that she thought lazy execution was what set Has
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/hyperf-swoole-gotask/" class="link black dim">
-        
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      得益于优秀的框架设计和超凡的性能，使用Hyperf/Swoole的开发时总体是非常愉悦了。就比如说Hyperf的AOP切面实现吧，曾几何时我为了做jaeger分布式追踪搞了一个很复杂的动态代理，但是后来惊喜的发现在Hyperf框架中用语法树重写在不损一毫秒的情况下就轻松解决了。
-不过，也有几次睡不着觉的时候，基本都是因为生态的问题。
-一方面，很多C扩展，比如Mongodb，还有我们广告系统经常用的Cassandra扩展，都不能支持协程。另一方面，还有很多PHP原生库充斥着静态变量，一不小心就协程混淆。
-要填补上生态上的差距还需要很长时间的努力。目前Swoole有个Task机制，不支持协程的都扔给它去处理。
- 在php-fpm的应用中，经常会将一个任务异步投递到Redis等队列中，并在后台启动一些php进程异步地处理这些任务。Swoole提供的TaskWorker是一套更完整的方案，将任务的投递、队列、php任务处理进程管理合为一体。通过底层提供的API可以非常简单地实现异步任务的处理。另外TaskWorker还可以在任务执行完成后，再返回一个结果反馈到Worker。
- 这个概念很好理解，Unix Socket的投递速度也是杠杠的。Task类似队列机制，本身有一种削峰填谷的功效，但是再长的缓冲区也毕竟是有限的，如果压力持续走高一样会反噬worker。所以task很难成为常规武器，偶尔用用还可以。
-人一旦习惯了epoll，对阻塞IO真的是很难容忍。
-有时我在想，实在不行，我就写个Nodejs服务，把查mongodb放到nodejs里，然后PHP再调nodejs接口算了，这总不阻塞了吧。
-理想虽然如此，但却一直没有动手写。原因也很简单，强行把一套服务拆成两套，再搞什么限流熔断监控追踪组合拳，着实是给自己找麻烦。
-算了，所以还是用Task吧。但是这个Task如果用别的语言来实现，是不是可以更快一点？
-在Swoole协程普及后，Swoole的TaskWorker一般来说承担三个责任：
- 遇到CPU密集型的操作，扔进来。 遇到暂时无法协程化的IO操作（如MongoDB），扔进来。 遇到某些组件不支持协程，扔进来。  前两条TaskWorker能做的，Go都可以做的更好。第三条嘛，虽然放弃了PHP生态比较遗憾，但是可以接入Go生态也不错。
-最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
-当然是0阻塞，PHP这边用swoole coroutine socket实现的，每次投递都会触发协程切换。写完再用Hyperf整了一套连接池，全局一个单例注入进来就可以IPC了。
-简单示意就是这样：
-package main import ( &#34;github.com/reasno/gotask/pkg/gotask&#34; ) // App sample type App struct{} // Hi returns greeting message. func (a *App) Hi(name interface{}, r *interface{}) error { *r = map[string]interface{}{ &#34;hello&#34;: name, } return nil } func main() { gotask.Register(new(App)) gotask.Run() }&lt;?
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/translate/" class="link black dim">
-        
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Productivity Out of Box Any component
-Native Coroutine
-Plugable Components
-Production-grade coroutine framework
-High performance
-Production ready
-Microservice
-Abundant Components
-Distributed
-Tested
     </div>
   </div>
 </div>
@@ -305,7 +322,7 @@ Tested
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
-    &copy; 2020 Garbage Collected
+    &copy; 2021 Garbage Collected
   </a>
     <div>
 
