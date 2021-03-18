@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>go on Garbage Collected</title>
+    <title>Go on Garbage Collected</title>
     <link>https://guxi.me/tags/go/</link>
-    <description>Recent content in go on Garbage Collected</description>
+    <description>Recent content in Go on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2020 18:34:28 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Mar 2021 14:20:56 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>An Elegant Way to Bootstrap Go App</title>
+      <link>https://guxi.me/posts/an-elegant-way-to-bootstrap-go-app/</link>
+      <pubDate>Thu, 18 Mar 2021 14:20:56 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/an-elegant-way-to-bootstrap-go-app/</guid>
+      <description>The twelve-factor methodology has proven its worth over the years. Since its invention many fields in technology have changed, many among them are shining and exciting. In the age of Kubernetes, service mesh and serverless architectures, the twelve-factor methodology has not faded away, but rather has happened to be a good fit for nearly all of those powerful platforms.
+Scaffolding a twelve-factor go app may not be a difficult task for experienced engineers, but certainly presents some challenges to juniors.</description>
+    </item>
     
     <item>
       <title>使用Hyperf插入100万行数据到MongoDB，能行吗</title>
