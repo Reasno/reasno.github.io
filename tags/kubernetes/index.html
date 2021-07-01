@@ -33,18 +33,18 @@
       <link href="https://guxi.me/tags/kubernetes/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
     
 
-    <meta property="og:title" content="kubernetes" />
+    <meta property="og:title" content="Kubernetes" />
 <meta property="og:description" content="A collection of my ephemeral thoughts" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/tags/kubernetes/" />
 
 <meta property="og:updated_time" content="2021-07-01T17:01:03&#43;08:00"/>
 
-<meta itemprop="name" content="kubernetes">
+<meta itemprop="name" content="Kubernetes">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="kubernetes"/>
+<meta name="twitter:title" content="Kubernetes"/>
 <meta name="twitter:description" content="A collection of my ephemeral thoughts"/>
 
       
@@ -129,7 +129,7 @@ if (!doNotTrack) {
 
       <div class="tc-l pv3 ph3 ph4-ns">
         <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          kubernetes
+          Kubernetes
         </h1>
         
       </div>
@@ -141,7 +141,7 @@ if (!doNotTrack) {
       
   <article class="cf pa3 pa4-m pa4-l">
     <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “kubernetes”</p>
+      <p>Below you will find pages that utilize the taxonomy term “Kubernetes”</p>
     </div>
   </article>
   <div class="mw8 center">    
@@ -159,7 +159,7 @@ if (!doNotTrack) {
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
 实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
-package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile(&#34;/dev/termination-log&#34;, []byte(fmt.Sprintf(&#34;panic: %s&#34;, r)), os.ModePerm) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
+package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile( &#34;/dev/termination-log&#34;, []byte(fmt.Sprintf(&#34;panic: %s&#34;, r)), os.ModePerm, ) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
 apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
 kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
 除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
