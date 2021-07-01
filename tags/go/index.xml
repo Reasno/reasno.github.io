@@ -6,10 +6,25 @@
     <description>Recent content in Go on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Mar 2021 14:20:56 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jul 2021 17:01:03 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>查看Pod重启的原因</title>
+      <link>https://guxi.me/posts/determine-reason-pod-failure/</link>
+      <pubDate>Thu, 01 Jul 2021 17:01:03 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/determine-reason-pod-failure/</guid>
+      <description>在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
+实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile(&amp;#34;/dev/termination-log&amp;#34;, []byte(fmt.Sprintf(&amp;#34;panic: %s&amp;#34;, r)), os.ModePerm) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
+apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
+kubectl get pod termination-demo -o go-template=&amp;#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&amp;#34; 写入的路径可以在terminationMessagePath中更改。
+除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/</description>
+    </item>
     
     <item>
       <title>An Elegant Way to Bootstrap Go App</title>
