@@ -33,18 +33,18 @@
       <link href="https://guxi.me/tags/go/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
     
 
-    <meta property="og:title" content="Go" />
+    <meta property="og:title" content="go" />
 <meta property="og:description" content="A collection of my ephemeral thoughts" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/tags/go/" />
 
 <meta property="og:updated_time" content="2021-07-01T17:01:03&#43;08:00"/>
 
-<meta itemprop="name" content="Go">
+<meta itemprop="name" content="go">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Go"/>
+<meta name="twitter:title" content="go"/>
 <meta name="twitter:description" content="A collection of my ephemeral thoughts"/>
 
       
@@ -129,7 +129,7 @@ if (!doNotTrack) {
 
       <div class="tc-l pv3 ph3 ph4-ns">
         <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          Go
+          go
         </h1>
         
       </div>
@@ -141,7 +141,7 @@ if (!doNotTrack) {
       
   <article class="cf pa3 pa4-m pa4-l">
     <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “Go”</p>
+      <p>Below you will find pages that utilize the taxonomy term “go”</p>
     </div>
   </article>
   <div class="mw8 center">    
@@ -164,7 +164,7 @@ apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt
 kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
 除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
 实际操作中，FallbackToLogsOnError的长度限制导致有时候会截取太少，丢掉重要信息。
-这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr，然后将terminationMessagePolicy设置为/dev/stderr，即可精确的获取Pod重启原因。
+这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr(Go里的panic默认就是stderr，不用拦截了)，然后将terminationMessagePath设置为/dev/stderr，即可精确的获取Pod重启原因。
 参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/
     </div>
   </div>
