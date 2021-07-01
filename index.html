@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2021-03-18T14:20:56&#43;08:00"/>
+<meta property="og:updated_time" content="2021-07-01T17:01:03&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -179,6 +179,36 @@ if (!doNotTrack) {
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/determine-reason-pod-failure/" class="color-inherit dim link">
+            查看Pod重启的原因
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
+实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
+package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile(&#34;/dev/termination-log&#34;, []byte(fmt.Sprintf(&#34;panic: %s&#34;, r)), os.ModePerm) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
+apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
+kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
+除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/
+        </div>
+          <a href="/posts/determine-reason-pod-failure/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/an-elegant-way-to-bootstrap-go-app/" class="color-inherit dim link">
             An Elegant Way to Bootstrap Go App
             </a>
@@ -270,30 +300,6 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/hyperf-swoole-gotask/" class="color-inherit dim link">
-            使用Hyperf插入100万行数据到MongoDB，能行吗
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
-        </div>
-          <a href="/posts/hyperf-swoole-gotask/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
@@ -301,6 +307,10 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
         <h1 class="f3">More</h1>
         <ul class="f5 fw4 mb4 dib mr3">
         
+        
+            <li class="link black dim pa2"><a href="/posts/hyperf-swoole-gotask/" class="link black dim pa2">
+              使用Hyperf插入100万行数据到MongoDB，能行吗
+            </a></li>
         
             <li class="link black dim pa2"><a href="/posts/timeout-vs-deadline/" class="link black dim pa2">
               Timeout vs Deadline
@@ -320,10 +330,6 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
         
             <li class="link black dim pa2"><a href="/posts/parties-in-online-advertising/" class="link black dim pa2">
               Parties in Online Advertising
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/beware-of-backpressure/" class="link black dim pa2">
-              Beware of Backpressure
             </a></li>
         
       
