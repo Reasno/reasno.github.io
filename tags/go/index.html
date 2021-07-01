@@ -163,6 +163,8 @@ package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { 
 apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
 kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
 除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+实际操作中，FallbackToLogsOnError的长度限制导致有时候会截取太少，丢掉重要信息。
+这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr，然后将terminationMessagePolicy设置为/dev/stderr，即可精确的获取Pod重启原因。
 参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/
     </div>
   </div>
