@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Garbage Collected </title>
+    <title>Garbage Collected  | Metaverse</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
 
@@ -29,23 +29,28 @@
     
 
     
-      <link href="https://guxi.me/tags/go/index.xml" rel="alternate" type="application/rss+xml" title="Garbage Collected" />
-      <link href="https://guxi.me/tags/go/index.xml" rel="feed" type="application/rss+xml" title="Garbage Collected" />
-    
 
-    <meta property="og:title" content="Go" />
-<meta property="og:description" content="A collection of my ephemeral thoughts" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://guxi.me/tags/go/" />
+    <meta property="og:title" content="Metaverse" />
+<meta property="og:description" content="The word Metaverse still bugs me. I have learned the word metadata means the data of data, and the word metaprogramming means the programing of programing (macros, annotations, code generations etc). In Reactive programing I have also seen the word metastream, meaning a stream of streams. Given the word Metaverse, shouldn&rsquo;t it just be the (uni)verse of (uni)verse? In my understanding metaverse, should it exist, can only be found in a higher dimension than the universe we know about." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://guxi.me/posts/metaverse/" />
+<meta property="article:published_time" content="2021-11-19T15:38:45&#43;08:00"/>
+<meta property="article:modified_time" content="2021-11-19T15:38:45&#43;08:00"/>
 
-<meta property="og:updated_time" content="2021-07-01T17:01:03&#43;08:00"/>
+<meta itemprop="name" content="Metaverse">
+<meta itemprop="description" content="The word Metaverse still bugs me. I have learned the word metadata means the data of data, and the word metaprogramming means the programing of programing (macros, annotations, code generations etc). In Reactive programing I have also seen the word metastream, meaning a stream of streams. Given the word Metaverse, shouldn&rsquo;t it just be the (uni)verse of (uni)verse? In my understanding metaverse, should it exist, can only be found in a higher dimension than the universe we know about.">
 
-<meta itemprop="name" content="Go">
-<meta itemprop="description" content="A collection of my ephemeral thoughts">
 
+<meta itemprop="datePublished" content="2021-11-19T15:38:45&#43;08:00" />
+<meta itemprop="dateModified" content="2021-11-19T15:38:45&#43;08:00" />
+<meta itemprop="wordCount" content="94">
+
+
+
+<meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Go"/>
-<meta name="twitter:description" content="A collection of my ephemeral thoughts"/>
+<meta name="twitter:title" content="Metaverse"/>
+<meta name="twitter:description" content="The word Metaverse still bugs me. I have learned the word metadata means the data of data, and the word metaprogramming means the programing of programing (macros, annotations, code generations etc). In Reactive programing I have also seen the word metastream, meaning a stream of streams. Given the word Metaverse, shouldn&rsquo;t it just be the (uni)verse of (uni)verse? In my understanding metaverse, should it exist, can only be found in a higher dimension than the universe we know about."/>
 
       
 <script type="application/javascript">
@@ -65,9 +70,11 @@ if (!doNotTrack) {
   <body class="ma0 avenir bg-near-white production">
 
     
+   
+  
 
   <header>
-    <div class="pb3-m pb6-l bg-black">
+    <div class="bg-black">
       <nav class="pv3 ph3 ph4-ns" role="navigation">
   <div class="flex-l justify-between items-center center">
     <a href="https://guxi.me/" class="f3 fw2 hover-white no-underline white-90 dib">
@@ -127,127 +134,54 @@ if (!doNotTrack) {
   </div>
 </nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          Go
-        </h1>
-        
-      </div>
     </div>
   </header>
 
 
+
     <main class="pb7" role="main">
       
-  <article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Below you will find pages that utilize the taxonomy term “Go”</p>
-    </div>
-  </article>
-  <div class="mw8 center">    
-    <section class="flex-ns flex-wrap justify-around mt5">
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/determine-reason-pod-failure/" class="link black dim">
-        查看Pod重启的原因
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
-实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
-package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile( &#34;/dev/termination-log&#34;, []byte(fmt.Sprintf(&#34;panic: %s&#34;, r)), os.ModePerm, ) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
-apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
-kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
-除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
-实际操作中，FallbackToLogsOnError的长度限制导致有时候会截取太少，丢掉重要信息。
-这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr(Go里的panic默认就是stderr，不用拦截了)，然后将terminationMessagePath设置为/dev/stderr，即可精确的获取Pod重启原因。
-参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/
-    </div>
-  </div>
-</div>
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
 
-        </div>
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Metaverse</h1>
       
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/an-elegant-way-to-bootstrap-go-app/" class="link black dim">
-        An Elegant Way to Bootstrap Go App
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The twelve-factor methodology has proven its worth over the years. Since its invention many fields in technology have changed, many among them are shining and exciting. In the age of Kubernetes, service mesh and serverless architectures, the twelve-factor methodology has not faded away, but rather has happened to be a good fit for nearly all of those powerful platforms.
-Scaffolding a twelve-factor go app may not be a difficult task for experienced engineers, but certainly presents some challenges to juniors.
-    </div>
-  </div>
-</div>
+      <time class="f6 mv4 dib tracked" datetime="2021-11-19T15:38:45&#43;08:00">November 19, 2021</time>
+      
+      
+    </header>
 
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/hyperf-swoole-gotask/" class="link black dim">
-        使用Hyperf插入100万行数据到MongoDB，能行吗
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
-    </div>
-  </div>
-</div>
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>The word Metaverse still bugs me. I have learned the word metadata means the data of data, and the word metaprogramming means the programing of programing (macros, annotations, code generations etc). In Reactive programing I have also seen the word metastream, meaning a stream of streams. Given the word Metaverse, shouldn&rsquo;t it just be the (uni)verse of (uni)verse? In my understanding metaverse, should it exist, can only be found in a higher dimension than the universe we know about.</p>
 
-        </div>
+<p>Certainly not just video games or VRs. The word subverse is more suitable to them.</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6">
       
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/when-do-we-need-php/" class="link black dim">
-        When Do We Need PHP
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      When we started huijiwiki.com, PHP was the language of the choice. But it was not much a choice. MediaWiki was coded in PHP. It provided us a solid starting point to expand our idea.
-Since then I have touched many languages and am moderately proficient in some of them. Among them, Go is my current favorite. Rust is the language I want to explore more.
-Go as well as Rust has a very different nature compared to PHP.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
-        <div class="relative w-100  mb4 bg-white">
-          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/options-take-a-toll/" class="link black dim">
-        Options Take a Toll
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      Vue community exploded due to changes in Vue 3. Some comments are full of gunpowder with regards to the recent functional API RFC. Let me show my opinions up front:
- A. OSS authors clearly deserve more respect.
- B. I think functional API generally are more expressive compared to the old one.
-  However I would like to provide a counter argument to a very point the defender of RFC made.
-    </div>
-  </div>
-</div>
-
-        </div>
-      
+      <script src="https://utteranc.es/client.js"
+        repo="Reasno/reasno.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+      </div>
     </section>
-  </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
 
     </main>
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">

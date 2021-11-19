@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jul 2021 17:01:03 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Nov 2021 15:38:45 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Metaverse</title>
+      <link>https://guxi.me/posts/metaverse/</link>
+      <pubDate>Fri, 19 Nov 2021 15:38:45 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/metaverse/</guid>
+      <description>The word Metaverse still bugs me. I have learned the word metadata means the data of data, and the word metaprogramming means the programing of programing (macros, annotations, code generations etc). In Reactive programing I have also seen the word metastream, meaning a stream of streams. Given the word Metaverse, shouldn&amp;rsquo;t it just be the (uni)verse of (uni)verse? In my understanding metaverse, should it exist, can only be found in a higher dimension than the universe we know about.</description>
+    </item>
     
     <item>
       <title>查看Pod重启的原因</title>
