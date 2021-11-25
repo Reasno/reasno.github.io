@@ -3,8 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://guxi.me/posts/debuging-session/</loc>
+    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/etcd/</loc>
+    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://guxi.me/</loc>
-    <lastmod>2021-11-19T15:38:45+08:00</lastmod>
+    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/go/</loc>
+    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/posts/</loc>
+    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/</loc>
+    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -13,25 +42,7 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/posts/</loc>
-    <lastmod>2021-11-19T15:38:45+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/go/</loc>
-    <lastmod>2021-07-01T17:01:03+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/tags/kubernetes/</loc>
-    <lastmod>2021-07-01T17:01:03+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://guxi.me/tags/</loc>
     <lastmod>2021-07-01T17:01:03+08:00</lastmod>
     <priority>0</priority>
   </url>

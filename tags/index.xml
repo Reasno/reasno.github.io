@@ -6,15 +6,24 @@
     <description>Recent content in Tags on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jul 2021 17:01:03 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Nov 2021 22:06:27 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>ETCD</title>
+      <link>https://guxi.me/tags/etcd/</link>
+      <pubDate>Thu, 25 Nov 2021 22:06:27 +0800</pubDate>
+      
+      <guid>https://guxi.me/tags/etcd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Go</title>
       <link>https://guxi.me/tags/go/</link>
-      <pubDate>Thu, 01 Jul 2021 17:01:03 +0800</pubDate>
+      <pubDate>Thu, 25 Nov 2021 22:06:27 +0800</pubDate>
       
       <guid>https://guxi.me/tags/go/</guid>
       <description></description>
@@ -120,7 +129,7 @@
     </item>
     
     <item>
-      <title>TypeScript</title>
+      <title>Typescript</title>
       <link>https://guxi.me/tags/typescript/</link>
       <pubDate>Wed, 22 Jan 2020 16:04:50 +0800</pubDate>
       

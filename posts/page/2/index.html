@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/posts/" />
 
-<meta property="og:updated_time" content="2021-11-19T15:38:45&#43;08:00"/>
+<meta property="og:updated_time" content="2021-11-25T22:06:27&#43;08:00"/>
 
 <meta itemprop="name" content="Posts">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -147,57 +147,8 @@ if (!doNotTrack) {
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
-      <a href="/posts/beware-of-backpressure/" class="link black dim">
-        Beware of Backpressure
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      One of my junior dev was frustrated today. He was supposed to read from a file stream with NodeJS, piping that into the database. However, he got errors thrown everywhere when dealing with larger files. I helped him identified the problem. He had been dumping async calls (the database insertion) faster than the call could be handled.
-I remotely remember I run into a similar issue years ago when I wrote a web scraper in NodeJS.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/compress-url-parameters-without-a-storage/" class="link black dim">
-        Compress Url Parameters Without a Storage
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      <p>In advertising and other online marketing fields, a common practice is to distribute URLs to the clients so that they can report user action through a simple GET request.</p>
-
-<p>Those parameters are fake. But you got the idea. Longer URLs mean higher bandwidth consumption. Moreover, if your URL is too long, you will risk triggering <strong>Error 413: request entity too large</strong>. I know nginx throws it.</p>
-
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/purposed-php-dialect-p-plus-plus/" class="link black dim">
-        Purposed PHP Dialect: P&#43;&#43;
-      </a>
-    </h1>
-    <div class="nested-links f5 lh-copy nested-copy-line-height">
-      The first time I saw P++ my reaction was &ldquo;meh, it is not going anywhere&rdquo;. Anything breaks backward compatibility and abandons existing user base will get punished eventually. Python community took a decade to heal from the wound caused by Python3. In short, I believe it is not worth it to trade backward compatibility for language design purity. I also wrote a blog about Vue3 changes on its new functional APIs.
-    </div>
-  </div>
-</div>
-</div>
-      
-        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
-  <div class="bg-white mb3 pa4 gray overflow-hidden">
-    <span class="f6 db">Posts</span>
-    <h1 class="f3 near-black">
-      <a href="/posts/rethink-clean-architecture/" class="link black dim">
-        Rethink The Clean Architecture
+      <a href="/posts/parties-in-online-advertising/" class="link black dim">
+        Parties in Online Advertising
       </a>
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
@@ -332,6 +283,57 @@ In Laravel it looks like this:
     </h1>
     <div class="nested-links f5 lh-copy nested-copy-line-height">
       As the job demand is going nowhere in a decade, a lot of new guys want to get into programming. There are numerous courses online, teaching a variety of skills in programming. There are also new shinning frameworks climbing up GitHub trending every day. I see a lot of people, typically newly graduated students, get confused. There seems to be an endless stream of knowledge to learn. How many skills are enough?
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/ad-server-rewrite-goals-and-non-goals/" class="link black dim">
+        Ad Server Rewrite: Goals and Non Goals
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      We have carried out the first or maybe last round of rewrite of the Juhui DSP/SSP/ADX with Typescript. A few goals and non-goals have been set for this labor-intensive process.
+Goals  Strong typed. Strong API contracts. Holistic Observability with logging, tracing, and metrics. Layered Architecture and dedicated component. Testcases can be run by anyone. Stateless over stateful. Improved readability. Proper code deprecation process.  Non-Goals  Use fancy technology.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/epoll-and-event-loop-just-enough-you-need-for-interview/" class="link black dim">
+        Epoll and Event Loop: Just Enough You Need for Interview
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      The biggest challenge for intermediate developers to understand event loop is that the articles found around the web are either written for die-hard C programmers or simply too long to read. I will give a try on explaining the event loop/epoll(), and stop at a point where interviewers will be sufficiently satisfied.
+The first thing should be made crystal clear is that things happen on two sides: The kernel and the userspace.
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/transactions-are-not-atomic/" class="link black dim">
+        Transactions Are Not Atomic
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      MySQL (InnoDB) transactions are ACID, with A for atomicity.
+ An atomic transaction is an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
+ The atomicity here is different from the atomicity in concurrent programming.
+ An operation acting on shared memory is atomic if it completes in a single step relative to other threads.
+ Suppose you want to read a number from a column, add it by an offset, and write it back to the same column.
     </div>
   </div>
 </div>
