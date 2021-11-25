@@ -19,12 +19,6 @@
   </url>
   
   <url>
-    <loc>https://guxi.me/tags/go/</loc>
-    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://guxi.me/posts/</loc>
     <lastmod>2021-11-25T22:06:27+08:00</lastmod>
     <priority>0</priority>
@@ -32,6 +26,12 @@
   
   <url>
     <loc>https://guxi.me/tags/</loc>
+    <lastmod>2021-11-25T22:06:27+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://guxi.me/tags/go/</loc>
     <lastmod>2021-11-25T22:06:27+08:00</lastmod>
     <priority>0</priority>
   </url>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kubernetes on Garbage Collected</title>
+    <title>kubernetes on Garbage Collected</title>
     <link>https://guxi.me/tags/kubernetes/</link>
-    <description>Recent content in Kubernetes on Garbage Collected</description>
+    <description>Recent content in kubernetes on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 01 Jul 2021 17:01:03 +0800</lastBuildDate>
