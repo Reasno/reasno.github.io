@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/" />
 
-<meta property="og:updated_time" content="2020-06-25T13:49:21&#43;08:00"/>
+<meta property="og:updated_time" content="2021-11-25T22:06:27&#43;08:00"/>
 
 <meta itemprop="name" content="Garbage Collected">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -179,6 +179,114 @@ if (!doNotTrack) {
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/debuging-session/" class="color-inherit dim link">
+            Debuging Session
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Today we encountered an intriguing production resource leak that deserved to be shared.
+The Observation: In our production server, the CPU and Memory usage continued to increase while the new request came in. In the development server where no requests were served, the resource usage is stable. The server code was written in Go.
+Two suspicions were drawn from the observation right away.
+The problematic code resides in the hot path, ie.
+        </div>
+          <a href="/posts/debuging-session/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/metaverse/" class="color-inherit dim link">
+            Metaverse
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          The word Metaverse still bugs me. I have learned the word metadata means the data of data, and the word metaprogramming means the programing of programing (macros, annotations, code generations etc). In Reactive programing I have also seen the word metastream, meaning a stream of streams. Given the word Metaverse, shouldn&rsquo;t it just be the (uni)verse of (uni)verse? In my understanding metaverse, should it exist, can only be found in a higher dimension than the universe we know about.
+        </div>
+          <a href="/posts/metaverse/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/determine-reason-pod-failure/" class="color-inherit dim link">
+            查看Pod重启的原因
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
+实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
+package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile( &#34;/dev/termination-log&#34;, []byte(fmt.Sprintf(&#34;panic: %s&#34;, r)), os.ModePerm, ) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
+apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
+kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
+除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+实际操作中，FallbackToLogsOnError的长度限制导致有时候会截取太少，丢掉重要信息。
+这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr(Go里的panic默认就是stderr，不用拦截了)，然后将terminationMessagePath设置为/dev/stderr，即可精确的获取Pod重启原因。
+参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/
+        </div>
+          <a href="/posts/determine-reason-pod-failure/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/an-elegant-way-to-bootstrap-go-app/" class="color-inherit dim link">
+            An Elegant Way to Bootstrap Go App
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          The twelve-factor methodology has proven its worth over the years. Since its invention many fields in technology have changed, many among them are shining and exciting. In the age of Kubernetes, service mesh and serverless architectures, the twelve-factor methodology has not faded away, but rather has happened to be a good fit for nearly all of those powerful platforms.
+Scaffolding a twelve-factor go app may not be a difficult task for experienced engineers, but certainly presents some challenges to juniors.
+        </div>
+          <a href="/posts/an-elegant-way-to-bootstrap-go-app/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="/posts/key-to-fast-development/" class="color-inherit dim link">
             Keys to Fast Development
             </a>
@@ -197,105 +305,6 @@ There was also a common belief that enforcing code qualities by means of TDD/Cod
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/swoole-sleep/" class="color-inherit dim link">
-            Interruptible Swoole Sleep
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          假设我们有一个监控任务，每5秒钟将监控结果上报。那么问题来了，如果我们现在需要关闭服务，如何保证关闭前最后一批数据不丢失？
-        </div>
-          <a href="/posts/swoole-sleep/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/socketio-server/" class="color-inherit dim link">
-            Socket.io Server For Hyperf
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          有小伙伴抱怨道，WebSocket Server感觉太原始，没有“框架感”。希望Socket.io协议的支持，可以让WebSocket更好用，不再有开篇提到的困惑。
-        </div>
-          <a href="/posts/socketio-server/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/hyperf-swoole-gotask/" class="color-inherit dim link">
-            使用Hyperf插入100万行数据到MongoDB，能行吗
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          最近用go搞了一个swoole的边车。是真的边车，用swoole process启动的。挂载到swoole server上跑，swoole起它起，swoole停它停，中间如果go挂了swoole还负责给拉起来。消息投递也照搬swoole task走IPC，从web worker上直接投递，等结果出来再返还web worker。
-        </div>
-          <a href="/posts/hyperf-swoole-gotask/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="/posts/timeout-vs-deadline/" class="color-inherit dim link">
-            Timeout vs Deadline
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          One of the first few things I feel strange about gRPC is that gRPC terminate unfinished request based on a deadline mechanism instead of the more common timeout mechanism.
-In pseudo-code:
-var timeout = 5 * time.Second; var deadline = time.Now() + 5 * time.Second; As you can see, the deadline mechanism is less straight-forward at first glance. So why bother?
-I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t put my mind to it until recently.
-        </div>
-          <a href="/posts/timeout-vs-deadline/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
@@ -304,28 +313,28 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
         <ul class="f5 fw4 mb4 dib mr3">
         
         
+            <li class="link black dim pa2"><a href="/posts/swoole-sleep/" class="link black dim pa2">
+              Interruptible Swoole Sleep
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/socketio-server/" class="link black dim pa2">
+              Socket.io Server For Hyperf
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/hyperf-swoole-gotask/" class="link black dim pa2">
+              使用Hyperf插入100万行数据到MongoDB，能行吗
+            </a></li>
+        
+            <li class="link black dim pa2"><a href="/posts/timeout-vs-deadline/" class="link black dim pa2">
+              Timeout vs Deadline
+            </a></li>
+        
             <li class="link black dim pa2"><a href="/posts/why-you-should-avoid-using-request-scope-injection-in-nest-js/" class="link black dim pa2">
               Why You Should Avoid Using Request-scoped Injection in NestJS
             </a></li>
         
             <li class="link black dim pa2"><a href="/posts/cloudnative-hyperf/" class="link black dim pa2">
               云原生Hyperf骨架包
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/hyperf-clean-annotations/" class="link black dim pa2">
-              Hyperf 注解整洁之道
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/parties-in-online-advertising/" class="link black dim pa2">
-              Parties in Online Advertising
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/beware-of-backpressure/" class="link black dim pa2">
-              Beware of Backpressure
-            </a></li>
-        
-            <li class="link black dim pa2"><a href="/posts/compress-url-parameters-without-a-storage/" class="link black dim pa2">
-              Compress Url Parameters Without a Storage
             </a></li>
         
       
@@ -344,6 +353,12 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
         
         
           <li class="link black dim pa2" >
+            <a href="/tags/go" class="link black dim pa2" > go <small>(6)</small></a>
+          </li>
+        
+        
+        
+          <li class="link black dim pa2" >
             <a href="/tags/hyperf" class="link black dim pa2" > hyperf <small>(5)</small></a>
           </li>
         
@@ -356,7 +371,7 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
         
         
           <li class="link black dim pa2" >
-            <a href="/tags/go" class="link black dim pa2" > go <small>(3)</small></a>
+            <a href="/tags/kubernetes" class="link black dim pa2" > kubernetes <small>(3)</small></a>
           </li>
         
         
@@ -369,12 +384,6 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
         
           <li class="link black dim pa2" >
             <a href="/tags/dependency-injection" class="link black dim pa2" > dependency-injection <small>(2)</small></a>
-          </li>
-        
-        
-        
-          <li class="link black dim pa2" >
-            <a href="/tags/kubernetes" class="link black dim pa2" > kubernetes <small>(2)</small></a>
           </li>
         
         
@@ -456,6 +465,8 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
         
         
         
+        
+        
    
         </ul>
         
@@ -472,7 +483,7 @@ I thought this might be another &ldquo;Google&rdquo; thing, so I didn&rsquo;t pu
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
-    &copy; 2020 Garbage Collected
+    &copy; 2021 Garbage Collected
   </a>
     <div>
 

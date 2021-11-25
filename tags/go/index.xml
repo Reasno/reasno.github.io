@@ -6,10 +6,49 @@
     <description>Recent content in Go on Garbage Collected</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Mar 2020 18:34:28 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Nov 2021 22:06:27 +0800</lastBuildDate>
     
 	<atom:link href="https://guxi.me/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Debuging Session</title>
+      <link>https://guxi.me/posts/debuging-session/</link>
+      <pubDate>Thu, 25 Nov 2021 22:06:27 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/debuging-session/</guid>
+      <description>Today we encountered an intriguing production resource leak that deserved to be shared.
+The Observation: In our production server, the CPU and Memory usage continued to increase while the new request came in. In the development server where no requests were served, the resource usage is stable. The server code was written in Go.
+Two suspicions were drawn from the observation right away.
+The problematic code resides in the hot path, ie.</description>
+    </item>
+    
+    <item>
+      <title>查看Pod重启的原因</title>
+      <link>https://guxi.me/posts/determine-reason-pod-failure/</link>
+      <pubDate>Thu, 01 Jul 2021 17:01:03 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/determine-reason-pod-failure/</guid>
+      <description>在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
+实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile( &amp;#34;/dev/termination-log&amp;#34;, []byte(fmt.Sprintf(&amp;#34;panic: %s&amp;#34;, r)), os.ModePerm, ) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
+apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
+kubectl get pod termination-demo -o go-template=&amp;#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&amp;#34; 写入的路径可以在terminationMessagePath中更改。
+除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+实际操作中，FallbackToLogsOnError的长度限制导致有时候会截取太少，丢掉重要信息。
+这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr(Go里的panic默认就是stderr，不用拦截了)，然后将terminationMessagePath设置为/dev/stderr，即可精确的获取Pod重启原因。
+参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/</description>
+    </item>
+    
+    <item>
+      <title>An Elegant Way to Bootstrap Go App</title>
+      <link>https://guxi.me/posts/an-elegant-way-to-bootstrap-go-app/</link>
+      <pubDate>Thu, 18 Mar 2021 14:20:56 +0800</pubDate>
+      
+      <guid>https://guxi.me/posts/an-elegant-way-to-bootstrap-go-app/</guid>
+      <description>The twelve-factor methodology has proven its worth over the years. Since its invention many fields in technology have changed, many among them are shining and exciting. In the age of Kubernetes, service mesh and serverless architectures, the twelve-factor methodology has not faded away, but rather has happened to be a good fit for nearly all of those powerful platforms.
+Scaffolding a twelve-factor go app may not be a difficult task for experienced engineers, but certainly presents some challenges to juniors.</description>
+    </item>
     
     <item>
       <title>使用Hyperf插入100万行数据到MongoDB，能行吗</title>

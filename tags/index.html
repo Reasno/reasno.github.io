@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://guxi.me/tags/" />
 
-<meta property="og:updated_time" content="2020-06-25T13:49:21&#43;08:00"/>
+<meta property="og:updated_time" content="2021-11-25T22:06:27&#43;08:00"/>
 
 <meta itemprop="name" content="Tags">
 <meta itemprop="description" content="A collection of my ephemeral thoughts">
@@ -508,6 +508,31 @@ The first thing should be made crystal clear is that things happen on two sides:
         
       
         <h2 class="f1">
+          <a href="/tags/etcd" class="link blue hover-black">
+            Tag: etcd
+          </a>
+        </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/debuging-session/" class="link black dim">
+        Debuging Session
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Today we encountered an intriguing production resource leak that deserved to be shared.
+The Observation: In our production server, the CPU and Memory usage continued to increase while the new request came in. In the development server where no requests were served, the resource usage is stable. The server code was written in Go.
+Two suspicions were drawn from the observation right away.
+The problematic code resides in the hot path, ie.
+    </div>
+  </div>
+</div>
+
+        
+      
+        <h2 class="f1">
           <a href="/tags/event-loop" class="link blue hover-black">
             Tag: event-loop
           </a>
@@ -535,6 +560,63 @@ The first thing should be made crystal clear is that things happen on two sides:
             Tag: go
           </a>
         </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/debuging-session/" class="link black dim">
+        Debuging Session
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      Today we encountered an intriguing production resource leak that deserved to be shared.
+The Observation: In our production server, the CPU and Memory usage continued to increase while the new request came in. In the development server where no requests were served, the resource usage is stable. The server code was written in Go.
+Two suspicions were drawn from the observation right away.
+The problematic code resides in the hot path, ie.
+    </div>
+  </div>
+</div>
+
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/determine-reason-pod-failure/" class="link black dim">
+        查看Pod重启的原因
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
+实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
+package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile( &#34;/dev/termination-log&#34;, []byte(fmt.Sprintf(&#34;panic: %s&#34;, r)), os.ModePerm, ) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
+apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
+kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
+除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+实际操作中，FallbackToLogsOnError的长度限制导致有时候会截取太少，丢掉重要信息。
+这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr(Go里的panic默认就是stderr，不用拦截了)，然后将terminationMessagePath设置为/dev/stderr，即可精确的获取Pod重启原因。
+参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/
+    </div>
+  </div>
+</div>
+
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/an-elegant-way-to-bootstrap-go-app/" class="link black dim">
+        An Elegant Way to Bootstrap Go App
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      The twelve-factor methodology has proven its worth over the years. Since its invention many fields in technology have changed, many among them are shining and exciting. In the age of Kubernetes, service mesh and serverless architectures, the twelve-factor methodology has not faded away, but rather has happened to be a good fit for nearly all of those powerful platforms.
+Scaffolding a twelve-factor go app may not be a difficult task for experienced engineers, but certainly presents some challenges to juniors.
+    </div>
+  </div>
+</div>
+
         
           <div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -803,6 +885,29 @@ I remotely remember I run into a similar issue years ago when I wrote a web scra
             Tag: kubernetes
           </a>
         </h2>
+        
+          <div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
+      <a href="/posts/determine-reason-pod-failure/" class="link black dim">
+        查看Pod重启的原因
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      在Kubernetes中，有时候Pod会异常重启。事后发现的时候错误原因在控制台面板里已经看不到了。
+实际上Kubernetes提供了相关的工具。我们可以在不可恢复的异常发生时拦截异常，将其写入/dev/termination-log。
+package main import ( &#34;fmt&#34; &#34;os&#34; ) func main() { defer func() { if r := recover(); r != nil { _ = os.WriteFile( &#34;/dev/termination-log&#34;, []byte(fmt.Sprintf(&#34;panic: %s&#34;, r)), os.ModePerm, ) panic(r) } }() // ... } 查看的时候，我们可以在edit pod时在lastState当中找到错误信息：
+apiVersion:v1kind:Pod...lastState:terminated:containerID:...exitCode:0finishedAt:...message:| panic: goroutine 1 [running]:main.main.func1()/Users/donew/src/kitty/main.go:18+0x131panic(0x5192e20,0x5640e10)/usr/local/Cellar/go/1.16/libexec/src/runtime/panic.go:965+0x1b9main.main()/Users/donew/src/kitty/main.go:21+0x5b... 也可以直接用kubectl 查看。
+kubectl get pod termination-demo -o go-template=&#34;{{range .status.containerStatuses}}{{.lastState.terminated.message}}{{end}}&#34; 写入的路径可以在terminationMessagePath中更改。
+除此之外，如果项目不方便拦截错误，还可以将terminationMessagePolicy设置为FallbackToLogsOnError。 此时使用容器日志输出的最后一块作为终止消息。 日志输出限制为 2048 字节或 80 行，以较小者为准。
+实际操作中，FallbackToLogsOnError的长度限制导致有时候会截取太少，丢掉重要信息。
+这里提供一个简单的最佳实践：将正常的日志打印到stdout中，将致命错误打印到stderr(Go里的panic默认就是stderr，不用拦截了)，然后将terminationMessagePath设置为/dev/stderr，即可精确的获取Pod重启原因。
+参考阅读：https://kubernetes.io/zh/docs/tasks/debug-application-cluster/determine-reason-pod-failure/
+    </div>
+  </div>
+</div>
+
         
           <div class="relative w-100 mb4 bg-white nested-copy-line-height">
   <div class="bg-white mb3 pa4 gray overflow-hidden">
@@ -1539,7 +1644,7 @@ Goals  Strong typed. Strong API contracts. Holistic Observability with logging, 
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://guxi.me/" >
-    &copy; 2020 Garbage Collected
+    &copy; 2021 Garbage Collected
   </a>
     <div>
 
